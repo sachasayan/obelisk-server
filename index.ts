@@ -32,7 +32,7 @@ export const runtimeOptions: RuntimeOptions = {
 
 
 let f = Pac.field.replace(/\n|\r/g, "");
-let o = [...f].map((char) => Pac.colors[char]);
+let o = Array.from(f).map((char) => Pac.colors[char]);
 
 
 const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
