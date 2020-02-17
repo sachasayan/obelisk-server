@@ -6,7 +6,7 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 (async () => {
   try {
 
-console.log('Init..2');
+  console.log('Init..2');
 
 
   const matrix = new LedMatrix(
@@ -35,7 +35,7 @@ console.log('Init..2');
     .sync();
 
 
-  await wait(999);
+  await wait(2);
 }
 catch (error) {
   console.error(`${__filename} caught: `, error);
