@@ -7,23 +7,27 @@ import {
   RuntimeOptions,
 } from 'rpi-led-matrix';
 
+
 export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
-  rows: 32,
-  cols: 64,
-  chainLength: 2,
+  rows: 16,
+  cols: 32,
+  chainLength: 4,
+  brightness: 20,
+  rowAddressType: 2,
+  multiplexing: 3,
   hardwareMapping: GpioMapping.Regular,
-  parallel: 3,
+  pwmLsbNanoseconds: 1500,
   pixelMapperConfig: LedMatrixUtils.encodeMappers(
-    { type: PixelMapperType.Chainlink }
-  ),
-  // pixelMapperConfig: LedMatrixUtils.encodeMappers({ type: PixelMapperType.U }),
+    { type: PixelMapperType.Rotate, angle: 180 }
+  )
 };
 
 export const runtimeOptions: RuntimeOptions = {
   ...LedMatrix.defaultRuntimeOptions(),
-  gpioSlowdown: 4,
+  gpioSlowdown: 2
 };
+
 
 const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
