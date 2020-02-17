@@ -1,0 +1,24 @@
+{
+  "name": "obelisk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sachasayan/obelisk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sachasayan/obelisk/issues"
+  },
+  "homepage": "https://github.com/sachasayan/obelisk#readme",
+  "dependencies": {
+    "@types/node": "^13.1.8",
+    "rpi-led-matrix": "^1.7.2",
+    "typescript": "^3.7.5"
+  }
+}
