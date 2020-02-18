@@ -1,5 +1,5 @@
 let colors = {
-  '*': 0x1919A6,
+  'W': 0x1919A6,
   'P': 0xFFFF00,
   '1': 0xFF0000,
   '2': 0xFFB8FF,
@@ -8,24 +8,23 @@ let colors = {
   ' ': 0x000000
 };
 
-
 let grid = `
-********************************************************************************************************************************
-*      **     P***                                       *                               *     ***                             *
-* **** ** **** ******* *************************************** ************************* ***** ******* ******************** ** *
-* **** ** **** *******                                   *****                      **** ***** *******                      ** *
-*                  *** ****** **  *** *** **   ******* **  *** ****** **  *** *** **               *** ****** **  *** *** * ** *
-* ** ****** ****** *** *** ** *    **  ** ** *         *** *** *** ** *    **  ** **** **** ****** *** *** ** *    **  ** *    *
-* **    *** *              ** * ** **  ** ** *  3  2   **          ** * ** **  ** ****    * *              ** * ** **  ** **** *
-* ***** *** * **** ******* ** * ** **  ** ** *      1  *** ******* ** * ** **  ** ******* * * **** ******* ** * ** **  ** **** *
-* ***** *** * **** ******* ** * ** **  ** ** *         *** ******* ** * ** **  ** ******* * * **** ******* ** * ** **  ** **** *
-* **    *** *              ** * ** **  ** ** *   4     **          ** * ** **  ** ****    * *              ** * ** **  ** **** *
-* ** ****** ****** *** *** ** *    **  ** ** ********* *** *** *** ** *    **  ** **** **** ****** *** *** ** *    **  ** *    *
-*                  *** ****** **  ***  ** ** ********* **  *** ****** **  ***  ** **               *** ****** **  ***  ** * ** *
-* ********************                                   *****                      ******************                      ** *
-* *******      ******* *************************************** ***************************     ******* ******************** ** *
-*          ***                                                                             ***                                 *
-********************************************************************************************************************************
+WWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WOOOWOOOOOOOOOOWWWOOOOOOPOOOOOWOWOOOOOOOOOOOOOOOOOOOOOOOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWOOOOOWWWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW
+WOWOOOWWWOWWWOOWWWWWWWOWWWWWWOOOOOWWWWWWWWWWWWWWWWOWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWOWWWWWOWWWWWWWOWWWWWWWWWWWWWWWWWWWWOWWOW
+WOWWWOWOOOOOOOOWWWWWWWOOOOOOOOWOWOOOOOOOOOOOOOOOOOOOOOOWOWWWWWOOOOOOOOOOOOOOOOOOOOOOWWWWOWWWWWOWWWWWWWOOOOOOOOOOOOOOOOOOOOOOWWOW
+WOWOOOWOWWWOWWWWOOOWWWOWWWWWWOWOWOWWWOWWWOOOOOWWWWWWWWOWOOOWWWOWWWWWWOWWOOWWWOWWWOWWOOOOOOOOOOOOOOOWWWOWWWWWWOWWOOWWWOWWWOWOWWOW
+WOWOWOWOWOOOWOOOWWOWWWOWWWOWWOWOWOOWWOOWWOOOOOWOOOOOOWOWOWOWWWOWWWOWWOWOOOOWWOOWWOWWWWOWWWWOWWWWWWOWWWOWWWOWWOWOOOOWWOOWWOWOOOOW
+WOOOWOOOOOWOWOOOOOOOOOOOOOOWWOWOWWOWWOOWWOWOOOWOIOOBOWOOOWOOOOOOOOOWWOWOWWOWWOOWWOWWWWOOOOWOWOOOOOOOOOOOOOOWWOWOWWOWWOOWWOWWWWOW
+WOWWWOWWWWWOWOOOOOOWWWWWWWOWWOWOWWOWWOOWWOWOOOWOOOOOTOOWWWOOOOOOOWOWWOWOWWOWWOOWWOWWWWWWWOWOWOWWWWOWWWWWWWOWWOWOWWOWWOOWWOWWWWOW
+WOWWWOWWWWWOWOOOOOOWWWWWWWOWWOWOWWOWWOOWWOWWOOWOOOOOOOOWWWOOOOOOOOOWWOWOWWOWWOOWWOWWWWWWWOWOWOWWWWOWWWWWWWOWWOWOWWOWWOOWWOWWWWOW
+WOOOWOOOOOWOWOOOOOOOOOOOOOOWWOWOWWOWWOOWWOWWOOWOOCOOOWOOOWOOOOOOOOOWWOWOWWOWWOOWWOWWWWOOOOWOWOOOOOOOOOOOOOOWWOWOWWOWWOOWWOWWWWOW
+WOWOWOWOWOOOWOOOWWOWWWOWWWOWWOWOWOOWWOOWWOWWOOWOOOOOOWOWOWOWWWOWWWOWWOWOOOOWWOOWWOWWWWOWWWWOWWWWWWOWWWOWWWOWWOWOOOOWWOOWWOWOOOOW
+WOWOOOWOWWWOWWWWOOOWWWOWWWWWWOWOWOWWWOOWWOWWOOWWWWWWWWOWOOOWWWOWWWWWWOWWOOWWWOOWWOWWOOOOOOOOOOOOOOOWWWOWWWWWWOWWOOWWWOOWWOWOWWOW
+WOWWWOWOOOOOOOOWWWWWWWOOOOOOWWWOWWWOOOOOOOOOOOOOOOOOOOOWOWWWWWOOOOOOOOOOOOOOOOOOOOOOWWWWWWWWWWWWWWWWWWOOOOOOOOOOOOOOOOOOOOOOWWOW
+WOWOOOWWWOWWWOOWWWWWWWOWWWWWWOOOOOWWWWWWWWWWWWWWWWOWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWOOOOOWWWWWWWOWWWWWWWWWWWWWWWWWWWWOWWOW
+WOOOWOOOOOOOOOOOOOOOOOOOOOOOOOWOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWWWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 `;
 
 

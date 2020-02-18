@@ -1,29 +1,41 @@
-let colors = {
-  '*': 0x1919A6,
-  'P': 0xFFFF00,
-  '1': 0xFF0000,
-  '2': 0xFFB8FF,
-  '3': 0x00FFFF,
-  '4': 0xFFB852,
-  ' ': 0x000000
-};
 
+class Raindrop {
+  velocity: number;
+  y: number;
 
+  constructor(
+    readonly x: number,
+    y: number,
+    velocity: number,
+  ) {}
 
+  next(): number {
+    this.y += this.velocity;
+    this.velocity ++;
+    return this.y;
+  }
+}
 
-let f = grid.replace(/\n|\r/g, "");
-let field = Array.from(f).map((char) => colors[char]);
+function initRain (matrix){
+    matrix
+      .clear()
+      .brightness(20);
 
+    const raindrops: Raindrop[] = [];
+    for (let x = 0; x < matrix.width()/2 ; x++) {
+      raindrops.push(new Raindrop(Math.random()matrix.width(), 0, 0));
+    }
 
-// field.forEach((c, i) => {
-//   matrix.fgColor(c)
-//     .setPixel(i % 128, Math.floor(i / 128))
+    matrix.afterSync((mat, dt, t) => {
+      raindrops.forEach(drop => {
+        drop.next();
+        matrix.fgColor(0xFFFFFF).setPixel(drop.x, drop.y);
+      });
 
+      setTimeout(() => matrix.sync(), 0);
+    });
+}
 
-// });
+let Rain = { initRain };
 
-
-let Pac = { colors, field };
-
-
-export { Pac };
+export { Rain };
