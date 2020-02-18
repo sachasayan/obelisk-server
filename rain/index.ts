@@ -23,7 +23,7 @@ function initRain (matrix){
 
     const raindrops: Raindrop[] = [];
     for (let x = 0; x < matrix.width()/2 ; x++) {
-      raindrops.push(new Raindrop(Math.random()matrix.width(), 0, 0));
+      raindrops.push(new Raindrop(Math.random()*matrix.width(), 0, 0));
     }
 
     matrix.afterSync((mat, dt, t) => {
