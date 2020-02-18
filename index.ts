@@ -7,7 +7,24 @@ import {
   RuntimeOptions,
 } from 'rpi-led-matrix';
 
-import { Pac } from './pac';
+// import { Pac } from './pac';
+// import { Rain } from './rain';
+
+class Pulser {
+  constructor(
+    readonly x: number,
+    readonly y: number,
+    readonly f: number
+  ) { }
+
+  nextColor(t: number): number {
+    /** You could easily work position-dependent logic into this expression */
+    const brightness = 0xFF & Math.max(0, 255 * (Math.sin(this.f * t / 1000)));
+
+    return (brightness << 16) | (brightness << 8) | brightness;
+  }
+}
+
 
 
 export const matrixOptions: MatrixOptions = {
@@ -31,9 +48,6 @@ export const runtimeOptions: RuntimeOptions = {
 };
 
 
-let f = Pac.field.replace(/\n|\r/g, "");
-let o = Array.from(f).map((char) => Pac.colors[char]);
-
 
 const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
@@ -45,12 +59,22 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
       .clear()
       .brightness(100);
 
-    o.forEach((c, i) => {
-      matrix.fgColor(c)
-        .setPixel(i % 128, Math.floor(i / 128))
+      const pulsers: Pulser[] = [];
+
+      for (let x = 0; x < matrix.width(); x++) {
+        for (let y = 0; y < matrix.height(); y++) {
+          pulsers.push(new Pulser(x, y, 5 * Math.random()));
+        }
+      }
+      matrix.afterSync((mat, dt, t) => {
+        pulsers.forEach(pulser => {
+          matrix.fgColor(pulser.nextColor(t)).setPixel(pulser.x, pulser.y);
+        });
+
+        setTimeout(() => matrix.sync(), 0);
+      });
 
 
-    });
 
     matrix.sync();
 
@@ -60,6 +84,10 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
     console.error(`${__filename} caught: `, error);
   }
 })();
+
+
+
+
 
 
 
