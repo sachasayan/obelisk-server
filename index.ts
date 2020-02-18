@@ -57,7 +57,7 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
     matrix
       .clear()
-      .brightness(100);
+      .brightness(20);
 
       const pulsers: Pulser[] = [];
 
