@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/sachasayan/obelisk#readme",
   "dependencies": {
-    "@types/node": "^13.1.8",
+    "@types/node": "^13.7.2",
     "prompts": "^2.3.1",
-    "rpi-led-matrix": "^1.7.2",
+    "rpi-led-matrix": "^1.9.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   }
