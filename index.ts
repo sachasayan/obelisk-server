@@ -10,7 +10,7 @@ import {
 import { Pac } from './pac';
 import { Rain } from './rain';
 import { Pulse } from './pulse';
-import * as prompts from 'prompts';
+// import * as prompts from 'prompts';
 
 export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
@@ -36,33 +36,33 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
 
 
-enum CliMode {
-  Pac = 'pac',
-  Rain = 'rain',
-  Pulse = 'pulse',
-  Exit = 'exit'
-}
+// enum CliMode {
+//   Pac = 'pac',
+//   Rain = 'rain',
+//   Pulse = 'pulse',
+//   Exit = 'exit'
+// }
 
 
-const createModeSelector = () => {
-  return async () => {
-    const { mode } = await prompts({
-      name: 'mode',
-      type: 'select',
-      message: 'What would you like to do?',
-      hint: 'Use tab or arrow keys and press enter to select.',
-      choices: [
-        { value: CliMode.Pac, title: '🟡 Pacman' },
-        { value: CliMode.Rain, title: '🌧 Rain' },
-        { value: CliMode.Pulse, title: '🕺 Pulse' },
-        { value: CliMode.Exit, title: '🚪 Exit' },
-      ],
-    });
+// const createModeSelector = () => {
+//   return async () => {
+//     const { mode } = await prompts({
+//       name: 'mode',
+//       type: 'select',
+//       message: 'What would you like to do?',
+//       hint: 'Use tab or arrow keys and press enter to select.',
+//       choices: [
+//         { value: CliMode.Pac, title: '🟡 Pacman' },
+//         { value: CliMode.Rain, title: '🌧 Rain' },
+//         { value: CliMode.Pulse, title: '🕺 Pulse' },
+//         { value: CliMode.Exit, title: '🚪 Exit' },
+//       ],
+//     });
 
-    return mode as CliMode;
-  };
-};
-const chooseMode = createModeSelector();
+//     return mode as CliMode;
+//   };
+// };
+// const chooseMode = createModeSelector();
 
 (async () => {
   try {
