@@ -7,7 +7,10 @@ class Raindrop {
     readonly x: number,
     y: number,
     velocity: number,
-  ) {}
+  ) {
+    this.velocity = velocity;
+    this.y = y;
+  }
 
   next(): number {
     this.y += this.velocity;
@@ -22,8 +25,9 @@ function initRain (matrix){
       .brightness(20);
 
     const raindrops: Raindrop[] = [];
+
     for (let x = 0; x < matrix.width()/2 ; x++) {
-      raindrops.push(new Raindrop(Math.random()*matrix.width(), Math.random()* 10, 0));
+      raindrops.push(new Raindrop(Math.random()*matrix.width(), Math.random()*10, 0));
     }
 
     matrix.afterSync((mat, dt, t) => {
