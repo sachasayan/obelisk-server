@@ -9,12 +9,12 @@ class Raindrop {
     velocity: number,
   ) {
     this.velocity = velocity;
-    this.y = y;
+    this.y = y + Math.random() * 10;
   }
 
   next(): number {
     this.y += this.velocity;
-    this.velocity += 0.1;
+    this.velocity += 0.01;
     if (this.y > 16) {
       this.y = 0;
       this.velocity = 0.1;
@@ -31,7 +31,7 @@ function initRain (matrix){
     const raindrops: Raindrop[] = [];
 
     for (let x = 0; x < matrix.width()/2 ; x++) {
-      raindrops.push(new Raindrop(Math.random()*matrix.width(), Math.random()*10, 0));
+      raindrops.push(new Raindrop(Math.random()*matrix.width(), 0, 0));
     }
 
     matrix.afterSync((mat, dt, t) => {
