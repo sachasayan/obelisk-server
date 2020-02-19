@@ -74,35 +74,35 @@ const chooseMode = createModeSelector();
 
       Pac.init(matrix);
 
-      while (true) {
-        switch (await chooseMode()) {
-          case CliMode.Pac: {
-            while (true) {
-              Pac.init(matrix);
-            }
-            break;
-          }
-          case CliMode.Rain: {
-            while (true) {
-              Rain.init(matrix);
-            }
-            break;
-          }
+      // while (true) {
+      //   switch (await chooseMode()) {
+      //     case CliMode.Pac: {
+      //       while (true) {
+      //         Pac.init(matrix);
+      //       }
+      //       break;
+      //     }
+      //     case CliMode.Rain: {
+      //       while (true) {
+      //         Rain.init(matrix);
+      //       }
+      //       break;
+      //     }
 
 
-          case CliMode.Pulse: {
-            // Stay in text mode until escaped
-            while (true) {
-              Pulse.init(matrix);
-            }
-            break;
-          }
-          case CliMode.Exit: {
-            console.log('Bye!');
-            process.exit(0);
-          }
-        }
-      }
+      //     case CliMode.Pulse: {
+      //       // Stay in text mode until escaped
+      //       while (true) {
+      //         Pulse.init(matrix);
+      //       }
+      //       break;
+      //     }
+      //     case CliMode.Exit: {
+      //       console.log('Bye!');
+      //       process.exit(0);
+      //     }
+      //   }
+      // }
 
 
     matrix.sync();
