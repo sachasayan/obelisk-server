@@ -66,7 +66,7 @@ function initRain (matrix){
 
       spaceship.forEach((pixel, i) => {
         if (pixel !== 0x000000){
-          matrix.fgColor(pixel).setPixel(i % 16, Math.floor(i / 16))
+          matrix.fgColor(pixel).setPixel(i % 16 + (64-8), Math.floor(i / 16))
         }
       });
 
