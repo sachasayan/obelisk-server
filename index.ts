@@ -42,8 +42,8 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
       .brightness(20);
 
     // Rain.init(matrix);
-    Pac.init(matrix);
-    // Pulse.init(matrix);
+    // Pac.init(matrix);
+    Pulse.init(matrix);
 
     matrix.sync();
 
