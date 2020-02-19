@@ -10,6 +10,7 @@ import {
 import { Pac } from './pac';
 import { Rain } from './rain';
 import { Pulse } from './pulse';
+import * as prompts from 'prompts';
 
 export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
@@ -33,6 +34,36 @@ export const runtimeOptions: RuntimeOptions = {
 
 const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
+
+
+enum CliMode {
+  Pac = 'pac',
+  Rain = 'rain',
+  Pulse = 'pulse',
+  Exit = 'exit'
+}
+
+
+const createModeSelector = () => {
+  return async () => {
+    const { mode } = await prompts({
+      name: 'mode',
+      type: 'select',
+      message: 'What would you like to do?',
+      hint: 'Use tab or arrow keys and press enter to select.',
+      choices: [
+        { value: CliMode.Pac, title: '🟡 Pacman' },
+        { value: CliMode.Rain, title: '🌧 Rain' },
+        { value: CliMode.Pulse, title: '🕺 Pulse' },
+        { value: CliMode.Exit, title: '🚪 Exit' },
+      ],
+    });
+
+    return mode as CliMode;
+  };
+};
+const chooseMode = createModeSelector();
+
 (async () => {
   try {
     const matrix = new LedMatrix(matrixOptions, runtimeOptions);
@@ -41,9 +72,36 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
       .clear()
       .brightness(20);
 
-    // Rain.init(matrix);
-    Pac.init(matrix);
-    // Pulse.init(matrix);
+      while (true) {
+        switch (await chooseMode()) {
+          case CliMode.Pac: {
+            while (true) {
+              Pac.init(matrix);
+            }
+            break;
+          }
+          case CliMode.Rain: {
+            while (true) {
+              Rain.init(matrix);
+            }
+            break;
+          }
+
+
+          case CliMode.Pulse: {
+            // Stay in text mode until escaped
+            while (true) {
+              Pulse.init(matrix);
+            }
+            break;
+          }
+          case CliMode.Exit: {
+            console.log('Bye!');
+            process.exit(0);
+          }
+        }
+      }
+
 
     matrix.sync();
 
