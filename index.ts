@@ -74,6 +74,8 @@ const chooseMode = createModeSelector();
       .fgColor(0x222222)
       .fill();
 
+      matrix.sync();
+
       while (true) {
         switch (await chooseMode()) {
           case CliMode.Pac: {
@@ -96,7 +98,7 @@ const chooseMode = createModeSelector();
       }
 
 
-    matrix.sync();
+
 
     await wait(999999999);
   }
