@@ -32,8 +32,8 @@ let field = Array.from(f).map((char) => colors[char]);
 
 
 function init (matrix){
-  (async () => {
-    try {
+  // (async () => {
+    // try {
       matrix
         .clear()
         .brightness(20);
@@ -42,12 +42,12 @@ function init (matrix){
         matrix.fgColor(c)
           .setPixel(i % 128, Math.floor(i / 128));
       });
-      await wait(999999999);
-    }
-    catch (error) {
-      console.error(`${__filename} caught: `, error);
-    }
-  })();
+      // await wait(999999999);
+    // }
+    // catch (error) {
+      // console.error(`${__filename} caught: `, error);
+    // }
+  // })();
 };
 
 let Pac = { colors, init };
