@@ -75,25 +75,16 @@ const chooseMode = createModeSelector();
       while (true) {
         switch (await chooseMode()) {
           case CliMode.Pac: {
-            while (true) {
-              Pac.init(matrix);
-            }
-            break;
+            Pac.init(matrix);
+            matrix.sync();
           }
           case CliMode.Rain: {
-            while (true) {
-              Rain.init(matrix);
-            }
-            break;
+            Rain.init(matrix);
+            matrix.sync();
           }
-
-
           case CliMode.Pulse: {
-            // Stay in text mode until escaped
-            while (true) {
-              Pulse.init(matrix);
-            }
-            break;
+            Pulse.init(matrix);
+            matrix.sync();
           }
           case CliMode.Exit: {
             console.log('Bye!');
