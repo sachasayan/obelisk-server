@@ -13,7 +13,7 @@ class Raindrop {
   }
 
   next(): number {
-    this.y += this.velocity;
+    // this.y += this.velocity;
     this.velocity += 0.01;
     if (this.y > 16) {
       this.y = 0;
