@@ -15,6 +15,10 @@ class Raindrop {
   next(): number {
     this.y += this.velocity;
     this.velocity++;
+    if (this.y > 16) {
+      this.y = 0;
+      this.velocity = 0;
+    }
     return this.y;
   }
 }
@@ -31,6 +35,10 @@ function initRain (matrix){
     }
 
     matrix.afterSync((mat, dt, t) => {
+      matrix
+      .clear()
+      .brightness(20);
+
       raindrops.forEach(drop => {
         drop.next();
         matrix.fgColor(0xFFFFFF).setPixel(drop.x, drop.y);
