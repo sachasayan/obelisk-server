@@ -27,8 +27,7 @@ WOOOWOOOOOOOOOOOOOOOOOOOOOOOOOWOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 `;
 
-let f = grid.replace(/\n|\r/g, "");
-let field = Array.from(f).map((char) => colors[char]);
+
 
 
 function init (matrix){
@@ -37,6 +36,9 @@ function init (matrix){
       matrix
         .clear()
         .brightness(20);
+
+        let f = grid.replace(/\n|\r/g, "");
+        let field = Array.from(f).map((char) => colors[char]);
 
       field.forEach((c, i) => {
         matrix.fgColor(c)
