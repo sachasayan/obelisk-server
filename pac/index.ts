@@ -1,11 +1,11 @@
 let colors = {
   'W': 0x1919A6,
   'P': 0xFFFF00,
-  '1': 0xFF0000,
-  '2': 0xFFB8FF,
-  '3': 0x00FFFF,
-  '4': 0xFFB852,
-  ' ': 0x000000
+  'I': 0xFF0000,
+  'B': 0xFFB8FF,
+  'C': 0x00FFFF,
+  'T': 0xFFB852,
+  'O': 0x000000
 };
 
 let grid = `
@@ -37,8 +37,8 @@ function init (matrix){
         .clear()
         .brightness(20);
 
-        let f = grid.replace(/\n|\r/g, "");
-        let field = Array.from(f).map((char) => colors[char]);
+      let f = grid.replace(/\n|\r/g, "");
+      let field = Array.from(f).map((char) => colors[char]);
 
       field.forEach((c, i) => {
         matrix.fgColor(c)
