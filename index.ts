@@ -64,8 +64,6 @@ const createModeSelector = () => {
 };
 const chooseMode = createModeSelector();
 
-
-
 (async () => {
   try {
     const matrix = new LedMatrix(matrixOptions, runtimeOptions);
@@ -74,9 +72,36 @@ const chooseMode = createModeSelector();
       .clear()
       .brightness(20);
 
-    // Rain.init(matrix);
-    Pac.init(matrix);
-    // Pulse.init(matrix);
+      while (true) {
+        switch (await chooseMode()) {
+          case CliMode.Pac: {
+            while (true) {
+              Pac.init(matrix);
+            }
+            break;
+          }
+          case CliMode.Rain: {
+            while (true) {
+              Rain.init(matrix);
+            }
+            break;
+          }
+
+
+          case CliMode.Pulse: {
+            // Stay in text mode until escaped
+            while (true) {
+              Pulse.init(matrix);
+            }
+            break;
+          }
+          case CliMode.Exit: {
+            console.log('Bye!');
+            process.exit(0);
+          }
+        }
+      }
+
 
     matrix.sync();
 
@@ -86,51 +111,6 @@ const chooseMode = createModeSelector();
     console.error(`${__filename} caught: `, error);
   }
 })();
-
-// (async () => {
-//   try {
-//     const matrix = new LedMatrix(matrixOptions, runtimeOptions);
-
-//     matrix
-//       .clear()
-//       .brightness(20)
-//       .fgColor(0x222222)
-//       .fill();
-
-
-//       Pac.init(matrix);
-//       matrix.sync();
-
-//       // while (true) {
-//       //   switch (await chooseMode()) {
-//       //     case CliMode.Pac: {
-//       //       Pac.init(matrix);
-//       //       matrix.sync();
-//       //     }
-//       //     case CliMode.Rain: {
-//       //       Rain.init(matrix);
-//       //       matrix.sync();
-//       //     }
-//       //     case CliMode.Pulse: {
-//       //       Pulse.init(matrix);
-//       //       matrix.sync();
-//       //     }
-//       //     case CliMode.Exit: {
-//       //       console.log('Bye!');
-//       //       process.exit(0);
-//       //     }
-//       //   }
-//       // }
-
-
-
-
-//     await wait(999999999);
-//   }
-//   catch (error) {
-//     console.error(`${__filename} caught: `, error);
-//   }
-// })();
 
 // matrix
 // .clear()            // clear the display
