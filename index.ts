@@ -74,28 +74,30 @@ const chooseMode = createModeSelector();
       .fgColor(0x222222)
       .fill();
 
+
+      Pac.init(matrix);
       matrix.sync();
 
-      while (true) {
-        switch (await chooseMode()) {
-          case CliMode.Pac: {
-            Pac.init(matrix);
-            matrix.sync();
-          }
-          case CliMode.Rain: {
-            Rain.init(matrix);
-            matrix.sync();
-          }
-          case CliMode.Pulse: {
-            Pulse.init(matrix);
-            matrix.sync();
-          }
-          case CliMode.Exit: {
-            console.log('Bye!');
-            process.exit(0);
-          }
-        }
-      }
+      // while (true) {
+      //   switch (await chooseMode()) {
+      //     case CliMode.Pac: {
+      //       Pac.init(matrix);
+      //       matrix.sync();
+      //     }
+      //     case CliMode.Rain: {
+      //       Rain.init(matrix);
+      //       matrix.sync();
+      //     }
+      //     case CliMode.Pulse: {
+      //       Pulse.init(matrix);
+      //       matrix.sync();
+      //     }
+      //     case CliMode.Exit: {
+      //       console.log('Bye!');
+      //       process.exit(0);
+      //     }
+      //   }
+      // }
 
 
 
