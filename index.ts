@@ -70,7 +70,9 @@ const chooseMode = createModeSelector();
 
     matrix
       .clear()
-      .brightness(20);
+      .brightness(20)
+      .fgColor(0x222222)
+      .fill();
 
       while (true) {
         switch (await chooseMode()) {
