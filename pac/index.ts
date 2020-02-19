@@ -27,20 +27,33 @@ WOOOWOOOOOOOOOOOOOOOOOOOOOOOOOWOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 `;
 
-
 let f = grid.replace(/\n|\r/g, "");
 let field = Array.from(f).map((char) => colors[char]);
 
 
-// field.forEach((c, i) => {
-//   matrix.fgColor(c)
-//     .setPixel(i % 128, Math.floor(i / 128))
+function init (matrix){
+  (async () => {
+    try {
+      matrix
+        .clear()
+        .brightness(20);
 
+      field.forEach((c, i) => {
+        matrix.fgColor(c)
+          .setPixel(i % 128, Math.floor(i / 128));
+      });
+      await wait(999999999);
+    }
+    catch (error) {
+      console.error(`${__filename} caught: `, error);
+    }
+  })();
+};
 
-// });
-
-
-let Pac = { colors, field };
+let Pac = { colors, init };
 
 
 export { Pac };
+
+
+

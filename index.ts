@@ -7,9 +7,9 @@ import {
   RuntimeOptions,
 } from 'rpi-led-matrix';
 
-// import { Pac } from './pac';
+import { Pac } from './pac';
 import { Rain } from './rain';
-// import { Pulse } from './pulse';
+import { Pulse } from './pulse';
 
 export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
@@ -41,7 +41,9 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
       .clear()
       .brightness(20);
 
-    Rain.initRain(matrix);
+    // Rain.init(matrix);
+    Pac.init(matrix);
+    // Pulse.init(matrix);
 
     matrix.sync();
 

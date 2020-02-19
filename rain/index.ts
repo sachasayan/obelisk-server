@@ -43,7 +43,7 @@ class Raindrop {
   }
 }
 
-function initRain (matrix){
+function init (matrix){
     matrix
       .clear()
       .brightness(20);
@@ -74,6 +74,6 @@ function initRain (matrix){
     });
 }
 
-let Rain = { initRain };
+let Rain = { init };
 
 export { Rain };

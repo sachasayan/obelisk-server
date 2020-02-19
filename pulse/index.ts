@@ -15,43 +15,31 @@ class Pulser {
 }
 
 
+function init(matrix) {
+  matrix
+    .clear()
+    .brightness(20);
 
-// (async () => {
-  try {
-    const matrix = new LedMatrix(matrixOptions, runtimeOptions);
+  const pulsers: Pulser[] = [];
 
-    matrix
-      .clear()
-      .brightness(20);
-
-      const pulsers: Pulser[] = [];
-
-      for (let x = 0; x < matrix.width(); x++) {
-        for (let y = 0; y < matrix.height(); y++) {
-          pulsers.push(new Pulser(x, y, 5 * Math.random()));
-        }
-      }
-      matrix.afterSync((mat, dt, t) => {
-        pulsers.forEach(pulser => {
-          matrix.fgColor(pulser.nextColor(t)).setPixel(pulser.x, pulser.y);
-        });
-
-        setTimeout(() => matrix.sync(), 0);
-      });
-
-
-
-    matrix.sync();
-
-    await wait(999999999);
+  for (let x = 0; x < matrix.width(); x++) {
+    for (let y = 0; y < matrix.height(); y++) {
+      pulsers.push(new Pulser(x, y, 5 * Math.random()));
+    }
   }
-  catch (error) {
-    console.error(`${__filename} caught: `, error);
-  }
-})();
+  matrix.afterSync((mat, dt, t) => {
+    pulsers.forEach(pulser => {
+      matrix.fgColor(pulser.nextColor(t)).setPixel(pulser.x, pulser.y);
+    });
+
+    setTimeout(() => matrix.sync(), 0);
+  });
+
+  matrix.sync();
+
+}
+
+let Pulse = { init };
 
 
-let Pac = { colors, field };
-
-
-export { Pac };
+export { Pulse };
