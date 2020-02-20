@@ -77,9 +77,11 @@ const chooseMode = createModeSelector();
       // while (true) {
         switch (await chooseMode()) {
           case CliMode.Pac: {
+            (async () => {
             // while (true) {
               Pac.init(matrix);
             // }
+            })();
             break;
           }
           case CliMode.Rain: {
