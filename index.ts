@@ -77,26 +77,15 @@ const chooseMode = createModeSelector();
       while (true) {
         switch (await chooseMode()) {
           case CliMode.Pac: {
-            (async () => {
-            // while (true) {
               Pac.init(matrix);
-            // }
-            })();
             break;
           }
           case CliMode.Rain: {
-            // while (true) {
               Rain.init(matrix);
-            // }
             break;
           }
-
-
           case CliMode.Pulse: {
-            // Stay in text mode until escaped
-            // while (true) {
               Pulse.init(matrix);
-            // }
             break;
           }
           case CliMode.Exit: {
