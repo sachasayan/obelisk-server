@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "node"
+    ],
+    "target": "esnext"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
