@@ -3,12 +3,5 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "types": [
-      "node"
-    ],
-    "target": "esnext"
-  },
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }
