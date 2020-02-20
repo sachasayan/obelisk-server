@@ -71,33 +71,33 @@ const modeSelector = (() => {
       .clear()
       .brightness(20);
 
-       Pac.init(matrix);
+      // Pac.init(matrix);
 
-      // while (true) {
-      //   switch (await modeSelector()) {
-      //     case CliMode.Pac: {
-      //       Pac.init(matrix);
-      //       break;
-      //     }
-      //     case CliMode.Rain: {
-      //       Rain.init(matrix);
-      //       break;
-      //     }
-      //     case CliMode.Pulse: {
-      //       Pulse.init(matrix);
-      //       break;
-      //     }
-      //     case CliMode.Exit: {
-      //       console.log('Bye!');
-      //       process.exit(0);
-      //     }
-      //   }
-      // }
+      while (true) {
+        switch (await modeSelector()) {
+          case CliMode.Pac: {
+            Pac.init(matrix);
+            break;
+          }
+          case CliMode.Rain: {
+            Rain.init(matrix);
+            break;
+          }
+          case CliMode.Pulse: {
+            Pulse.init(matrix);
+            break;
+          }
+          case CliMode.Exit: {
+            console.log('Bye!');
+            process.exit(0);
+          }
+        }
+      }
 
 
-      matrix.sync();
+      // matrix.sync();
 
-      await wait(999999999);
+      // await wait(999999999);
   }
   catch (error) {
     console.error(`${__filename} caught: `, error);
