@@ -12,9 +12,6 @@ import { Rain } from './rain';
 import { Pulse } from './pulse';
 import * as prompts from 'prompts';
 
-import Jimp from 'jimp';
-
-
 export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
   rows: 16,
@@ -36,8 +33,6 @@ export const runtimeOptions: RuntimeOptions = {
 };
 
 const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
-
-
 
 enum CliMode {
   Pac = 'pac',
