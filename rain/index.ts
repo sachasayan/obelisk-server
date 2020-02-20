@@ -77,9 +77,9 @@ function init (matrix){
       if(rocket){
         rocket.scan(0, 0, rocket.bitmap.width, rocket.bitmap.height, function(x, y, idx) {
           let pc = rocket.getPixelColor(x, y);
-          if (pc % 256 !== 255) {
+
             matrix.fgColor( (pc - (pc % 256)) / 256).setPixel(x + (64-8), y);
-          }
+
         });
       }
 
