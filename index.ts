@@ -10,6 +10,7 @@ import {
 import { Pac } from './pac';
 import { Space } from './space';
 import { Pulse } from './pulse';
+import { Pong } from './pong';
 import * as prompts from 'prompts';
 
 export const matrixOptions: MatrixOptions = {
@@ -38,6 +39,7 @@ enum CliMode {
   Pac = 'pac',
   Space = 'space',
   Pulse = 'pulse',
+  Pong = 'pong',
   Exit = 'exit'
 }
 
@@ -53,6 +55,7 @@ const createModeSelector = () => {
         { value: CliMode.Pac, title:  '🟡 => Pacman' },
         { value: CliMode.Space, title: '🚀 => Space' },
         { value: CliMode.Pulse, title:'🕺 => Pulse' },
+        { value: CliMode.Pong, title:'🎾 => Pong' },
         { value: CliMode.Exit, title: '🚪 => Exit' },
       ],
     });
@@ -85,6 +88,11 @@ const chooseMode = createModeSelector();
           case CliMode.Pulse: {
             matrix.afterSync(() => {});
               Pulse.init(matrix);
+            break;
+          }
+          case CliMode.Pong: {
+            matrix.afterSync(() => {});
+              Pong.init(matrix);
             break;
           }
           case CliMode.Exit: {
