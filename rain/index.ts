@@ -39,7 +39,7 @@ class Raindrop {
     this.velocity += 0.001;
     if (this.y > 16) {
       this.y = 0;
-      this.velocity = Math.random();
+      this.velocity = Math.random()/3 + 0.3;
     }
     return Math.floor(this.y);
   }
