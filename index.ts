@@ -74,7 +74,7 @@ const chooseMode = createModeSelector();
 
       // Pac.init(matrix);
 
-      // while (true) {
+      while (true) {
         switch (await chooseMode()) {
           case CliMode.Pac: {
             (async () => {
@@ -104,7 +104,7 @@ const chooseMode = createModeSelector();
             process.exit(0);
           }
         }
-      // }
+      }
 
 
     matrix.sync();
