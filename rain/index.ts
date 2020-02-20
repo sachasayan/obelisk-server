@@ -86,6 +86,7 @@ function init (matrix){
       setTimeout(() => matrix.sync(), 0);
     });
 
+    console.log(Jimp);
     Jimp.read('images/spaceship.png')
       .then(img => {
         rocket = img;
