@@ -52,10 +52,10 @@ const createModeSelector = () => {
       message: 'What would you like to do?',
       hint: 'Use tab or arrow keys and press enter to select.',
       choices: [
-        { value: CliMode.Pac, title: '🟡 Pacman' },
-        { value: CliMode.Rain, title: '🌧 Rain' },
-        { value: CliMode.Pulse, title: '🕺 Pulse' },
-        { value: CliMode.Exit, title: '🚪 Exit' },
+        { value: CliMode.Pac, title: '🟡  Pacman' },
+        { value: CliMode.Rain, title: '🌧  Rain' },
+        { value: CliMode.Pulse, title: '🕺  Pulse' },
+        { value: CliMode.Exit, title: '🚪  Exit' },
       ],
     });
 

@@ -28,10 +28,10 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 `;
 
 
-
+const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
 function init (matrix){
-  // (async () => {
+  (async () => {
     // try {
       matrix
         .clear()
@@ -44,12 +44,12 @@ function init (matrix){
         matrix.fgColor(c)
           .setPixel(i % 128, Math.floor(i / 128));
       });
-      // await wait(999999999);
+      await wait(999999999);
     // }
     // catch (error) {
       // console.error(`${__filename} caught: `, error);
     // }
-  // })();
+  })();
 };
 
 let Pac = { colors, init };
