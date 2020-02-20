@@ -8,7 +8,7 @@ import {
 } from 'rpi-led-matrix';
 
 import { Pac } from './pac';
-import { Rain } from './rain';
+import { Space } from './space';
 import { Pulse } from './pulse';
 import * as prompts from 'prompts';
 
@@ -36,7 +36,7 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
 enum CliMode {
   Pac = 'pac',
-  Rain = 'rain',
+  Space = 'space',
   Pulse = 'pulse',
   Exit = 'exit'
 }
@@ -51,7 +51,7 @@ const createModeSelector = () => {
       hint: 'Use tab or arrow keys and press enter to select.',
       choices: [
         { value: CliMode.Pac, title:  '🟡 => Pacman' },
-        { value: CliMode.Rain, title: '🚀 => Space' },
+        { value: CliMode.Space, title: '🚀 => Space' },
         { value: CliMode.Pulse, title:'🕺 => Pulse' },
         { value: CliMode.Exit, title: '🚪 => Exit' },
       ],
@@ -77,9 +77,9 @@ const chooseMode = createModeSelector();
               Pac.init(matrix);
             break;
           }
-          case CliMode.Rain: {
+          case CliMode.Space: {
             matrix.afterSync(() => {});
-              Rain.init(matrix);
+              Space.init(matrix);
             break;
           }
           case CliMode.Pulse: {

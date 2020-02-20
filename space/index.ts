@@ -21,7 +21,7 @@ let spaceship = [
 
 
 
-class Raindrop {
+class Star {
   velocity: number;
   y: number;
 
@@ -52,10 +52,10 @@ function init (matrix){
       .brightness(20);
 
     let rocket;
-    const raindrops: Raindrop[] = [];
+    const starfield: Star[] = [];
 
     for (let x = 0; x < matrix.width()/2 ; x++) {
-      raindrops.push(new Raindrop(Math.random()*matrix.width(), 0, 0.4));
+      starfield.push(new Star(Math.random()*matrix.width(), 0, 0.4));
     }
 
     matrix.afterSync((mat, dt, t) => {
@@ -63,7 +63,7 @@ function init (matrix){
       .clear()
       .brightness(20);
 
-      raindrops.forEach(drop => {
+      starfield.forEach(drop => {
         drop.next();
         matrix.fgColor(0xFFFFFF).setPixel(drop.x, drop.y);
       });
@@ -87,7 +87,7 @@ function init (matrix){
     });
 
 
-    Jimp.read('./rain/spaceship.png')
+    Jimp.read('./space/spaceship.png')
       .then(img => {
         rocket = img;
         matrix.sync();
@@ -98,6 +98,6 @@ function init (matrix){
 
 }
 
-let Rain = { init };
+let Space = { init };
 
-export { Rain };
+export { Space };
