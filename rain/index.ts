@@ -1,4 +1,4 @@
-import Jimp from 'jimp';
+import * as Jimp from 'jimp';
 
 let spaceship = [
   0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000,
@@ -86,16 +86,15 @@ function init (matrix){
       setTimeout(() => matrix.sync(), 0);
     });
 
-    console.log(Jimp);
 
-    // Jimp.read('./spaceship.png')
-    //   .then(img => {
-    //     rocket = img;
-    //     matrix.sync();
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
+    Jimp.read('./spaceship.png')
+      .then(img => {
+        rocket = img;
+        matrix.sync();
+      })
+      .catch(err => {
+        console.error(err);
+      });
 
 }
 
