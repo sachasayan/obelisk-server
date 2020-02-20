@@ -105,11 +105,6 @@ const chooseMode = createModeSelector();
           }
         }
       }
-
-
-    matrix.sync();
-
-    await wait(999999999);
   }
   catch (error) {
     console.error(`${__filename} caught: `, error);
