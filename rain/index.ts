@@ -1,3 +1,5 @@
+import Jimp from 'jimp';
+
 let spaceship = [
   0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000,
   0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x4d4d4d, 0x4d4d4d, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000,
@@ -44,10 +46,12 @@ class Raindrop {
 }
 
 function init (matrix){
+
     matrix
       .clear()
       .brightness(20);
 
+    let rocket;
     const raindrops: Raindrop[] = [];
 
     for (let x = 0; x < matrix.width()/2 ; x++) {
@@ -64,16 +68,35 @@ function init (matrix){
         matrix.fgColor(0xFFFFFF).setPixel(drop.x, drop.y);
       });
 
-      spaceship.forEach((pixel, i) => {
-        if (pixel !== 0x000000){
-          matrix.fgColor(pixel).setPixel(i % 16 + (64-8), Math.floor(i / 16))
+      // spaceship.forEach((pixel, i) => {
+      //   if (pixel !== 0x000000){
+      //     matrix.fgColor(pixel).setPixel(i % 16 + (64-8), Math.floor(i / 16))
+      //   }
+      // });
+
+      rocket.scan(0, 0, rocket.bitmap.width, rocket.bitmap.height, function(x, y, idx) {
+
+        let pc = rocket.getPixelColor(x, y);
+        if (pc % 256 !== 255) {
+          matrix.fgColor( (pc - (pc % 256)) / 256).setPixel(x + (64-8), y);
         }
+
       });
 
       setTimeout(() => matrix.sync(), 0);
     });
 
-    matrix.sync();
+    Jimp.read('spaceship.png')
+      .then(img => {
+        rocket = img;
+        matrix.sync();
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+
+
 }
 
 let Rain = { init };

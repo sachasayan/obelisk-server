@@ -19,6 +19,7 @@
   "homepage": "https://github.com/sachasayan/obelisk#readme",
   "dependencies": {
     "@types/node": "^13.7.2",
+    "jimp": "^0.9.3",
     "prompts": "^2.3.1",
     "rpi-led-matrix": "^1.9.0",
     "ts-node": "^8.6.2",
