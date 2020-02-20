@@ -72,6 +72,8 @@ function init (matrix){
 
       setTimeout(() => matrix.sync(), 0);
     });
+
+    matrix.sync();
 }
 
 let Rain = { init };
