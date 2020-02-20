@@ -87,7 +87,7 @@ function init (matrix){
     });
 
 
-    Jimp.read('spaceship.png')
+    Jimp.read('./rain/spaceship.png')
       .then(img => {
         rocket = img;
         matrix.sync();
