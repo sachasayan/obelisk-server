@@ -12,6 +12,9 @@ import { Rain } from './rain';
 import { Pulse } from './pulse';
 import * as prompts from 'prompts';
 
+import Jimp from 'jimp';
+
+
 export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
   rows: 16,
