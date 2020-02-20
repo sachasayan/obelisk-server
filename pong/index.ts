@@ -1,14 +1,16 @@
-class Star {
+class Ball {
   velocity: number;
+  heading: number;
   y: number;
-
+  x: number;
   constructor(
-    readonly x: number,
+    x: number,
     y: number,
     velocity: number,
   ) {
     this.velocity = velocity;
     this.y = y + Math.random() * 16;
+    this.x = 0;
   }
 
   next(): number {
@@ -36,7 +38,7 @@ function init (matrix){
       .clear()
       .brightness(20);
 
-      matrix.fgColor(0xFFFFFF).setPixel(x, y);
+      matrix.fgColor(0xFFFFFF).setPixel(1,1);
 
 
       setTimeout(() => matrix.sync(), 0);
