@@ -44,7 +44,7 @@ enum CliMode {
 }
 
 
-const createModeSelector = () => {
+const modeSelector = (() => {
   return async () => {
     const { mode } = await prompts({
       name: 'mode',
@@ -61,8 +61,7 @@ const createModeSelector = () => {
 
     return mode as CliMode;
   };
-};
-const chooseMode = createModeSelector();
+})();
 
 (async () => {
   try {
@@ -72,42 +71,33 @@ const chooseMode = createModeSelector();
       .clear()
       .brightness(20);
 
-      Pac.init(matrix);
+      // Pac.init(matrix);
 
-      // while (true) {
-      //   switch (await chooseMode()) {
-      //     case CliMode.Pac: {
-      //       while (true) {
-      //         Pac.init(matrix);
-      //       }
-      //       break;
-      //     }
-      //     case CliMode.Rain: {
-      //       while (true) {
-      //         Rain.init(matrix);
-      //       }
-      //       break;
-      //     }
-
-
-      //     case CliMode.Pulse: {
-      //       // Stay in text mode until escaped
-      //       while (true) {
-      //         Pulse.init(matrix);
-      //       }
-      //       break;
-      //     }
-      //     case CliMode.Exit: {
-      //       console.log('Bye!');
-      //       process.exit(0);
-      //     }
-      //   }
-      // }
+      while (true) {
+        switch (await modeSelector()) {
+          case CliMode.Pac: {
+            Pac.init(matrix);
+            break;
+          }
+          case CliMode.Rain: {
+            Rain.init(matrix);
+            break;
+          }
+          case CliMode.Pulse: {
+            Pulse.init(matrix);
+            break;
+          }
+          case CliMode.Exit: {
+            console.log('Bye!');
+            process.exit(0);
+          }
+        }
+      }
 
 
-    matrix.sync();
+      // matrix.sync();
 
-    await wait(999999999);
+      // await wait(999999999);
   }
   catch (error) {
     console.error(`${__filename} caught: `, error);
