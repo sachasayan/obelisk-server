@@ -32,7 +32,6 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
 function init (matrix){
   (async () => {
-    // try {
       matrix
         .clear()
         .brightness(20);
@@ -47,10 +46,6 @@ function init (matrix){
 
       matrix.sync();
       await wait(999999999);
-    // }
-    // catch (error) {
-      // console.error(`${__filename} caught: `, error);
-    // }
   })();
 };
 

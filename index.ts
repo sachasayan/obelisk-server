@@ -75,14 +75,17 @@ const chooseMode = createModeSelector();
       while (true) {
         switch (await chooseMode()) {
           case CliMode.Pac: {
+            matrix.afterSync(() => {});
               Pac.init(matrix);
             break;
           }
           case CliMode.Rain: {
+            matrix.afterSync(() => {});
               Rain.init(matrix);
             break;
           }
           case CliMode.Pulse: {
+            matrix.afterSync(() => {});
               Pulse.init(matrix);
             break;
           }
