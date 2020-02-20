@@ -11,6 +11,7 @@ import { Pac } from './pac';
 import { Space } from './space';
 import { Pulse } from './pulse';
 import { Pong } from './pong';
+import { Lightcycles } from './lightcycles';
 import * as prompts from 'prompts';
 
 export const matrixOptions: MatrixOptions = {
@@ -40,6 +41,7 @@ enum CliMode {
   Space = 'space',
   Pulse = 'pulse',
   Pong = 'pong',
+  Lightcycles = 'lightcycles',
   Exit = 'exit'
 }
 
@@ -56,6 +58,7 @@ const createModeSelector = () => {
         { value: CliMode.Space, title: '🚀 => Space' },
         { value: CliMode.Pulse, title:'🕺 => Pulse' },
         { value: CliMode.Pong, title:'🎾 => Pong' },
+        { value: CliMode.Lightcycles, title:'🏍 => Lightcycles' },
         { value: CliMode.Exit, title: '🚪 => Exit' },
       ],
     });
@@ -74,25 +77,26 @@ const chooseMode = createModeSelector();
       .brightness(20);
 
       while (true) {
+        matrix.afterSync(() => {}); // Reset sync hook
         switch (await chooseMode()) {
           case CliMode.Pac: {
-            matrix.afterSync(() => {});
-              Pac.init(matrix);
+            Pac.init(matrix);
             break;
           }
           case CliMode.Space: {
-            matrix.afterSync(() => {});
-              Space.init(matrix);
+            Space.init(matrix);
             break;
           }
           case CliMode.Pulse: {
-            matrix.afterSync(() => {});
-              Pulse.init(matrix);
+            Pulse.init(matrix);
             break;
           }
           case CliMode.Pong: {
-            matrix.afterSync(() => {});
-              Pong.init(matrix);
+            Pong.init(matrix);
+            break;
+          }
+          case CliMode.Lightcycles: {
+            Lightcycles.init(matrix);
             break;
           }
           case CliMode.Exit: {
