@@ -44,6 +44,8 @@ function init (matrix){
         matrix.fgColor(c)
           .setPixel(i % 128, Math.floor(i / 128));
       });
+
+      matrix.sync();
       await wait(999999999);
     // }
     // catch (error) {

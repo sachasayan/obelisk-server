@@ -52,10 +52,10 @@ const createModeSelector = () => {
       message: 'What would you like to do?',
       hint: 'Use tab or arrow keys and press enter to select.',
       choices: [
-        { value: CliMode.Pac, title: '🟡  Pacman' },
-        { value: CliMode.Rain, title: '🌧  Rain' },
-        { value: CliMode.Pulse, title: '🕺  Pulse' },
-        { value: CliMode.Exit, title: '🚪  Exit' },
+        { value: CliMode.Pac, title: '🟡 -> Pacman' },
+        { value: CliMode.Rain, title: '🌧 -> Rain' },
+        { value: CliMode.Pulse, title: '🕺 -> Pulse' },
+        { value: CliMode.Exit, title: '🚪 -> Exit' },
       ],
     });
 
@@ -71,8 +71,6 @@ const chooseMode = createModeSelector();
     matrix
       .clear()
       .brightness(20);
-
-      // Pac.init(matrix);
 
       while (true) {
         switch (await chooseMode()) {
