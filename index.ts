@@ -31,7 +31,7 @@ export const matrixOptions: MatrixOptions = {
 
 export const runtimeOptions: RuntimeOptions = {
   ...LedMatrix.defaultRuntimeOptions(),
-  gpioSlowdown: 2
+  gpioSlowdown: 4
 };
 
 const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
@@ -77,25 +77,29 @@ const chooseMode = createModeSelector();
       .brightness(20);
 
       while (true) {
-        matrix.afterSync(() => {}); // Reset sync hook
         switch (await chooseMode()) {
           case CliMode.Pac: {
+            matrix.afterSync(() => {});
             Pac.init(matrix);
             break;
           }
           case CliMode.Space: {
+            matrix.afterSync(() => {});
             Space.init(matrix);
             break;
           }
           case CliMode.Pulse: {
+            matrix.afterSync(() => {});
             Pulse.init(matrix);
             break;
           }
           case CliMode.Pong: {
+            matrix.afterSync(() => {});
             Pong.init(matrix);
             break;
           }
           case CliMode.Lightcycles: {
+            matrix.afterSync(() => {});
             Lightcycles.init(matrix);
             break;
           }
