@@ -23,7 +23,7 @@ class LightCycle {
 function init (matrix){
     matrix
       .clear()
-      .brightness(20);
+      .brightness(100);
 
     let player: LightCycle = new LightCycle(0xFF0000);
 

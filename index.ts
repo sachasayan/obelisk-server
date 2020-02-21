@@ -23,7 +23,7 @@ export const matrixOptions: MatrixOptions = {
   rowAddressType: 2,
   multiplexing: 3,
   hardwareMapping: GpioMapping.Regular,
-  pwmLsbNanoseconds: 150,
+  pwmLsbNanoseconds: 300,
   pixelMapperConfig: LedMatrixUtils.encodeMappers(
     { type: PixelMapperType.Rotate, angle: 180 }
   )
