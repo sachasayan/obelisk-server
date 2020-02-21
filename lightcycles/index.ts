@@ -28,13 +28,19 @@ function init (matrix){
     let player: LightCycle = new LightCycle(0xFF0000);
 
     // Game loop
+    let tick = () => {
+      setTimeout(tick, 500);
 
+      player.next();
+
+    }
+    setTimeout(tick, 500) ;
 
     // Render loop
     matrix.afterSync((mat, dt, t) => {
       matrix.clear().brightness(20);
 
-      player.next();
+
       matrix.fgColor(0xFFFFFF).setPixel(player.x, player.y);
 
 
