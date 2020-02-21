@@ -38,7 +38,7 @@ function init (matrix){
 
     // Render loop
     matrix.afterSync((mat, dt, t) => {
-      matrix.clear().brightness(20);
+      matrix.clear().brightness(100);
 
 
       matrix.fgColor(0xFFFFFF).setPixel(player.x, player.y);
