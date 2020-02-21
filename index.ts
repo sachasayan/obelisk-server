@@ -23,7 +23,7 @@ export const matrixOptions: MatrixOptions = {
   rowAddressType: 2,
   multiplexing: 3,
   hardwareMapping: GpioMapping.Regular,
-  pwmLsbNanoseconds: 1500,
+  pwmLsbNanoseconds: 150,
   pixelMapperConfig: LedMatrixUtils.encodeMappers(
     { type: PixelMapperType.Rotate, angle: 180 }
   )
@@ -58,7 +58,7 @@ const createModeSelector = () => {
         { value: CliMode.Space, title: '🚀 => Space' },
         { value: CliMode.Pulse, title:'🕺 => Pulse' },
         { value: CliMode.Pong, title:'🎾 => Pong' },
-        { value: CliMode.Lightcycles, title:'🏍 => Lightcycles' },
+        { value: CliMode.Lightcycles, title:'🏍\s => Lightcycles' },
         { value: CliMode.Exit, title: '🚪 => Exit' },
       ],
     });
