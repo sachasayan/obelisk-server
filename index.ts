@@ -19,7 +19,7 @@ export const matrixOptions: MatrixOptions = {
   rows: 16,
   cols: 32,
   chainLength: 4,
-  brightness: 20,
+  brightness: 100,
   rowAddressType: 2,
   multiplexing: 3,
   hardwareMapping: GpioMapping.Regular,
@@ -62,7 +62,6 @@ const createModeSelector = () => {
         { value: CliMode.Exit, title: '🚪 => Exit' },
       ],
     });
-
     return mode as CliMode;
   };
 };
@@ -71,44 +70,43 @@ const chooseMode = createModeSelector();
 (async () => {
   try {
     const matrix = new LedMatrix(matrixOptions, runtimeOptions);
+    matrix.clear();
 
-    matrix
-      .clear()
-      .brightness(20);
-
-      while (true) {
-        switch (await chooseMode()) {
-          case CliMode.Pac: {
-            matrix.afterSync(() => {});
-            Pac.init(matrix);
-            break;
-          }
-          case CliMode.Space: {
-            matrix.afterSync(() => {});
-            Space.init(matrix);
-            break;
-          }
-          case CliMode.Pulse: {
-            matrix.afterSync(() => {});
-            Pulse.init(matrix);
-            break;
-          }
-          case CliMode.Pong: {
-            matrix.afterSync(() => {});
-            Pong.init(matrix);
-            break;
-          }
-          case CliMode.Lightcycles: {
-            matrix.afterSync(() => {});
-            Lightcycles.init(matrix);
-            break;
-          }
-          case CliMode.Exit: {
-            console.log('Bye!');
-            process.exit(0);
-          }
+    while (true) {
+      switch (await chooseMode()) {
+        case CliMode.Pac: {
+          matrix.afterSync(() => {});
+          Pac.init(matrix);
+          break;
+        }
+        case CliMode.Space: {
+          matrix.afterSync(() => {});
+          Space.init(matrix);
+          break;
+        }
+        case CliMode.Pulse: {
+          matrix.afterSync(() => {});
+          Pulse.init(matrix);
+          break;
+        }
+        case CliMode.Pong: {
+          matrix.afterSync(() => {});
+          Pong.init(matrix);
+          break;
+        }
+        case CliMode.Lightcycles: {
+          matrix.afterSync(() => {});
+          Lightcycles.init(matrix);
+          break;
+        }
+        case CliMode.Exit: {
+          matrix.afterSync(() => {});
+          matrix.clear().sync();
+          console.log('Bye!');
+          process.exit(0);
         }
       }
+    }
   }
   catch (error) {
     console.error(`${__filename} caught: `, error);

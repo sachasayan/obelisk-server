@@ -26,20 +26,14 @@ class Ball {
 
 function init (matrix){
 
-    matrix
-      .clear()
-      .brightness(20);
+    matrix.clear();
 
     let ball: any;
     let paddles: []  = [];
 
     matrix.afterSync((mat, dt, t) => {
-      matrix
-      .clear()
-      .brightness(20);
-
+      matrix.clear();
       matrix.fgColor(0xFFFFFF).setPixel(1,1);
-
 
       setTimeout(() => matrix.sync(), 0);
     });

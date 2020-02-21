@@ -32,9 +32,7 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
 function init (matrix){
   (async () => {
-      matrix
-        .clear()
-        .brightness(20);
+      matrix.clear();
 
       let f = grid.replace(/\n|\r/g, "");
       let field = Array.from(f).map((char) => colors[char]);

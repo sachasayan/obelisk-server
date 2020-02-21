@@ -47,9 +47,7 @@ class Star {
 
 function init (matrix){
 
-    matrix
-      .clear()
-      .brightness(20);
+    matrix.clear();
 
     let rocket;
     const starfield: Star[] = [];
@@ -60,8 +58,7 @@ function init (matrix){
 
     matrix.afterSync((mat, dt, t) => {
       matrix
-      .clear()
-      .brightness(20);
+      .clear();
 
       starfield.forEach(drop => {
         drop.next();

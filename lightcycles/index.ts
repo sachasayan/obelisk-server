@@ -21,9 +21,7 @@ class LightCycle {
 }
 
 function init (matrix){
-    matrix
-      .clear()
-      .brightness(100);
+    matrix.clear();
 
     let player: LightCycle = new LightCycle(0xFF0000);
 
@@ -38,7 +36,7 @@ function init (matrix){
 
     // Render loop
     matrix.afterSync((mat, dt, t) => {
-      matrix.clear().brightness(100);
+      matrix.clear();
 
 
       matrix.fgColor(0xFFFFFF).setPixel(player.x, player.y);

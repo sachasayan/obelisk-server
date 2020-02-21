@@ -16,9 +16,7 @@ class Pulser {
 
 
 function init(matrix) {
-  matrix
-    .clear()
-    .brightness(20);
+  matrix.clear();
 
   const pulsers: Pulser[] = [];
 
