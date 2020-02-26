@@ -2,7 +2,14 @@ interface PongGameSettings {
   paddleRadius: number,
 };
 
+enum STATUS {
+  INTRO,
+  PLAYING_GAME,
+  WIN_SCREEN
+}
+
 interface PongGameState {
+  activeScreen: STATUS,
   score: number[],
   paddles: number[],
   ball: {
@@ -21,7 +28,6 @@ let gameState: PongGameState;
 
 let matrix;
 
-
 function resetBall(){
   gameState.ball = {
     x: (Math.floor(matrix.width()/2)),
@@ -30,8 +36,10 @@ function resetBall(){
     velocity: 2, // AKA, two pixels per second
   }
 }
+
 function resetGame(){
   gameState = {
+    activeScreen: STATUS.PLAYING_GAME,
     score: [0, 0],
     paddles:[0, 0],
     ball: {
@@ -44,18 +52,11 @@ function resetGame(){
   setTimeout(tick, 2000);
 }
 
-function winScreen(){
-    // Player X wins!
-    matrix.clear();
-
-    setTimeout(resetGame, 5000);
-
-}
-
 function incrementScore(player: number){
   gameState.score[player]++;
   if (gameState.score[player] >= 10) {
-    winScreen();
+    gameState.activeScreen = STATUS.WIN_SCREEN;
+    setTimeout(resetGame, 5000);
   } else {
     resetBall();
     setTimeout(tick, 2000);
@@ -87,7 +88,9 @@ function tick() {
   if (ball. x > matrix.width()) { incrementScore(1); };
 }
 
-function gameLoop(){
+function displayIntroScreen(){}
+
+function displayGameScreen(){
   let { paddleRadius } = gameSettings;
 
   // Draw paddles
@@ -103,6 +106,27 @@ function gameLoop(){
   let midpoint = matrix.width() / 2;
   matrix.drawLine(midpoint, 0, midpoint - gameState.score[0], 0);
   matrix.drawLine(midpoint, 0, midpoint + gameState.score[1], 0);
+}
+
+function displayWinScreen(){
+
+}
+
+function gameLoop(){
+  switch(gameState.activeScreen) {
+    case STATUS.PLAYING_GAME:
+      displayGameScreen();
+      break;
+    case STATUS.INTRO:
+      displayIntroScreen();
+      break;
+    case STATUS.WIN_SCREEN:
+      displayWinScreen();
+      break;
+    default:
+      break;
+  }
+
 }
 
 // Inner loop runs as fast as possible, draw grid.
