@@ -19,7 +19,7 @@ export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
   rows: 16,
   cols: 32,
-  chainLength: 1,
+  chainLength: 2,
   brightness: 50,
   rowAddressType: 2,
   multiplexing: 3,
