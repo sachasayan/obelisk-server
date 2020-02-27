@@ -33,7 +33,7 @@ function resetBall() {
     x: (Math.floor(matrix.width()/2)),
     y: (Math.floor(matrix.height()/2)),
     heading: (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
-    velocity: 2, // AKA, two pixels per second
+    velocity: 4, // AKA, two pixels per second
   }
 }
 
@@ -41,12 +41,12 @@ function resetGame() {
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
     score: [0, 0],
-    paddles:[0, 0],
+    paddles:[Math.floor(matrix.height()/2), Math.floor(matrix.height()/2)],
     ball: {
       x: (Math.floor(matrix.width()/2)),
       y: (Math.floor(matrix.height()/2)),
       heading: (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
-      velocity: 2, // AKA, two pixels per second
+      velocity: 4, // AKA, two pixels per second
     },
   }
   setTimeout(tick, 2000);
@@ -84,8 +84,8 @@ function tick() {
 
   // Check for out of x bounds, if so apply score
   if (ball.x > 0 && ball.x < matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
-  if (ball. x < 0) { incrementScore(0); };
-  if (ball. x > matrix.width()) { incrementScore(1); };
+  if (ball.x < 0) { incrementScore(0); };
+  if (ball.x > matrix.width()) { incrementScore(1); };
 }
 
 function displayIntroScreen(){}
