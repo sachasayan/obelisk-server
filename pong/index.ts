@@ -41,7 +41,7 @@ function resetGame() {
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
     score: [0, 0],
-    paddles:[8,8],
+    paddles:[Math.floor(matrix.height()/2), Math.floor(matrix.height()/2)],
     ball: {
       x: (Math.floor(matrix.width()/2)),
       y: (Math.floor(matrix.height()/2)),
@@ -68,7 +68,7 @@ function tick() {
   // Move ball
   ball.x += Math.cos(Math.PI*ball.heading*2);
   ball.y += Math.sin(Math.PI*ball.heading*2);
-  // Hitting vertical edges? Apply reflection
+  // Hitting edges? Apply reflection
   if (ball.y < 0){
     ball.y = 0 - ball.x;
     ball.heading < 0.5 ? ball.heading = 0.5 - ball.heading : ball.heading = 1.5 - ball.heading;
@@ -79,8 +79,8 @@ function tick() {
   };
 
   // Did we hit a paddle? Reflect x.
-  if (ball.x < 1 &&                   Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius){ball.heading = 0.25}
-  if (ball.x > matrix.width() - 1 &&  Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius){ball.heading = 0.75}
+  if (ball.x < 1 && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius){ball.heading = 0.25}
+  if (ball.x > matrix.width() && Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius){ball.heading = 0.75}
 
   // Check for out of x bounds, if so apply score
   if (ball.x > 0 && ball.x < matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
@@ -94,7 +94,7 @@ function displayGameScreen(){
   let { paddleRadius } = gameSettings;
 
   // Draw paddles
-  matrix.fgColor(0xFFFF00);
+  matrix.fgColor(0xFFFFFF);
   matrix.drawLine(0, gameState.paddles[0] - paddleRadius, 0, gameState.paddles[0] + paddleRadius);
   matrix.drawLine(matrix.width()-1, gameState.paddles[1] - paddleRadius, matrix.width()-1, gameState.paddles[1] + paddleRadius);
 
