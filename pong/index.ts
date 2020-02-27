@@ -126,18 +126,6 @@ function gameLoop(){
     default:
       break;
   }
-
-}
-
-// Inner loop runs as fast as possible, draw grid.
-function syncLoop(){
-  return (mat, dt, t) => {
-    matrix.clear();
-
-    gameLoop();
-
-    setTimeout(() => matrix.sync(), 0);
-  }
 }
 
 function init (m){
@@ -145,7 +133,13 @@ function init (m){
     matrix.clear();
     resetGame();
     gameLoop();
-    matrix.afterSync(syncLoop());
+    matrix.afterSync((mat, dt, t) => {
+      matrix.clear();
+
+      gameLoop();
+
+      setTimeout(() => matrix.sync(), 0);
+    });
 }
 
 let Pong = { init };
