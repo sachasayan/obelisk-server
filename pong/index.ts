@@ -79,8 +79,8 @@ function tick() {
   };
 
   // Did we hit a paddle? Reflect x.
-  if (ball.x < 1 && Math.abs(ball.y - gameState.paddles[0])){}
-  if (ball.x < 1 && Math.abs(ball.y - gameState.paddles[1])){}
+  if (ball.x < 1 && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius){ball.heading = 0.25}
+  if (ball.x > matrix.width() && Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius){ball.heading = 0.75}
 
   // Check for out of x bounds, if so apply score
   if (ball.x > 0 && ball.x < matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
@@ -95,16 +95,16 @@ function displayGameScreen(){
 
   // Draw paddles
   matrix.fgColor(0xFFFFFF);
-  matrix.drawLine(0, gameState.paddles[0] - paddleRadius, 0, gameState.paddles[0] - paddleRadius);
-  matrix.drawLine(matrix.width()-1, gameState.paddles[0] - paddleRadius, matrix.width()-1, gameState.paddles[0] - paddleRadius);
+  matrix.drawLine(0, gameState.paddles[0] - paddleRadius, 0, gameState.paddles[0] + paddleRadius);
+  matrix.drawLine(matrix.width()-1, gameState.paddles[1] - paddleRadius, matrix.width()-1, gameState.paddles[1] + paddleRadius);
 
   // Draw ball
   matrix.setPixel(Math.floor(gameState.ball.x), Math.floor(gameState.ball.y));
 
   // Draw scores
-  matrix.fgColor(0xBBBBBB);
+  matrix.fgColor(0x333333);
   let midpoint = matrix.width() / 2;
-  matrix.drawLine(midpoint, 0, midpoint - gameState.score[0], 0);
+  matrix.drawLine(midpoint-1, 0, midpoint - 1 - gameState.score[0], 0);
   matrix.drawLine(midpoint, 0, midpoint + gameState.score[1], 0);
 }
 
