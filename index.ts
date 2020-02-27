@@ -7,6 +7,7 @@ import {
   RuntimeOptions,
 } from 'rpi-led-matrix';
 
+import { Test } from './test';
 import { Pac } from './pac';
 import { Space } from './space';
 import { Pulse } from './pulse';
@@ -18,8 +19,8 @@ export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
   rows: 16,
   cols: 32,
-  chainLength: 4,
-  brightness: 100,
+  chainLength: 1,
+  brightness: 50,
   rowAddressType: 2,
   multiplexing: 3,
   hardwareMapping: GpioMapping.Regular,
@@ -37,6 +38,7 @@ export const runtimeOptions: RuntimeOptions = {
 const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
 enum CliMode {
+  Test = 'test',
   Pac = 'pac',
   Space = 'space',
   Pulse = 'pulse',
@@ -54,6 +56,7 @@ const createModeSelector = () => {
       message: 'What would you like to do?',
       hint: 'Use tab or arrow keys and press enter to select.',
       choices: [
+        { value: CliMode.Pac, title:  '(Test Mode)' },
         { value: CliMode.Pac, title:  '🟡 => Pacman' },
         { value: CliMode.Space, title: '🚀 => Space' },
         { value: CliMode.Pulse, title:'🕺 => Pulse' },
@@ -74,6 +77,11 @@ const chooseMode = createModeSelector();
 
     while (true) {
       switch (await chooseMode()) {
+        case CliMode.Test: {
+          matrix.afterSync(() => {});
+          Test.init(matrix);
+          break;
+        }
         case CliMode.Pac: {
           matrix.afterSync(() => {});
           Pac.init(matrix);
