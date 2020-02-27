@@ -49,17 +49,17 @@ function resetGame() {
       velocity: 4, // AKA, two pixels per second
     },
   }
-  setTimeout(() => tick(), 2000);
+  setTimeout(tick, 2000);
 }
 
 function incrementScore(player: number){
   gameState.score[player]++;
   if (gameState.score[player] >= 10) {
     gameState.activeScreen = STATUS.WIN_SCREEN;
-    setTimeout(() => resetGame(), 5000);
+    setTimeout(resetGame, 5000);
   } else {
     resetBall();
-    setTimeout(() => tick(), 2000);
+    setTimeout(tick, 2000);
   }
 }
 
@@ -83,7 +83,7 @@ function tick() {
   if (ball.x > matrix.width() - 1 &&  Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius){ball.heading = 0.75}
 
   // Check for out of x bounds, if so apply score
-  if (ball.x > 0 && ball.x < matrix.width()) { setTimeout(() => tick(), (1 / ball.velocity) * 1000); };
+  if (ball.x > 0 && ball.x < matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
   if (ball.x < 0) { incrementScore(0); };
   if (ball.x > matrix.width()) { incrementScore(1); };
 }
