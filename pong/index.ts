@@ -99,7 +99,7 @@ function displayGameScreen(){
   matrix.drawLine(matrix.width()-1, gameState.paddles[0] - paddleRadius, matrix.width()-1, gameState.paddles[0] - paddleRadius);
 
   // Draw ball
-  matrix.setPixel(Math.floor(gameState.ball.x), Math.floor(gameState.ball.y));
+  matrix.fgColor(0xFF0000).setPixel(Math.floor(gameState.ball.x), Math.floor(gameState.ball.y));
 
   // Draw scores
   matrix.fgColor(0xBBBBBB);
