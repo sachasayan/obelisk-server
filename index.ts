@@ -8,7 +8,8 @@ import {
 } from 'rpi-led-matrix';
 
 import { Test } from './test';
-import { Pac } from './pac';
+import { Pac } from './_pac';
+import { Munchman } from './munchman';
 import { Space } from './space';
 import { Pulse } from './pulse';
 import { Pong } from './pong';
@@ -43,6 +44,7 @@ enum CliMode {
   Space = 'space',
   Pulse = 'pulse',
   Pong = 'pong',
+  Munchman = 'munchman',
   Lightcycles = 'lightcycles',
   Exit = 'exit'
 }
@@ -56,8 +58,8 @@ const createModeSelector = () => {
       message: 'What would you like to do?',
       hint: 'Use tab or arrow keys and press enter to select.',
       choices: [
-        { value: CliMode.Pac, title:  '(Test Mode)' },
-        { value: CliMode.Pac, title:  '🟡 => Pacman' },
+        { value: CliMode.Test, title:  '(Test Mode)' },
+        { value: CliMode.Munchman, title:  '🟡 => Munchman' },
         { value: CliMode.Space, title: '🚀 => Space' },
         { value: CliMode.Pulse, title:'🕺 => Pulse' },
         { value: CliMode.Pong, title:'🎾 => Pong' },
@@ -82,9 +84,9 @@ const chooseMode = createModeSelector();
           Test.init(matrix);
           break;
         }
-        case CliMode.Pac: {
+        case CliMode.Munchman: {
           matrix.afterSync(() => {});
-          Pac.init(matrix);
+          Munchman.init(matrix);
           break;
         }
         case CliMode.Space: {
