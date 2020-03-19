@@ -1,3 +1,5 @@
+import { chroma } from 'chroma-js';
+
 let colors = {
   'W': 0x1919A6,
   'P': 0xFFFF00,
@@ -7,6 +9,11 @@ let colors = {
   'T': 0xFFB852,
   'O': 0x000000
 };
+
+let scales = {
+  player: chroma.scale('black', colors.P)
+}
+
 
 let grid = `
 WWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
@@ -118,7 +125,7 @@ function displayGameScreen(){
   });
 
   // Display player
-  matrix.fgColor(colors['P']).setPixel(gameState.player.x, gameState.player.y);
+  matrix.fgColor(scales.player(1).num()).setPixel(gameState.player.x, gameState.player.y);
 
 }
 
