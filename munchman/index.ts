@@ -143,10 +143,15 @@ function displayGameScreen(t: number){
   });
 
   // Display player
-  matrix.fgColor(colors.player(Math.sin(Math.PI * ((t % 700) / 700))).num()).setPixel(gameState.player.x, gameState.player.y);
+  matrix
+    .fgColor(colors.player(Math.sin(Math.PI * ((t % 700) / 700))).num())
+    .setPixel(gameState.player.x, gameState.player.y);
   // Ghosts
   gameState.ghosts.forEach((g, i) => {
-    matrix.fgColor(baseColors[g.type]).setPixel(g.x, g.y);
+    let offset = i * 0.25;
+    matrix
+      .fgColor(colors[g.type](Math.sin(Math.PI * ( (t % 700) / 700 + offset) ) ).num())
+      .setPixel(g.x, g.y);
   });
 
 }
