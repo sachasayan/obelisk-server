@@ -90,7 +90,7 @@ interface MunchGameState {
 };
 
 let gameSettings: MunchGameSettings = {
-  speed: 200
+  speed: 40
 };
 
 let gameState: MunchGameState;
