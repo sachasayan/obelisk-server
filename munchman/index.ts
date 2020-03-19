@@ -113,7 +113,7 @@ function resetPlayer() {
 
 function resetGame() {
   //let f = grid.replace(/\n|\r/g, "");  // Clean up whitespace
-  let field = grid.trim().split('\n').map(row => row.split('')));
+  let field = grid.trim().split('\n').map(row => row.split(''));
 
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
