@@ -32,7 +32,7 @@ function resetBall() {
   gameState.ball = {
     x: (Math.floor(matrix.width()/2)),
     y: (Math.floor(matrix.height()/2)),
-    heading: (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
+    heading: 0.75, // (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
     velocity: 8, // in pixels per second
   }
 }
@@ -66,8 +66,8 @@ function incrementScore(player: number){
 function tick() {
   let ball = gameState.ball;
   // Move ball
-  ball.x += Math.cos(Math.PI*ball.heading*2);
-  ball.y += Math.sin(Math.PI*ball.heading*2);
+  ball.x += Math.sin(Math.PI*ball.heading*2);
+  ball.y += Math.cos(Math.PI*ball.heading*2);
   // Hitting edges? Apply reflection
   if (ball.y < 0){
     ball.y = 0 - ball.x;
