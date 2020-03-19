@@ -58,13 +58,13 @@ const createModeSelector = () => {
       message: 'What would you like to do?',
       hint: 'Use tab or arrow keys and press enter to select.',
       choices: [
-        { value: CliMode.Test, title:  '(Test Mode)' },
         { value: CliMode.Munchman, title:  '🟡 => Munchman' },
         { value: CliMode.Space, title: '🚀 => Space' },
         { value: CliMode.Pulse, title:'🕺 => Pulse' },
         { value: CliMode.Pong, title:'🎾 => Pong' },
         { value: CliMode.Lightcycles, title:'🏍\s => Lightcycles' },
         { value: CliMode.Exit, title: '🚪 => Exit' },
+        { value: CliMode.Test, title:  '(Test Mode)' },
       ],
     });
     return mode as CliMode;
