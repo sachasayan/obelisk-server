@@ -8,7 +8,7 @@ import {
 } from 'rpi-led-matrix';
 
 import { Test } from './test';
-// import { Munchman } from './munchman';
+import { Munchman } from './munchman';
 import { Space } from './space';
 import { Pulse } from './pulse';
 import { Pong } from './pong';
@@ -85,7 +85,7 @@ const chooseMode = createModeSelector();
         }
         case CliMode.Munchman: {
           matrix.afterSync(() => {});
-          // Munchman.init(matrix);
+          Munchman.init(matrix);
           break;
         }
         case CliMode.Space: {
