@@ -141,10 +141,10 @@ function tick() {
     if (i == 'w') { player.yIntent -= 1; }
     if (i == 's') { player.yIntent += 1; }
 
-    if (gameState.field[player.xIntent * player.yIntent] !== 'W') {
+    //if (gameState.field[player.xIntent * player.yIntent] !== 'W') {
       player.x = player.xIntent;
       player.y = player.yIntent;
-    }
+    //}
 
     // Hitting pill? Gobble it up.
     // Hitting ghost? Die, sorry. :(
@@ -218,7 +218,7 @@ function init (m){
       if ( key === '\u0003' ) { process.exit();} // ctrl-c ( end of text )
       if ( key === 'x' ) { stdin.pause(); stdin.setRawMode( false ); }
       if ( 'wasd'.includes(key) ) { gameState.inputs.push(key); }
-      // process.stdout.write( key );       // write the key to stdout all normal like
+      process.stdout.write( key );       // write the key to stdout all normal like
     });
 
     matrix.sync();
