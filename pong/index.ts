@@ -141,16 +141,18 @@ function gameLoop(){
 
 function init (m){
     matrix = m;
-    m.clear();
+    matrix.clear();
     resetGameState();
     setTimeout(tick, 3000);
-    m.afterSync((mat, dt, t) => {
-      m.clear();
+    matrix.afterSync((mat, dt, t) => {
+      matrix.clear();
 
       gameLoop();
 
-      setTimeout(() => m.sync(), 0);
+      setTimeout(() => matrix.sync(), 0);
     });
+
+    matrix.sync();
 }
 
 let Pong = { init };
