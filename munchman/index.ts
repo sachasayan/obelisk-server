@@ -78,7 +78,7 @@ interface MunchGameSettings {
 
 interface MunchGameState {
   activeScreen: STATUS,
-  field: string[],
+  field: string[][],
   sickoMode: boolean,
   ghosts: Ghost[],
   inputs: string[],
@@ -112,9 +112,8 @@ function resetPlayer() {
 }
 
 function resetGame() {
-  let f = grid.replace(/\n|\r/g, "");  // Clean up whitespace
-  let field = Array.from(f);
-
+  //let f = grid.replace(/\n|\r/g, "");  // Clean up whitespace
+  let field = grid.trim().split('\n').map(row => row.split('')));
 
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
