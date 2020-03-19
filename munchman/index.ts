@@ -1,19 +1,24 @@
 import * as chroma from 'chroma-js';
 
-let colors = {
-  'W': 0x1919A6,
-  'P': 0xFFFF00,
-  'I': 0xFF0000,
-  'B': 0xFFB8FF,
-  'C': 0x00FFFF,
-  'T': 0xFFB852,
-  'O': 0x000000
+const baseColors = {
+  'wall': 0x1919A6,
+  'player': 0xFFFF00,
+  'inky': 0xFF0000,
+  'binky': 0xFFB8FF,
+  'pinky': 0x00FFFF,
+  'clyde': 0xFFB852,
+  'empty': 0x000000
 };
 
-let scales = {
-  player: chroma.scale(['black', colors.P])
-}
-
+let colors = {
+  'wall': chroma.scale([0, baseColors['wall']]),
+  'player': chroma.scale([0, baseColors['player']]),
+  'inky': chroma.scale([0, baseColors['inky']]),
+  'binky': chroma.scale([0, baseColors['binky']]),
+  'pinky': chroma.scale([0, baseColors['pinky']]),
+  'clyde': chroma.scale([0, baseColors['clyde']]),
+  'empty': chroma.scale([0, baseColors['empty']])
+};
 
 let grid = `
 WWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
@@ -34,6 +39,10 @@ WOOOWOOOOOOOOOOOOOOOOOOOOOOOOOWOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 `;
 
+enum TILES {
+  W = 'wall',
+  O = 'empty'
+};
 
 enum STATUS {
   INTRO,
@@ -58,8 +67,6 @@ class Ghost{
     this.x = x;
     this.y = y;
   }
-
-
 }
 
 interface MunchGameSettings {
@@ -99,7 +106,7 @@ function resetGame() {
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
     ghostsAggressive: false,
-    ghosts: [new Ghost('I', 52, 7), new Ghost('B', 53, 8), new Ghost('T', 54, 10), new Ghost('C', 50, 10)],
+    ghosts: [new Ghost('inky', 52, 7), new Ghost('binky', 53, 8), new Ghost('pinky', 54, 10), new Ghost('clyde', 50, 10)],
     player: {
       x: 1,
       y: 1,
@@ -120,14 +127,14 @@ function tick() {
 
   // No pills left? Great, you win.
 
-  setTimeout(tick, 200);
+  setTimeout(tick, gameSettings.speed);
 }
 
 function displayIntroScreen(){}
 
 function displayGameScreen(t: number){
   let f = grid.replace(/\n|\r/g, "");
-  let field = Array.from(f).map((char) => colors[char]);
+  let field = Array.from(f).map((char) => baseColors[TILES[char]]);
 
   // Display field
   field.forEach((c, i) => {
@@ -136,10 +143,10 @@ function displayGameScreen(t: number){
   });
 
   // Display player
-  matrix.fgColor(scales.player(Math.sin(Math.PI * ((t % 700) / 700))).num()).setPixel(gameState.player.x, gameState.player.y);
+  matrix.fgColor(colors.player(Math.sin(Math.PI * ((t % 700) / 700))).num()).setPixel(gameState.player.x, gameState.player.y);
   // Ghosts
   gameState.ghosts.forEach((g, i) => {
-    matrix.fgColor(colors[g.type]).setPixel(g.x, g.y);
+    matrix.fgColor(baseColors[g.type]).setPixel(g.x, g.y);
   });
 
 }
@@ -173,6 +180,6 @@ function init (m){
     matrix.sync();
 }
 
-let Munchman = { colors, init };
+let Munchman = { init };
 
 export { Munchman };
