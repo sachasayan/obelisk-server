@@ -80,7 +80,7 @@ function init (matrix){
         });
       }
 
-      setTimeout(() => matrix.sync(), 0);
+      setTimeout(() => matrix.sync(), 200);
     });
 
 
