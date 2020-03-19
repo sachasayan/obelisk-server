@@ -102,7 +102,7 @@ function resetGame() {
 function tick() {
   let player = gameState.player;
   // Move player
-  player.x += 1;
+  player.x += 0;
   player.y += 0;
   // Hitting pill? Gobble it up.
   // Hitting ghost? Die, sorry. :(
@@ -125,7 +125,7 @@ function displayGameScreen(t: number){
   });
 
   // Display player
-  matrix.fgColor(scales.player((t % 700) / 700).num()).setPixel(gameState.player.x, gameState.player.y);
+  matrix.fgColor(scales.player(Math.sin(Math.PI * ((t % 700) / 700))).num()).setPixel(gameState.player.x, gameState.player.y);
 
 }
 
