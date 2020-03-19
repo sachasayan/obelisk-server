@@ -176,7 +176,7 @@ function displayGameScreen(t: number){
   gameState.field.forEach((row, y) => {
     row.forEach((c, x) => {
     matrix
-      .fgColor(c === 'D' ? colors.dot(fade(t, 1000, (x*y) / (128*32) )).num() : baseColors[TILES[c]])
+      .fgColor(c === 'D' ? colors.dot(fade(t, 1000, (x / 128) )).num() : baseColors[TILES[c]])
       .setPixel(x, y);
     });
   });
