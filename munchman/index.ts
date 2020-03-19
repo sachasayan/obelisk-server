@@ -132,6 +132,11 @@ function tick() {
 
 function displayIntroScreen(){}
 
+
+let fade = (t, freq, offset) => {
+ return Math.sin(  Math.PI * (t % freq / freq) - ( 2 * Math.PI * offset ));
+};
+
 function displayGameScreen(t: number){
   let f = grid.replace(/\n|\r/g, "");
   let field = Array.from(f).map((char) => baseColors[TILES[char]]);
@@ -144,13 +149,12 @@ function displayGameScreen(t: number){
 
   // Display player
   matrix
-    .fgColor(colors.player(Math.sin(Math.PI * ((t % 700) / 700))).num())
+    .fgColor(colors.player(fade(t, 700, 0)).num())
     .setPixel(gameState.player.x, gameState.player.y);
   // Ghosts
   gameState.ghosts.forEach((g, i) => {
-    let offset = i * 0.25;
     matrix
-      .fgColor(colors[g.type](Math.sin(Math.PI * ( (t % 700) / 700 + offset) ) ).num())
+      .fgColor(colors[g.type](fade(t, 700, i * 0.25)).num())
       .setPixel(g.x, g.y);
   });
 
