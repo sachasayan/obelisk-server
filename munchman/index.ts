@@ -75,11 +75,15 @@ interface MunchGameSettings {
 
 interface MunchGameState {
   activeScreen: STATUS,
+  field: string[],
   sickoMode: boolean,
   ghosts: Ghost[],
+  inputs: string[],
   player: {
     x: number,
     y: number,
+    xIntent: number,
+    yIntent: number,
     heading: number,
     lives: number
   }
@@ -97,38 +101,56 @@ function resetPlayer() {
   gameState.player = {
     x: 1,
     y: 1,
+    xIntent: 1,
+    yIntent: 1,
     heading: 3,
     lives: gameState.player.lives-1,
   }
 }
 
 function resetGame() {
+  let f = grid.replace(/\n|\r/g, "");  // Clean up whitespace
+  let field = Array.from(f);
+
+
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
+    field: field,
     sickoMode: false,
+    inputs: [],
     ghosts: [new Ghost('inky', 52, 7), new Ghost('binky', 53, 8), new Ghost('pinky', 54, 10), new Ghost('clyde', 50, 10)],
     player: {
       x: 1,
       y: 1,
+      xIntent: 1,
+      yIntent: 1,
       heading: 3,
       lives: 3
     }
   };
 }
 
-
 function tick() {
   let player = gameState.player;
 
-  // Move player
-  player.x += 0;
-  player.y += 0;
+  while (gameState.inputs.length){
+    let i = gameState.inputs.shift();
+    // Move player
+    if (i == 'a') { player.xIntent -= 1; }
+    if (i == 'd') { player.xIntent += 1; }
+    if (i == 'w') { player.yIntent -= 1; }
+    if (i == 's') { player.yIntent += 1; }
 
+    if (gameState.field[player.xIntent * player.yIntent] !== 'W') {
+      player.x = player.xIntent;
+      player.y = player.yIntent;
+    }
 
-  // Hitting pill? Gobble it up.
-  // Hitting ghost? Die, sorry. :(
+    // Hitting pill? Gobble it up.
+    // Hitting ghost? Die, sorry. :(
 
-  // No pills left? Great, you win.
+    // No pills left? Great, you win.
+  }
 
   setTimeout(tick, gameSettings.speed);
 }
@@ -141,12 +163,11 @@ let fade = (t, freq, offset) => {
 };
 
 function displayGameScreen(t: number){
-  let f = grid.replace(/\n|\r/g, "");
-  let field = Array.from(f).map((char) => baseColors[TILES[char]]);
+
 
   // Display field
-  field.forEach((c, i) => {
-    matrix.fgColor(c)
+  gameState.field.forEach((c, i) => {
+    matrix.fgColor(baseColors[TILES[c]])
       .setPixel(i % 128, Math.floor(i / 128));
   });
 
@@ -194,13 +215,11 @@ function init (m){
     stdin.resume();
     stdin.setEncoding( 'utf8' ); // i don't want binary, do you?
     stdin.on( 'data', ( key: string ) => {
-      if ( key === 'd' ) { gameState.player.x += 1; }
       if ( key === '\u0003' ) { process.exit();} // ctrl-c ( end of text )
-      if ( key === '\u001B' ) { stdin.setRawMode( false ); stdin.pause(); }
-      process.stdout.write( key );       // write the key to stdout all normal like
+      else if ( key === 'x' ) { stdin.setRawMode( false ); stdin.pause(); }
+      else if ( 'wasd'.includes(key) ) { gameState.inputs.push(key); }
+      // process.stdout.write( key );       // write the key to stdout all normal like
     });
-
-
 
     matrix.sync();
 }
