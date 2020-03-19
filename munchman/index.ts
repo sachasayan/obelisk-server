@@ -8,7 +8,7 @@ const baseColors = {
   'pinky':  0x00FFFF,
   'clyde':  0xFFB852,
   'empty':  0x000000,
-  'dot':    0x0A0A0A
+  'dot':    0x080808
 };
 
 let colors = {
@@ -19,10 +19,8 @@ let colors = {
   'pinky': chroma.scale([0, baseColors['pinky']]),
   'clyde': chroma.scale([0, baseColors['clyde']]),
   'empty': chroma.scale([0, baseColors['empty']]),
-  'dot': chroma.scale([0, baseColors['dot']]),
+  'dot': chroma.scale([0x040404, baseColors['dot']]),
 };
-
-console.log(colors.dot);
 
 let grid = `
 WWWWWWWWWWWWWWDWWWWWWWWWWWWWWWWDWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
