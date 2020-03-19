@@ -37,7 +37,7 @@ function resetBall() {
   }
 }
 
-function resetGame() {
+function resetGameState() {
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
     score: [0, 0],
@@ -49,14 +49,14 @@ function resetGame() {
       velocity: 8, // in pixels per second
     },
   }
-  setTimeout(tick, 2000);
 }
 
 function incrementScore(player: number){
   gameState.score[player]++;
   if (gameState.score[player] >= 10) {
     gameState.activeScreen = STATUS.WIN_SCREEN;
-    setTimeout(resetGame, 5000);
+    setTimeout(resetGameState, 2000);
+    setTimeout(tick, 3000);
   } else {
     resetBall();
     setTimeout(tick, 2000);
@@ -78,8 +78,6 @@ function tick() {
     ball.heading < 0.5 ? ball.heading = 0.5 - ball.heading : ball.heading = 1.5 - ball.heading;
   };
 
-
-    console.log(ball);
   // Did we hit a paddle? Reflect x.
   if (
       (ball.x == 1 || ball.x == 0 )  &&
@@ -144,8 +142,8 @@ function gameLoop(){
 function init (m){
     matrix = m;
     matrix.clear();
-    resetGame();
-    gameLoop();
+    resetGameState();
+    setTimeout(tick, 3000);
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
 
