@@ -216,8 +216,8 @@ function init (m){
     stdin.setEncoding( 'utf8' ); // i don't want binary, do you?
     stdin.on( 'data', ( key: string ) => {
       if ( key === '\u0003' ) { process.exit();} // ctrl-c ( end of text )
-      else if ( key === 'x' ) { stdin.setRawMode( false ); stdin.pause(); }
-      else if ( 'wasd'.includes(key) ) { gameState.inputs.push(key); }
+      if ( key === 'x' ) { stdin.pause(); stdin.setRawMode( false ); }
+      if ( 'wasd'.includes(key) ) { gameState.inputs.push(key); }
       // process.stdout.write( key );       // write the key to stdout all normal like
     });
 
