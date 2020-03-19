@@ -89,7 +89,6 @@ function resetGame() {
       lives: 3
     }
   };
-  setTimeout(tick, 2000);
 }
 
 
@@ -107,8 +106,6 @@ function tick() {
 function displayIntroScreen(){}
 
 function displayGameScreen(){
-  matrix.clear();
-
   let f = grid.replace(/\n|\r/g, "");
   let field = Array.from(f).map((char) => colors[char]);
 
@@ -116,8 +113,6 @@ function displayGameScreen(){
     matrix.fgColor(c)
       .setPixel(i % 128, Math.floor(i / 128));
   });
-
-  matrix.sync();
 }
 
 function gameLoop(){
@@ -137,7 +132,7 @@ function init (m){
     matrix = m;
     matrix.clear();
     resetGame();
-    gameLoop();
+    setTimeout(tick, 2000);
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
 
@@ -145,6 +140,8 @@ function init (m){
 
       setTimeout(() => matrix.sync(), 0);
     });
+
+    matrix.sync();
 }
 
 let Munchman = { colors, init };
