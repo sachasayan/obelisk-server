@@ -81,6 +81,7 @@ function tick() {
   // Did we hit a paddle? Reflect x.
   if (ball.x < -5) {
     ball.x = (Math.floor(matrix.width()/2));
+    ball.y = (Math.floor(matrix.height()/2));
     ball.heading = 0.75;
   } /////
   if (ball.x < 1 && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius){ball.heading = 0.25}
