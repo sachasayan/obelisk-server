@@ -8,7 +8,6 @@ import {
 } from 'rpi-led-matrix';
 
 import { Test } from './test';
-// import { Pac } from './_pac';
 import { Munchman } from './munchman';
 import { Space } from './space';
 import { Pulse } from './pulse';
@@ -25,7 +24,7 @@ export const matrixOptions: MatrixOptions = {
   rowAddressType: 2,
   multiplexing: 3,
   hardwareMapping: GpioMapping.Regular,
-  pwmLsbNanoseconds: 500,
+  pwmLsbNanoseconds: 800,
   pixelMapperConfig: LedMatrixUtils.encodeMappers(
     { type: PixelMapperType.Rotate, angle: 180 }
   )
