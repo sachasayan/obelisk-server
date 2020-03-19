@@ -8,7 +8,7 @@ const baseColors = {
   'pinky':  0x00FFFF,
   'clyde':  0xFFB852,
   'empty':  0x000000,
-  'dot':    0x444444
+  'dot':    0x111111
 };
 
 let colors = {
@@ -148,7 +148,7 @@ function tick() {
       player.y = player.yIntent;
     }
     if (gameState.field[player.y][player.x] === 'D') {
-      gameState.field[player.y][player.x] === 'O'
+      gameState.field[player.y][player.x] = 'O'
     }
   }
 
