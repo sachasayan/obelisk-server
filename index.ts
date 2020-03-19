@@ -20,16 +20,16 @@ export const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
   rows: 16,
   cols: 32,
-  chainLength: 2,
+  chainLength: 4,
   brightness: 50,
   rowAddressType: 2,
   multiplexing: 3,
   hardwareMapping: GpioMapping.Regular,
   pwmBits: 4,
   pwmLsbNanoseconds: 1500,
-  pixelMapperConfig: LedMatrixUtils.encodeMappers(
-    { type: PixelMapperType.Rotate, angle: 180 }
-  )
+  // pixelMapperConfig: LedMatrixUtils.encodeMappers(
+  //   { type: PixelMapperType.Rotate, angle: 180 }
+  // )
 };
 
 export const runtimeOptions: RuntimeOptions = {
