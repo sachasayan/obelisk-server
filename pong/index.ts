@@ -26,14 +26,14 @@ let gameSettings: PongGameSettings = {
 
 let gameState: PongGameState;
 
-let matrix;
+let matrix: any;
 
 function resetBall() {
   gameState.ball = {
     x: (Math.floor(matrix.width()/2)),
     y: (Math.floor(matrix.height()/2)),
     heading: 0.75, // (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
-    velocity: 8, // in pixels per second
+    velocity: 32, // in pixels per second
   }
 }
 
@@ -46,7 +46,7 @@ function resetGameState() {
       x: (Math.floor(matrix.width()/2)),
       y: (Math.floor(matrix.height()/2)),
       heading: 0.75, // (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
-      velocity: 8, // in pixels per second
+      velocity: 32, // in pixels per second
     },
   }
 }
@@ -141,15 +141,15 @@ function gameLoop(){
 
 function init (m){
     matrix = m;
-    matrix.clear();
+    m.clear();
     resetGameState();
     setTimeout(tick, 3000);
-    matrix.afterSync((mat, dt, t) => {
-      matrix.clear();
+    m.afterSync((mat, dt, t) => {
+      m.clear();
 
       gameLoop();
 
-      setTimeout(() => matrix.sync(), 0);
+      setTimeout(() => m.sync(), 0);
     });
 }
 
