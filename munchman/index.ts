@@ -1,4 +1,4 @@
-import { chroma } from 'chroma-js';
+import * as chroma from 'chroma-js';
 
 let colors = {
   'W': 0x1919A6,
