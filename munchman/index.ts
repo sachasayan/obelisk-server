@@ -171,7 +171,7 @@ function displayGameScreen(t: number){
 
   // Display field
   gameState.field.forEach((row, y) => {
-    gameState.field.forEach((c, x) => {
+    row.forEach((c, x) => {
     matrix.fgColor(baseColors[TILES[c]])
       .setPixel(x, y);
     });
