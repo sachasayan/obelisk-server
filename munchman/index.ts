@@ -75,7 +75,7 @@ interface MunchGameSettings {
 
 interface MunchGameState {
   activeScreen: STATUS,
-  ghostsAggressive: boolean,
+  sickoMode: boolean,
   ghosts: Ghost[],
   player: {
     x: number,
@@ -105,7 +105,7 @@ function resetPlayer() {
 function resetGame() {
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
-    ghostsAggressive: false,
+    sickoMode: false,
     ghosts: [new Ghost('inky', 52, 7), new Ghost('binky', 53, 8), new Ghost('pinky', 54, 10), new Ghost('clyde', 50, 10)],
     player: {
       x: 1,
@@ -119,9 +119,12 @@ function resetGame() {
 
 function tick() {
   let player = gameState.player;
+
   // Move player
   player.x += 0;
   player.y += 0;
+
+
   // Hitting pill? Gobble it up.
   // Hitting ghost? Die, sorry. :(
 
@@ -185,6 +188,19 @@ function init (m){
 
       setTimeout(() => matrix.sync(), 0);
     });
+
+    var stdin = process.stdin;
+    stdin.setRawMode( true ); // without this, we would only get streams once enter is pressed
+    stdin.resume();
+    stdin.setEncoding( 'utf8' ); // i don't want binary, do you?
+    stdin.on( 'data', ( key: string ) => {
+      if ( key === 'd' ) { gameState.player.x += 1; }
+      if ( key === '\u0003' ) { process.exit();} // ctrl-c ( end of text )
+      if ( key === '\u001B' ) { stdin.setRawMode( false ); stdin.pause(); }
+      process.stdout.write( key );       // write the key to stdout all normal like
+    });
+
+
 
     matrix.sync();
 }
