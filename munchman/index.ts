@@ -8,7 +8,7 @@ const baseColors = {
   'pinky':  0x00FFFF,
   'clyde':  0xFFB852,
   'empty':  0x000000,
-  'dot':    0x111111
+  'dot':    0x020202
 };
 
 let colors = {
@@ -175,7 +175,8 @@ function displayGameScreen(t: number){
   // Display field
   gameState.field.forEach((row, y) => {
     row.forEach((c, x) => {
-    matrix.fgColor(baseColors[TILES[c]])
+    matrix
+      .fgColor(c === 'D' ? colors.dot(fade(t, 1000, x)).num() : baseColors[TILES[c]])
       .setPixel(x, y);
     });
   });
