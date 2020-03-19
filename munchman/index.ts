@@ -134,7 +134,7 @@ function displayIntroScreen(){}
 
 
 let fade = (t, freq, offset) => {
- return Math.sin(  Math.PI * (t % freq / freq) - ( 2 * Math.PI * offset ));
+ return Math.abs(Math.sin(  Math.PI * (t % freq / freq - offset) ));
 };
 
 function displayGameScreen(t: number){
