@@ -9,7 +9,7 @@ import {
 
 import { Test } from './test';
 // import { Pac } from './_pac';
-// import { Munchman } from './munchman';
+import { Munchman } from './munchman';
 import { Space } from './space';
 import { Pulse } from './pulse';
 import { Pong } from './pong';
@@ -21,7 +21,7 @@ export const matrixOptions: MatrixOptions = {
   rows: 16,
   cols: 32,
   chainLength: 4,
-  brightness: 100,
+  brightness: 50,
   rowAddressType: 2,
   multiplexing: 3,
   hardwareMapping: GpioMapping.Regular,
@@ -59,7 +59,7 @@ const createModeSelector = () => {
       hint: 'Use tab or arrow keys and press enter to select.',
       choices: [
         { value: CliMode.Test, title:  '(Test Mode)' },
-        // { value: CliMode.Munchman, title:  '🟡 => Munchman' },
+        { value: CliMode.Munchman, title:  '🟡 => Munchman' },
         { value: CliMode.Space, title: '🚀 => Space' },
         { value: CliMode.Pulse, title:'🕺 => Pulse' },
         { value: CliMode.Pong, title:'🎾 => Pong' },
@@ -86,7 +86,7 @@ const chooseMode = createModeSelector();
         }
         case CliMode.Munchman: {
           matrix.afterSync(() => {});
-          // Munchman.init(matrix);
+          Munchman.init(matrix);
           break;
         }
         case CliMode.Space: {
