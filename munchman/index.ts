@@ -125,7 +125,7 @@ function displayGameScreen(t: number){
   });
 
   // Display player
-  matrix.fgColor(scales.player((t % 200) / 200).num()).setPixel(gameState.player.x, gameState.player.y);
+  matrix.fgColor(scales.player((t % 700) / 700).num()).setPixel(gameState.player.x, gameState.player.y);
 
 }
 
