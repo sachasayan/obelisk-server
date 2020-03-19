@@ -11,7 +11,7 @@ let colors = {
 };
 
 let scales = {
-  player: chroma.scale('black', '#FFFF00')
+  player: chroma.scale(['black', colors.P])
 }
 
 
