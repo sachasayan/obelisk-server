@@ -146,6 +146,9 @@ function tick() {
     if (gameState.field[player.yIntent][player.xIntent] !== 'W') {
       player.x = player.xIntent;
       player.y = player.yIntent;
+    } else {
+      player.xIntent = player.x;
+      player.yIntent = player.y;
     }
     if (gameState.field[player.y][player.x] === 'D') {
       gameState.field[player.y][player.x] = 'O'
