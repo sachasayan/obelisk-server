@@ -33,7 +33,7 @@ function resetBall() {
     x: (Math.floor(matrix.width()/2)),
     y: (Math.floor(matrix.height()/2)),
     heading: (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
-    velocity: 4, // AKA, two pixels per second
+    velocity: 8, // in pixels per second
   }
 }
 
@@ -46,7 +46,7 @@ function resetGame() {
       x: (Math.floor(matrix.width()/2)),
       y: (Math.floor(matrix.height()/2)),
       heading: (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
-      velocity: 4, // AKA, two pixels per second
+      velocity: 8, // in pixels per second
     },
   }
   setTimeout(tick, 2000);
@@ -79,8 +79,8 @@ function tick() {
   };
 
   // Did we hit a paddle? Reflect x.
-  if (ball.x < 1) { ball.heading = 0.25;}
-  if (ball.x < 1 && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius){ball.heading = 0.25}
+  if (ball.x < 1) { ball.x = (Math.floor(matrix.width()/2));}
+  //if (ball.x < 1 && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius){ball.heading = 0.25}
   if (ball.x > matrix.width() && Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius){ball.heading = 0.75}
 
   // Check for out of x bounds, if so apply score
