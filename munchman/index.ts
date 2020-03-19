@@ -114,7 +114,7 @@ function tick() {
 
 function displayIntroScreen(){}
 
-function displayGameScreen(){
+function displayGameScreen(t: number){
   let f = grid.replace(/\n|\r/g, "");
   let field = Array.from(f).map((char) => colors[char]);
 
@@ -125,14 +125,14 @@ function displayGameScreen(){
   });
 
   // Display player
-  matrix.fgColor(scales.player(1).num()).setPixel(gameState.player.x, gameState.player.y);
+  matrix.fgColor(scales.player((t % 200) / 200).num()).setPixel(gameState.player.x, gameState.player.y);
 
 }
 
-function gameLoop(){
+function gameLoop(t){
   switch(gameState.activeScreen) {
     case STATUS.PLAYING_GAME:
-      displayGameScreen();
+      displayGameScreen(t);
       break;
     case STATUS.INTRO:
       displayIntroScreen();
@@ -150,7 +150,7 @@ function init (m){
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
 
-      gameLoop();
+      gameLoop(t);
 
       setTimeout(() => matrix.sync(), 0);
     });
