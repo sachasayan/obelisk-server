@@ -78,6 +78,8 @@ function tick() {
     ball.heading < 0.5 ? ball.heading = 0.5 - ball.heading : ball.heading = 1.5 - ball.heading;
   };
 
+
+    console.log(ball);
   // Did we hit a paddle? Reflect x.
   if (
       ball.x < 1
@@ -96,6 +98,7 @@ function tick() {
   if (ball.x > 0 && ball.x < matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
   if (ball.x < 0) { incrementScore(0); };
   if (ball.x > matrix.width()) { incrementScore(1); };
+
 }
 
 function displayIntroScreen(){}
