@@ -82,20 +82,20 @@ function tick() {
     console.log(ball);
   // Did we hit a paddle? Reflect x.
   if (
-      ball.x < 1
-      // Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius
+      (ball.x == 1 || ball.x == 0 )  &&
+      Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius
     ){
       ball.heading = 0.25;
   }
   if (
-      ball.x > matrix.width() -1
-      // Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius
+      ( ball.x == matrix.width() - 1 || ball.x == matrix.width() - 2 ) &&
+      Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius
     ){
       ball.heading = 0.75;
   }
 
   // Check for out of x bounds, if so apply score
-  if (ball.x > 0 && ball.x < matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
+  if (ball.x >= 0 && ball.x <= matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
   if (ball.x < 0) { incrementScore(0); };
   if (ball.x > matrix.width()) { incrementScore(1); };
 
