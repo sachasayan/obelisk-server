@@ -112,7 +112,6 @@ function resetPlayer() {
 }
 
 function resetGame() {
-  //let f = grid.replace(/\n|\r/g, "");  // Clean up whitespace
   let field = grid.trim().split('\n').map(row => row.split(''));
 
   gameState = {
@@ -220,16 +219,16 @@ function init (m){
       setTimeout(() => matrix.sync(), 0);
     });
 
-    // var stdin = process.stdin;
-    // stdin.setRawMode( true ); // without this, we would only get streams once enter is pressed
-    // stdin.resume();
-    // stdin.setEncoding( 'utf8' ); // i don't want binary, do you?
-    // stdin.on( 'data', ( key: string ) => {
-    //   if ( key === '\u0003' ) { process.exit();} // ctrl-c ( end of text )
-    //   if ( key === 'x' ) { stdin.pause(); stdin.setRawMode( false ); }
-    //   if ( 'wasd'.includes(key) ) { gameState.inputs.push(key); }
-    //   process.stdout.write( key );       // write the key to stdout all normal like
-    // });
+    var stdin = process.stdin;
+    stdin.setRawMode( true ); // without this, we would only get streams once enter is pressed
+    stdin.resume();
+    stdin.setEncoding( 'utf8' ); // i don't want binary, do you?
+    stdin.on( 'data', ( key: string ) => {
+      if ( key === '\u0003' ) { process.exit();} // ctrl-c ( end of text )
+      if ( key === 'x' ) { stdin.pause(); stdin.setRawMode( false ); }
+      if ( 'wasd'.includes(key) ) { gameState.inputs.push(key); }
+      process.stdout.write( key );       // write the key to stdout all normal like
+    });
 
     matrix.sync();
 }
