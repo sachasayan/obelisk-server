@@ -214,7 +214,7 @@ function init (m){
             g : img.bitmap.data[idx + 1],
             b : img.bitmap.data[idx + 2]
           }).hex()];
-          if (grid.length % 128 == 0) { grid += '\n'; };
+          if (x == 127) { grid += '\n'; };
         });
         console.log(grid);
         resetGame();
