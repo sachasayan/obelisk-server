@@ -202,13 +202,7 @@ function init (m){
     matrix = m;
     matrix.clear();
     // Set matrix events
-    matrix.afterSync((mat, dt, t) => {
-      matrix.clear();
 
-      gameLoop(t);
-
-      setTimeout(() => matrix.sync(), 0);
-    });
 
     // Load level
 
@@ -224,6 +218,14 @@ function init (m){
         });
         resetGame();
         setTimeout(tick, 2000);
+
+        matrix.afterSync((mat, dt, t) => {
+          matrix.clear();
+
+          gameLoop(t);
+
+          setTimeout(() => matrix.sync(), 0);
+        });
     })
     .catch(err => {
       console.error(err);
