@@ -36,7 +36,8 @@ enum MAP_LOOKUP {
   '#000000' = 'O',
   '#333333' = 'O',
   '#FFFFFF' = 'O',
-  '#86BB48' = 'O'
+  '#86bb48' = 'O',
+  '#8bc34a' = 'O',
 }
 
 enum STATUS {
