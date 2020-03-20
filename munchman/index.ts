@@ -22,7 +22,7 @@ let colors = {
   'empty': chroma.scale([0, baseColors['empty']]),
   'dot': chroma.scale([0x040404, baseColors['dot']]),
 };
-let grid;
+let grid = '';
 
 
 enum TILES {
@@ -216,6 +216,7 @@ function init (m){
           }).hex()];
           if (grid.length % 128 == 0) { grid += '\n'; };
         });
+        console.log(grid);
         resetGame();
         setTimeout(tick, 2000);
 
