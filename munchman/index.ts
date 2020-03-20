@@ -226,6 +226,7 @@ function init (m){
 
           setTimeout(() => matrix.sync(), 0);
         });
+        matrix.sync();
     })
     .catch(err => {
       console.error(err);
@@ -246,7 +247,7 @@ function init (m){
       process.stdout.write( key );       // write the key to stdout all normal like
     });
 
-    matrix.sync();
+
 }
 
 let Munchman = { init };
