@@ -15,7 +15,6 @@ class Star {
 
   next(): number {
     this.y += this.velocity;
-    this.velocity += 0.001;
     if (this.y > 16) {
       this.y = 0;
       this.velocity = Math.random()/3 + 0.3;
@@ -32,7 +31,7 @@ function init (matrix){
     const starfield: Star[] = [];
 
     for (let x = 0; x < matrix.width()/2 ; x++) {
-      starfield.push(new Star(Math.random()*matrix.width(), 0, 0.4));
+      starfield.push(new Star(Math.random()*matrix.width(), 0, 30));
     }
 
     matrix.afterSync((mat, dt, t) => {
