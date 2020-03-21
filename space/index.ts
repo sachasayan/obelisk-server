@@ -10,10 +10,7 @@ class Star {
   y: number;
   x: number;
 
-  constructor(
-    x: number,
-    distance: number,
-  ) {
+  constructor() {
     this.distance = 1 + Math.random()*10
     this.x = Math.random()* matrix.width()
     this.y = Math.random() * 16;
