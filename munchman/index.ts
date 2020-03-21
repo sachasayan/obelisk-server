@@ -158,7 +158,7 @@ function displayGameScreen(t: number){
   // Display ghosts
   gameState.ghosts.forEach((g, i) => {
     matrix
-      .fgColor(colors[g.type](fade(t, gameSettings.ghostsTick, 0.5)).num())
+      .fgColor(colors[g.type](fade(t - gameState.animations.ghostOffset, gameSettings.ghostsTick, 0.5)).num())
       .setPixel(g.x, g.y);
   });
 
