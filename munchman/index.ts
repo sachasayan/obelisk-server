@@ -47,16 +47,18 @@ enum STATUS {
 
 class Ghost{
   type: string;
-  location: {
+  x: number;
+  y: number;
+  previous: {
     x: number,
     y: number
   };
   status: string;
 
   constructor(
-    readonly t: string,
-    readonly x: number,
-    readonly y: number
+    t: string,
+    x: number,
+    y: number
   ) {
     this.type = t;
     this.x = x;
@@ -125,7 +127,10 @@ function resetGame() {
 
 function tick() {
   let player = gameState.player;
-
+  // Player movement
+  if (!gameState.inputs.length){
+    gameState.inputs.push('wasd'.charAt(Math.floor(Math.random()*4)));
+  }
   while (gameState.inputs.length){
     let i = gameState.inputs.shift();
     // Move player
@@ -146,10 +151,36 @@ function tick() {
     }
   }
 
-    // Hitting pill? Gobble it up.
-    // Hitting ghost? Die, sorry. :(
+  // Hitting pill? Gobble it up.
+  if (gameState.field[player.y][player.x] === 'P') {
+    gameState.field[player.y][player.x] = 'O';
+    gameState.sickoMode = true;
+    setTimeout(() => { gameState.sickoMode = false}, 5000);
+  }
 
-    // No pills left? Great, you win.
+  let getAdjacent = (x, y) => {
+      return [{x: x+1, y: y}, {x: x-1, y: y}, {x: x, y: y-1}, {x: x, y: y+1}]
+        .filter(coords => coords.x >= 0 && coords.y >= 0 && coords.x <= matrix.width() && coords.y <= matrix.height());
+  }
+
+  // Ghost movement
+  gameState.ghosts.forEach(g => {
+    // Get all viable candidates. Remove where we just came from.
+    let candidates = getAdjacent(g.x, g.y).filter(coords => !(coords.x == g.previous.x && coords.y == g.previous.y));
+    let finalCandidate = candidates[0];
+    g.previous = { x: g.x, y: g.y};
+
+    g.x = finalCandidate.x;
+    g.y = finalCandidate.y;
+
+  });
+
+  // Hitting ghost? Die, sorry. :(
+  gameState.ghosts.forEach(g => {
+    if (g.x == player.x && g.y == player.y){
+      gameState.activeScreen = STATUS.WIN_SCREEN;
+    }
+  });
 
   setTimeout(tick, gameSettings.speed);
 }
@@ -200,10 +231,6 @@ function gameLoop(t){
 
 function init (m){
     matrix = m;
-    matrix.clear();
-    // Set matrix events
-
-
     // Load level
 
     Jimp.read('./munchman/munch-lvl.png')
@@ -216,7 +243,6 @@ function init (m){
           }).hex()];
           if (x == 127) { grid += '\n'; };
         });
-        console.log(grid);
         resetGame();
         setTimeout(tick, 2000);
 
