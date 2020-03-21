@@ -19,7 +19,7 @@ let matrix;
 let gameSettings: MunchGameSettings = {
   grid: '',
   playerTick: 100,
-  ghostsTick: 200,
+  ghostsTick: 700,
   demoMode: true
 };
 
