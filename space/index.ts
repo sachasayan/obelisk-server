@@ -1,25 +1,26 @@
 import * as Jimp from 'jimp';
+import * as chroma from 'chroma-js';
+
+
+const palette = chroma.scale([0xFFFFFF, 0x111111]);
 
 class Star {
-  velocity: number;
+  distance: number; // Distance (from camera) affects brightness and speed
   y: number;
 
   constructor(
     readonly x: number,
-    y: number,
-    velocity: number,
+    distance: number,
   ) {
-    this.velocity = velocity;
-    this.y = y + Math.random() * 16;
+    this.distance = distance;
+    this.y = Math.random() * 16;
   }
 
-  next(): number {
-    this.y += this.velocity;
+  step() {
+    this.y += 1 / this.distance;
     if (this.y > 16) {
-      this.y = 0;
-      this.velocity = Math.random()/3 + 0.3;
+      this.y -= 32;
     }
-    return Math.floor(this.y);
   }
 }
 
@@ -31,16 +32,16 @@ function init (matrix){
     const starfield: Star[] = [];
 
     for (let x = 0; x < matrix.width()/2 ; x++) {
-      starfield.push(new Star(Math.random()*matrix.width(), 0, 30));
+      starfield.push(new Star(Math.random()*matrix.width(), 30));
     }
 
     matrix.afterSync((mat, dt, t) => {
       matrix
       .clear();
 
-      starfield.forEach(drop => {
-        drop.next();
-        matrix.fgColor(0xFFFFFF).setPixel(drop.x, drop.y);
+      starfield.forEach(star => {
+        star.step();
+        matrix.fgColor(palette(star.distance).num()).setPixel(star.x, Math.floor(star.y));
       });
 
       if(rocket){
