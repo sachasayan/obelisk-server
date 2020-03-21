@@ -32,7 +32,7 @@ function init (matrix){
     const starfield: Star[] = [];
 
     for (let x = 0; x < matrix.width() * 2 ; x++) {
-      starfield.push(new Star(Math.random()*matrix.width(), Math.random()*10));
+      starfield.push(new Star(Math.random()*matrix.width(), 1 + Math.random()*10));
     }
 
     matrix.afterSync((mat, dt, t) => {
