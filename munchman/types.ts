@@ -1,12 +1,12 @@
-const BASE_COLORS = {
-  'wall':   0x1919A6,
-  'player': 0xFFFF00,
-  'inky':   0xFF0000,
-  'binky':  0xFFB8FF,
-  'pinky':  0x00FFFF,
-  'clyde':  0xFFB852,
-  'empty':  0x000000,
-  'dot':    0x040404
+enum BASE_COLORS {
+  'wall'   = 0x1919A6,
+  'player' = 0xFFFF00,
+  'inky'   = 0xFF0000,
+  'binky'  = 0xFFB8FF,
+  'pinky'  = 0x00FFFF,
+  'clyde'  = 0xFFB852,
+  'empty'  = 0x000000,
+  'dot'    = 0x040404
 };
 
 enum MAP_LOOKUP {
@@ -28,6 +28,44 @@ enum TILES {
   O = 'empty',
   D = 'dot'
 };
+
+interface Coordinate {
+  x: number;
+  y: number;
+}
+
+interface MunchGameState {
+  activeScreen: STATUS,
+  field: string[][],
+  sickoMode: boolean,
+  ghosts: Ghost[],
+  inputs: string[],
+  player: Player;
+};
+
+interface MunchGameSettings {
+  grid: string,
+  speed: number,
+  ghostsTick: number
+}
+
+class Player {
+  x: number;
+  y: number;
+  intent: Coordinate;
+  previous: Coordinate;
+  heading: number;
+  lives: number;
+
+  constructor() {
+    this.x = 1;
+    this.y = 1;
+    this.intent = {x: 1, y: 1};
+    this.previous = {x: 1, y: 1};
+    this.heading = 3;
+    this.lives = 3;
+  }
+}
 
 class Ghost{
   type: string;
@@ -51,27 +89,13 @@ class Ghost{
   }
 }
 
-interface MunchGameState {
-  activeScreen: STATUS,
-  field: string[][],
-  sickoMode: boolean,
-  ghosts: Ghost[],
-  inputs: string[],
-  player: {
-    x: number,
-    y: number,
-    xIntent: number,
-    yIntent: number,
-    heading: number,
-    lives: number
-  }
+export {
+  BASE_COLORS,
+  STATUS,
+  MAP_LOOKUP,
+  TILES,
+  MunchGameSettings,
+  MunchGameState,
+  Ghost,
+  Player
 };
-
-interface MunchGameSettings {
-  grid: string,
-  speed: number,
-  ghostsTick: number
-}
-
-
-export { BASE_COLORS, MunchGameSettings, MunchGameState, Ghost, STATUS, MAP_LOOKUP, TILES };

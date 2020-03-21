@@ -8,7 +8,8 @@ import {
   TILES,
   MunchGameSettings,
   MunchGameState,
-  Ghost
+  Ghost,
+  Player
 } from './types';
 
 import { fade, colors } from './utils';
@@ -29,15 +30,8 @@ function resetGame() {
     field: gameSettings.grid.trim().split('\n').map(row => row.split('')),
     sickoMode: false,
     inputs: [],
-    ghosts: [new Ghost('inky', 52, 7), new Ghost('binky', 53, 8), new Ghost('pinky', 54, 10), new Ghost('clyde', 50, 10)],
-    player: {
-      x: 1,
-      y: 1,
-      xIntent: 1,
-      yIntent: 1,
-      heading: 3,
-      lives: 3
-    }
+    ghosts: [new Ghost('inky', 62, 7), new Ghost('binky', 62, 8), new Ghost('pinky', 64, 7), new Ghost('clyde', 64, 8)],
+    player: new Player()
   };
 }
 
@@ -50,17 +44,17 @@ function tick() {
   while (gameState.inputs.length){
     let i = gameState.inputs.shift();
     // Move player
-    if (i == 'a') { player.xIntent -= 1; }
-    if (i == 'd') { player.xIntent += 1; }
-    if (i == 'w') { player.yIntent -= 1; }
-    if (i == 's') { player.yIntent += 1; }
+    if (i == 'a') { player.intent.x -= 1; }
+    if (i == 'd') { player.intent.x += 1; }
+    if (i == 'w') { player.intent.y -= 1; }
+    if (i == 's') { player.intent.y += 1; }
 
-    if (gameState.field[player.yIntent][player.xIntent] !== 'W') {
-      player.x = player.xIntent;
-      player.y = player.yIntent;
+    if (gameState.field[player.intent.y][player.intent.x] !== 'W') {
+      player.x = player.intent.x;
+      player.y = player.intent.y;
     } else {
-      player.xIntent = player.x;
-      player.yIntent = player.y;
+      player.intent.x = player.x;
+      player.intent.y = player.y;
     }
     if (gameState.field[player.y][player.x] === 'D') {
       gameState.field[player.y][player.x] = 'O'
