@@ -166,8 +166,10 @@ function tick() {
 
   // Ghost movement
   gameState.ghosts.forEach(g => {
-    // Get all viable candidates. Remove where we just came from.
-    let candidates = getAdjacent(g.x, g.y).filter(coords => !(coords.x == g.previous.x && coords.y == g.previous.y));
+    // Get all viable candidates.
+    let candidates = getAdjacent(g.x, g.y)
+      .filter(coords => !(coords.x == g.previous.x && coords.y == g.previous.y)) // Remove where we just came from.
+      .filter(coords => gameState.field[coords.y][coords.x] !== 'W'); //Filter out walls
     let finalCandidate = candidates[0];
     g.previous = { x: g.x, y: g.y};
 
