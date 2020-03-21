@@ -170,7 +170,7 @@ function tick() {
     let candidates = getAdjacent(g.x, g.y)
       .filter(coords => !(coords.x == g.previous.x && coords.y == g.previous.y)) // Remove where we just came from.
       .filter(coords => gameState.field[coords.y][coords.x] !== 'W'); //Filter out walls
-    let finalCandidate = candidates[0];
+    let finalCandidate = candidates[Math.floor(Math.random()*candidates.length)];
     g.previous = { x: g.x, y: g.y};
 
     g.x = finalCandidate.x;
