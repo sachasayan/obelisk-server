@@ -32,7 +32,7 @@ function init (matrix){
     const starfield: Star[] = [];
 
     for (let x = 0; x < matrix.width()/2 ; x++) {
-      starfield.push(new Star(Math.random()*matrix.width(), 30));
+      starfield.push(new Star(Math.random()*matrix.width(), Math.random()*10));
     }
 
     matrix.afterSync((mat, dt, t) => {
@@ -41,7 +41,7 @@ function init (matrix){
 
       starfield.forEach(star => {
         star.step();
-        matrix.fgColor(0xFFFFFF).setPixel(star.x, Math.floor(star.y));
+        matrix.fgColor(palette(star.distance).num()).setPixel(star.x, Math.floor(star.y));
       });
 
       if(rocket){
