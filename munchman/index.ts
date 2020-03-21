@@ -26,7 +26,7 @@ let gameState: MunchGameState;
 function resetGame() {
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
-    field: gameSettings.grid.trim().split('\n').map(row => row.split(''));
+    field: gameSettings.grid.trim().split('\n').map(row => row.split('')),
     sickoMode: false,
     inputs: [],
     ghosts: [new Ghost('inky', 52, 7), new Ghost('binky', 53, 8), new Ghost('pinky', 54, 10), new Ghost('clyde', 50, 10)],
