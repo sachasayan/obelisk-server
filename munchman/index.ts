@@ -188,10 +188,10 @@ function ghostsTick(){
       .filter(coords => gameState.field[coords.y][coords.x] !== 'W'); //Filter out walls
     let finalCandidate = candidates[Math.floor(Math.random()*candidates.length)];
     g.previous = { x: g.x, y: g.y};
-
-    g.x = finalCandidate.x;
-    g.y = finalCandidate.y;
-
+    if (finalCandidate) {
+      g.x = finalCandidate.x;
+      g.y = finalCandidate.y;
+    }
   });
 
   setTimeout(ghostsTick, gameSettings.ghostsTick);
