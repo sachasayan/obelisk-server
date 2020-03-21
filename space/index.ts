@@ -44,14 +44,14 @@ function init (matrix){
         matrix.fgColor(palette(star.distance/10).num()).setPixel(star.x, Math.floor(star.y));
       });
 
-      if(rocket){
-        rocket.scan(0, 0, rocket.bitmap.width, rocket.bitmap.height, function(x, y, idx) {
-          let pc = rocket.getPixelColor(x, y);
-          if (pc % 256 == 255) {
-            matrix.fgColor( (pc - (pc % 256)) / 256).setPixel( x + (64-8), y);
-          }
-        });
-      }
+      // if(rocket){
+      //   rocket.scan(0, 0, rocket.bitmap.width, rocket.bitmap.height, function(x, y, idx) {
+      //     let pc = rocket.getPixelColor(x, y);
+      //     if (pc % 256 == 255) {
+      //       matrix.fgColor( (pc - (pc % 256)) / 256).setPixel( x + (64-8), y);
+      //     }
+      //   });
+      // }
 
       setTimeout(() => matrix.sync(), 40);
     });
