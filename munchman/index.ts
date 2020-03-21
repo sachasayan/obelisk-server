@@ -1,121 +1,32 @@
 import * as chroma from 'chroma-js';
 import * as Jimp from 'jimp';
 
-const baseColors = {
-  'wall':   0x1919A6,
-  'player': 0xFFFF00,
-  'inky':   0xFF0000,
-  'binky':  0xFFB8FF,
-  'pinky':  0x00FFFF,
-  'clyde':  0xFFB852,
-  'empty':  0x000000,
-  'dot':    0x040404
-};
+import {
+  BASE_COLORS,
+  STATUS,
+  MAP_LOOKUP,
+  TILES,
+  MunchGameSettings,
+  MunchGameState,
+  Ghost
+} from './types';
 
-let colors = {
-  'wall': chroma.scale([0, baseColors['wall']]),
-  'player': chroma.scale([0, baseColors['player']]),
-  'inky': chroma.scale([0, baseColors['inky']]),
-  'binky': chroma.scale([0, baseColors['binky']]),
-  'pinky': chroma.scale([0, baseColors['pinky']]),
-  'clyde': chroma.scale([0, baseColors['clyde']]),
-  'empty': chroma.scale([0, baseColors['empty']]),
-  'dot': chroma.scale([0x040404, baseColors['dot']]),
-};
-let grid = '';
+import { fade, colors } from './utils';
 
-
-enum TILES {
-  W = 'wall',
-  O = 'empty',
-  D = 'dot'
-};
-
-enum MAP_LOOKUP {
-  '#3f51b5' = 'W',
-  '#000000' = 'O',
-  '#333333' = 'O',
-  '#ffffff' = 'O',
-  '#00ff00' = 'W'
-}
-
-enum STATUS {
-  INTRO,
-  PLAYING_GAME,
-  WIN_SCREEN
-}
-
-class Ghost{
-  type: string;
-  x: number;
-  y: number;
-  previous: {
-    x: number,
-    y: number
-  };
-  status: string;
-
-  constructor(
-    t: string,
-    x: number,
-    y: number
-  ) {
-    this.type = t;
-    this.x = x;
-    this.y = y;
-    this.previous =  { x: x, y: y};
-  }
-}
-
-
-
-interface MunchGameState {
-  activeScreen: STATUS,
-  field: string[][],
-  sickoMode: boolean,
-  ghosts: Ghost[],
-  inputs: string[],
-  player: {
-    x: number,
-    y: number,
-    xIntent: number,
-    yIntent: number,
-    heading: number,
-    lives: number
-  }
-};
-
-interface MunchGameSettings {
-  speed: number,
-  ghostsTick: number
-}
+let matrix;
 
 let gameSettings: MunchGameSettings = {
+  grid: '',
   speed: 40,
   ghostsTick: 200
 };
 
 let gameState: MunchGameState;
 
-let matrix;
-
-function resetPlayer() {
-  gameState.player = {
-    x: 1,
-    y: 1,
-    xIntent: 1,
-    yIntent: 1,
-    heading: 3,
-    lives: gameState.player.lives-1,
-  }
-}
-
 function resetGame() {
-  let field = grid.trim().split('\n').map(row => row.split(''));
-
   gameState = {
     activeScreen: STATUS.PLAYING_GAME,
-    field: field,
+    field: gameSettings.grid.trim().split('\n').map(row => row.split(''));
     sickoMode: false,
     inputs: [],
     ghosts: [new Ghost('inky', 52, 7), new Ghost('binky', 53, 8), new Ghost('pinky', 54, 10), new Ghost('clyde', 50, 10)],
@@ -166,14 +77,12 @@ function tick() {
   // Hitting ghost? Die, sorry. :(
     gameState.ghosts.forEach(g => {
       if (g.x == player.x && g.y == player.y){
-        gameState.activeScreen = STATUS.WIN_SCREEN;
+        gameState.activeScreen = STATUS.PLAYING_GAME;
       }
     });
 
     setTimeout(tick, gameSettings.speed);
   }
-
-
 
 function ghostsTick(){
   let getAdjacent = (x, y) => {
@@ -197,13 +106,12 @@ function ghostsTick(){
   setTimeout(ghostsTick, gameSettings.ghostsTick);
 }
 
+function displayIntroScreen(){
+  // matrix.fgColor(matrix.bgColor()).fill().fgColor(0xFFFFFF);
+  // const font = fonts[matrix.font()];
+  // matrix.drawText(glyph.char, glyph.x, glyph.y);
+  // matrix.sync();
 
-
-function displayIntroScreen(){}
-
-
-let fade = (t, freq, offset) => {
- return Math.abs(Math.sin(  Math.PI * (t % freq / freq - offset) ));
 };
 
 function displayGameScreen(t: number){
@@ -212,19 +120,19 @@ function displayGameScreen(t: number){
   gameState.field.forEach((row, y) => {
     row.forEach((c, x) => {
     matrix
-      .fgColor(c === 'D' ? colors.dot(fade(t, 1000, (x / 128) )).num() : baseColors[TILES[c]])
+      .fgColor(c === 'D' ? colors.dot(fade(t, 1000, (x / 128) )).num() : BASE_COLORS[TILES[c]])
       .setPixel(x, y);
     });
   });
 
   // Display player
   matrix
-    .fgColor(colors.player(fade(t, 700, 0)).num())
+    .fgColor(BASE_COLORS.player)
     .setPixel(gameState.player.x, gameState.player.y);
   // Ghosts
   gameState.ghosts.forEach((g, i) => {
     matrix
-      .fgColor(colors[g.type](fade(t, 700, i * 0.25)).num())
+      .fgColor(colors[g.type](fade(t, 700, 0.25)).num())
       .setPixel(g.x, g.y);
   });
 
@@ -250,12 +158,12 @@ function init (m){
     Jimp.read('./munchman/munch-lvl.png')
     .then(img => {
         img.scan(0, 0, img.bitmap.width, img.bitmap.height, function(x, y, idx) {
-          grid += MAP_LOOKUP[chroma({
+          gameSettings.grid += MAP_LOOKUP[chroma({
             r : img.bitmap.data[idx + 0],
             g : img.bitmap.data[idx + 1],
             b : img.bitmap.data[idx + 2]
           }).hex()];
-          if (x == 127) { grid += '\n'; };
+          if (x == 127) { gameSettings.grid += '\n'; };
         });
         resetGame();
         setTimeout(tick, 2000);
@@ -273,9 +181,6 @@ function init (m){
     .catch(err => {
       console.error(err);
     });
-
-
-
 
     // Set inputs
     var stdin = process.stdin;
