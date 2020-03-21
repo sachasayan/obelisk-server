@@ -63,6 +63,7 @@ class Ghost{
     this.type = t;
     this.x = x;
     this.y = y;
+    this.previous =  { x: x, y: y};
   }
 }
 
