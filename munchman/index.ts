@@ -44,7 +44,7 @@ function tick() {
       .filter(coords => gameState.field[coords.y][coords.x] !== 'W'); //Filter out walls
     let finalCandidate = candidates[Math.floor(Math.random()*candidates.length)];
     if (finalCandidate) {
-      //gameState.inputs.push('x');
+      gameState.inputs.push('x');
       player.intent.x = finalCandidate.x - player.x;
       player.intent.y = finalCandidate.y - player.y;
     }
