@@ -67,9 +67,7 @@ class Ghost{
   }
 }
 
-interface MunchGameSettings {
-  speed: number,
-}
+
 
 interface MunchGameState {
   activeScreen: STATUS,
@@ -87,8 +85,14 @@ interface MunchGameState {
   }
 };
 
+interface MunchGameSettings {
+  speed: number,
+  ghostsTick: number
+}
+
 let gameSettings: MunchGameSettings = {
-  speed: 40
+  speed: 40,
+  ghostsTick: 200
 };
 
 let gameState: MunchGameState;
@@ -159,12 +163,24 @@ function tick() {
     setTimeout(() => { gameState.sickoMode = false}, 5000);
   }
 
+  // Hitting ghost? Die, sorry. :(
+    gameState.ghosts.forEach(g => {
+      if (g.x == player.x && g.y == player.y){
+        gameState.activeScreen = STATUS.WIN_SCREEN;
+      }
+    });
+
+    setTimeout(tick, gameSettings.speed);
+  }
+
+
+
+function ghostsTick(){
   let getAdjacent = (x, y) => {
       return [{x: x+1, y: y}, {x: x-1, y: y}, {x: x, y: y-1}, {x: x, y: y+1}]
         .filter(coords => coords.x >= 0 && coords.y >= 0 && coords.x <= matrix.width() && coords.y <= matrix.height());
   }
 
-  // Ghost movement
   gameState.ghosts.forEach(g => {
     // Get all viable candidates.
     let candidates = getAdjacent(g.x, g.y)
@@ -178,15 +194,10 @@ function tick() {
 
   });
 
-  // Hitting ghost? Die, sorry. :(
-  gameState.ghosts.forEach(g => {
-    if (g.x == player.x && g.y == player.y){
-      gameState.activeScreen = STATUS.WIN_SCREEN;
-    }
-  });
-
-  setTimeout(tick, gameSettings.speed);
+  setTimeout(ghostsTick, gameSettings.ghostsTick);
 }
+
+
 
 function displayIntroScreen(){}
 
@@ -248,6 +259,7 @@ function init (m){
         });
         resetGame();
         setTimeout(tick, 2000);
+        setTimeout(ghostsTick, 2000);
 
         matrix.afterSync((mat, dt, t) => {
           matrix.clear();
