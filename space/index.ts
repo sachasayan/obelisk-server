@@ -31,7 +31,7 @@ function init (matrix){
     let rocket;
     const starfield: Star[] = [];
 
-    for (let x = 0; x < matrix.width() ; x++) {
+    for (let x = 0; x < matrix.width() * 2 ; x++) {
       starfield.push(new Star(Math.random()*matrix.width(), Math.random()*10));
     }
 
