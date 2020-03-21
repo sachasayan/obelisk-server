@@ -40,13 +40,17 @@ interface MunchGameState {
   sickoMode: boolean,
   ghosts: Ghost[],
   inputs: string[],
-  player: Player;
+  player: Player,
+  animations: {
+    ghostOffset: number
+   }
 };
 
 interface MunchGameSettings {
   grid: string,
-  speed: number,
-  ghostsTick: number
+  playerTick: number,
+  ghostsTick: number,
+  demoMode: boolean
 }
 
 class Player {

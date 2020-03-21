@@ -18,8 +18,9 @@ let matrix;
 
 let gameSettings: MunchGameSettings = {
   grid: '',
-  speed: 40,
-  ghostsTick: 200
+  playerTick: 100,
+  ghostsTick: 200,
+  demoMode: true
 };
 
 let gameState: MunchGameState;
@@ -31,14 +32,22 @@ function resetGame() {
     sickoMode: false,
     inputs: [],
     ghosts: [new Ghost('inky', 62, 7), new Ghost('binky', 62, 8), new Ghost('pinky', 64, 7), new Ghost('clyde', 64, 8)],
-    player: new Player()
+    player: new Player(),
+    animations: {
+     ghostOffset: 0
+    }
   };
 }
 
-function tick() {
+
+//////////////////////
+// MOVEMENT
+//////////////////////
+
+function handlePlayerMovement() {
   let player = gameState.player;
-  // Player movement
-  if (!gameState.inputs.length){
+  // Autonomous Movement
+  if (!gameState.inputs.length && gameSettings.demoMode){
     let candidates = getAdjacent(player.x, player.y, matrix)
       .filter(coords => !(coords.x == player.previous.x && coords.y == player.previous.y)) // Remove where we just came from.
       .filter(coords => gameState.field[coords.y][coords.x] !== 'W'); //Filter out walls
@@ -74,24 +83,13 @@ function tick() {
     }
   }
 
-  // Hitting pill? Gobble it up.
-  if (gameState.field[player.y][player.x] === 'P') {
-    gameState.field[player.y][player.x] = 'O';
-    gameState.sickoMode = true;
-    setTimeout(() => { gameState.sickoMode = false}, 5000);
-  }
+  hitDetection();
+  setTimeout(handlePlayerMovement, gameSettings.playerTick);
+}
 
-  // Hitting ghost? Die, sorry. :(
-    gameState.ghosts.forEach(g => {
-      if (g.x == player.x && g.y == player.y){
-        gameState.activeScreen = STATUS.PLAYING_GAME;
-      }
-    });
+function handleGhostMovement(){
+  gameState.animations.ghostOffset = new Date().getTime();
 
-    setTimeout(tick, gameSettings.speed);
-  }
-
-function ghostsTick(){
   gameState.ghosts.forEach(g => {
     // Get all viable candidates.
     let candidates = getAdjacent(g.x, g.y, matrix)
@@ -104,9 +102,32 @@ function ghostsTick(){
       g.y = finalCandidate.y;
     }
   });
+  hitDetection();
 
-  setTimeout(ghostsTick, gameSettings.ghostsTick);
+  setTimeout(handleGhostMovement, gameSettings.ghostsTick);
 }
+
+function hitDetection() {
+  let {player, ghosts, field, sickoMode} = gameState;
+
+  // Did player hit a pill? Gobble it up.
+  if (field[player.y][player.x] === 'P') {
+    field[player.y][player.x] = 'O';
+    sickoMode = true;
+    setTimeout(() => { sickoMode = false}, 5000);
+  }
+
+  // Did player hit a ghost? Die, sorry. :(
+  ghosts.forEach(g => {
+    if (g.x == player.x && g.y == player.y){
+      gameState.activeScreen = STATUS.PLAYING_GAME;
+    }
+  });
+}
+
+//////////////////////
+// GAME SCREENS
+//////////////////////
 
 function displayIntroScreen(){
   // matrix.fgColor(matrix.bgColor()).fill().fgColor(0xFFFFFF);
@@ -116,13 +137,15 @@ function displayIntroScreen(){
 
 };
 
-function displayGameScreen(t: number){
+function displayGameScreen(){
 
   // Display field
   gameState.field.forEach((row, y) => {
     row.forEach((c, x) => {
+
+    //Previously... .fgColor(c === 'D' ? colors.dot(fade(t, 1000, (x / 128) )).num() : BASE_COLORS[TILES[c]])
     matrix
-      .fgColor(c === 'D' ? colors.dot(fade(t, 1000, (x / 128) )).num() : BASE_COLORS[TILES[c]])
+      .fgColor(BASE_COLORS[TILES[c]])
       .setPixel(x, y);
     });
   });
@@ -131,19 +154,20 @@ function displayGameScreen(t: number){
   matrix
     .fgColor(BASE_COLORS.player)
     .setPixel(gameState.player.x, gameState.player.y);
-  // Ghosts
+
+  // Display ghosts
   gameState.ghosts.forEach((g, i) => {
     matrix
-      .fgColor(colors[g.type](fade(t, 700, 0.25)).num())
+      .fgColor(colors[g.type](fade(gameState.animations.ghostOffset, gameSettings.ghostsTick, 0)).num())
       .setPixel(g.x, g.y);
   });
 
 }
 
-function gameLoop(t){
+function gameLoop(){
   switch(gameState.activeScreen) {
     case STATUS.PLAYING_GAME:
-      displayGameScreen(t);
+      displayGameScreen();
       break;
     case STATUS.INTRO:
       displayIntroScreen();
@@ -152,6 +176,11 @@ function gameLoop(t){
       break;
   }
 }
+
+//////////////////////
+// INIT
+//////////////////////
+
 
 function init (m){
     matrix = m;
@@ -168,17 +197,17 @@ function init (m){
           if (x == 127) { gameSettings.grid += '\n'; };
         });
         resetGame();
-        setTimeout(tick, 2000);
-        setTimeout(ghostsTick, 2000);
+        setTimeout(handlePlayerMovement, 2000);
+        setTimeout(handleGhostMovement, 2000);
 
         matrix.afterSync((mat, dt, t) => {
-          matrix.clear();
+        matrix.clear();
 
-          gameLoop(t);
+        gameLoop();
 
-          setTimeout(() => matrix.sync(), 0);
-        });
-        matrix.sync();
+        setTimeout(() => matrix.sync(), 0);
+      });
+      matrix.sync();
     })
     .catch(err => {
       console.error(err);
