@@ -137,7 +137,7 @@ function displayIntroScreen(){
 
 };
 
-function displayGameScreen(){
+function displayGameScreen(t: number){
 
   // Display field
   gameState.field.forEach((row, y) => {
@@ -158,16 +158,16 @@ function displayGameScreen(){
   // Display ghosts
   gameState.ghosts.forEach((g, i) => {
     matrix
-      .fgColor(colors[g.type](fade(gameState.animations.ghostOffset, gameSettings.ghostsTick, 0)).num())
+      .fgColor(colors[g.type](fade(t, gameSettings.ghostsTick, gameState.animations.ghostOffset)).num())
       .setPixel(g.x, g.y);
   });
 
 }
 
-function gameLoop(){
+function gameLoop(t: number){
   switch(gameState.activeScreen) {
     case STATUS.PLAYING_GAME:
-      displayGameScreen();
+      displayGameScreen(t);
       break;
     case STATUS.INTRO:
       displayIntroScreen();
@@ -203,7 +203,7 @@ function init (m){
         matrix.afterSync((mat, dt, t) => {
         matrix.clear();
 
-        gameLoop();
+        gameLoop(t);
 
         setTimeout(() => matrix.sync(), 0);
       });
