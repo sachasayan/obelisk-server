@@ -7,6 +7,11 @@ let fade = (t, freq, offset) => {
   return Math.abs(Math.sin(  Math.PI * (t % freq / freq - offset) ));
  };
 
+ let getAdjacent = (x, y, matrix) => {
+  return [{x: x+1, y: y}, {x: x-1, y: y}, {x: x, y: y-1}, {x: x, y: y+1}]
+    .filter(coords => coords.x >= 0 && coords.y >= 0 && coords.x <= matrix.width() && coords.y <= matrix.height());
+}
+
 let colors = {
   'wall': chroma.scale([0, BASE_COLORS['wall']]),
   'player': chroma.scale([0, BASE_COLORS['player']]),
@@ -18,4 +23,4 @@ let colors = {
   'dot': chroma.scale([0x040404, BASE_COLORS['dot']]),
 };
 
-export { fade, colors};
+export { fade, colors, getAdjacent};

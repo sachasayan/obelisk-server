@@ -12,7 +12,7 @@ import {
   Player
 } from './types';
 
-import { fade, colors } from './utils';
+import { fade, colors, getAdjacent } from './utils';
 
 let matrix;
 
@@ -39,8 +39,18 @@ function tick() {
   let player = gameState.player;
   // Player movement
   if (!gameState.inputs.length){
-    gameState.inputs.push('wasd'.charAt(Math.floor(Math.random()*4)));
+    let candidates = getAdjacent(player.x, player.y, matrix)
+      .filter(coords => !(coords.x == player.previous.x && coords.y == player.previous.y)) // Remove where we just came from.
+      .filter(coords => gameState.field[coords.y][coords.x] !== 'W'); //Filter out walls
+    let finalCandidate = candidates[Math.floor(Math.random()*candidates.length)];
+    if (finalCandidate) {
+      //gameState.inputs.push('x');
+      player.intent.x = finalCandidate.x - player.x;
+      player.intent.y = finalCandidate.y - player.y;
+    }
+
   }
+
   while (gameState.inputs.length){
     let i = gameState.inputs.shift();
     // Move player
@@ -50,12 +60,15 @@ function tick() {
     if (i == 's') { player.intent.y += 1; }
 
     if (gameState.field[player.intent.y][player.intent.x] !== 'W') {
+      player.previous.x = player.x;
+      player.previous.y = player.y;
       player.x = player.intent.x;
       player.y = player.intent.y;
     } else {
       player.intent.x = player.x;
       player.intent.y = player.y;
     }
+    // Eat dot
     if (gameState.field[player.y][player.x] === 'D') {
       gameState.field[player.y][player.x] = 'O'
     }
@@ -79,14 +92,9 @@ function tick() {
   }
 
 function ghostsTick(){
-  let getAdjacent = (x, y) => {
-      return [{x: x+1, y: y}, {x: x-1, y: y}, {x: x, y: y-1}, {x: x, y: y+1}]
-        .filter(coords => coords.x >= 0 && coords.y >= 0 && coords.x <= matrix.width() && coords.y <= matrix.height());
-  }
-
   gameState.ghosts.forEach(g => {
     // Get all viable candidates.
-    let candidates = getAdjacent(g.x, g.y)
+    let candidates = getAdjacent(g.x, g.y, matrix)
       .filter(coords => !(coords.x == g.previous.x && coords.y == g.previous.y)) // Remove where we just came from.
       .filter(coords => gameState.field[coords.y][coords.x] !== 'W'); //Filter out walls
     let finalCandidate = candidates[Math.floor(Math.random()*candidates.length)];
