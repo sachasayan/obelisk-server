@@ -54,7 +54,6 @@ class Player {
   y: number;
   intent: Coordinate;
   previous: Coordinate;
-  heading: number;
   lives: number;
 
   constructor() {
@@ -62,7 +61,6 @@ class Player {
     this.y = 1;
     this.intent = {x: 1, y: 1};
     this.previous = {x: 1, y: 1};
-    this.heading = 3;
     this.lives = 3;
   }
 }

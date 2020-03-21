@@ -43,10 +43,11 @@ function tick() {
       .filter(coords => !(coords.x == player.previous.x && coords.y == player.previous.y)) // Remove where we just came from.
       .filter(coords => gameState.field[coords.y][coords.x] !== 'W'); //Filter out walls
     let finalCandidate = candidates[Math.floor(Math.random()*candidates.length)];
+    console.log(`Candidates: ${candidates}  FinalCandidate: ${finalCandidate}`);
     if (finalCandidate) {
       gameState.inputs.push('x');
-      player.intent.x = finalCandidate.x - player.x;
-      player.intent.y = finalCandidate.y - player.y;
+      player.intent.x = finalCandidate.x;
+      player.intent.y = finalCandidate.y;
     }
 
   }
