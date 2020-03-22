@@ -49,7 +49,6 @@ enum CliMode {
   Exit = 'exit'
 }
 
-
 const createModeSelector = () => {
   return async () => {
     const { mode } = await prompts({
