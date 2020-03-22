@@ -127,8 +127,9 @@ function displayGameScreen(){
 
 
    matrix
-    .fgColor(0xFFFFFF)
-    .drawText("Hello", 0, 0);
+    .fgColor(0x333333)
+    .drawText(gameState.score[0], matrix.width()/2 - 12, 0)
+    .drawText(gameState.score[1], matrix.width()/2 + 2, 0);
 
 
   // Draw ball
