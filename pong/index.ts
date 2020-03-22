@@ -163,7 +163,7 @@ function init (m){
     for (var y = 0; y < matrix.height(); y++) {
       field[y] = [];
       for (var x = 0; x < matrix.width(); x++ ) {
-        field[y][x] = [0x002200, 0x001100, 0x001903, 0x0a110a][Math.floor(Math.random()*4)];
+        field[y][x] = [0x002000, 0x001100, 0x00190a, 0x0a110a][Math.floor(Math.random()*4)];
       }
   }
 
