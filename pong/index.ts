@@ -1,3 +1,11 @@
+import {
+  LedMatrix,
+  LedMatrixUtils,
+  Font,
+  FontInstance
+} from 'rpi-led-matrix';
+
+
 interface PongGameSettings {
   paddleRadius: number,
 };
@@ -117,6 +125,12 @@ function displayGameScreen(){
   matrix.drawLine(0, gameState.paddles[0] - paddleRadius, 0, gameState.paddles[0] + paddleRadius);
   matrix.drawLine(matrix.width()-1, gameState.paddles[1] - paddleRadius, matrix.width()-1, gameState.paddles[1] + paddleRadius);
 
+
+   matrix
+    .fgColor(0xFFFFFF)
+    .drawText("Hello", 0, 0);
+
+
   // Draw ball
   matrix
     .fgColor(0xBBFF00)
@@ -146,6 +160,12 @@ function gameLoop(){
 function init (m){
     matrix = m;
     matrix.clear();
+
+    const font = new Font('helvR12', `${process.cwd()}/fonts/helvR12.bdf`);
+    //const lines = LayoutUtils.textToLines(font, matrix.width(), 'Hello, matrix!');
+
+    matrix.font(font);
+
     resetGameState();
     setTimeout(tick, 3000);
 
