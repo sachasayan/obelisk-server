@@ -43,6 +43,9 @@ function tick(){
         .map(e => {e.coords})
         .reduce((a, b) => a.concat(b), []);
 
+
+      console.log(walls);
+
       // Get all recommended movement candidates.
       let candidates = getAdjacent(p.coords[0].x, p.coords[0].y, matrix)
         .filter(coord => !walls.some( (w) => (w.x == coord.x && w.y == coord.y) ) ); //Filter out walls
