@@ -3,7 +3,7 @@ let fade = (t, freq, offset) => {
  };
 
 let isViable = (coords, matrix) => {
-  return coords.x >= 0 && coords.y >= 0 && coords.x <= matrix.width() && coords.y <= matrix.height());
+  return coords.x >= 0 && coords.y >= 0 && coords.x <= matrix.width() && coords.y <= matrix.height();
 }
 
 let getAdjacent = (x, y, matrix) => {
