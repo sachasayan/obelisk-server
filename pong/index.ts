@@ -106,9 +106,9 @@ function displayGameScreen(){
   let { paddleRadius } = gameSettings;
 
   // Draw background:
-  matrix
-    .fgColor(0x002200)
-    .fill();
+  // matrix
+  //   .fgColor(0x002200)
+  //   .fill();
 
     for (var x = 0; x < matrix.width(); x++ ) {
       for (var y = 0; y < matrix.height(); y++) {
@@ -163,7 +163,7 @@ function init (m){
     for (var y = 0; y < matrix.height(); y++) {
       field[y] = [];
       for (var x = 0; x < matrix.width(); x++ ) {
-        field[y][x] = [0x001a00, 0x001100, 0x00190a, 0x0a110a][Math.floor(Math.random()*4)];
+        field[y][x] = [0x001100, 0x001100, 0x00110a, 0x0a110a ][Math.floor(Math.random()*4)];
       }
   }
 
