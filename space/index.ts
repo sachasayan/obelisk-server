@@ -17,7 +17,7 @@ class Star {
   }
 
   step(dt : number) {
-    this.y += 50 * (1-this.distance) * (dt/1000);
+    this.y += 100 * (1-this.distance) * (dt/1000);
     if (this.y > 16) {
       this.y -= 32;
     }
