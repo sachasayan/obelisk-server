@@ -46,7 +46,7 @@ function init (m){
       starfield.forEach(star => {
         star.step(dt);
         matrix.fgColor(palette(star.distance).num())
-        .drawLine(star.x, Math.floor(star.y), star.x, Math.floor((1 / star.distance) * 5 + star.y  ));
+        .drawLine(star.x, Math.floor(star.y), star.x, Math.floor( (1- star.distance) * 3 + star.y  ));
         //.setPixel(star.x, Math.floor(star.y));
       });
 
