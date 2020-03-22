@@ -104,19 +104,25 @@ function displayIntroScreen(){}
 function displayGameScreen(){
   let { paddleRadius } = gameSettings;
 
+  // Draw background:
+
+  matrix
+    .fgColor(0x00AA00)
+    .fill()
+    .fgColor(0x333333)
+    .drawRect(0,0,matrix.width(), matrix.height())
+    .drawRect(matrix.width()/2, matrix.height(), matrix.width()/2+1, matrix.height())
+
+
   // Draw paddles
   matrix.fgColor(0xFFFFFF);
   matrix.drawLine(0, gameState.paddles[0] - paddleRadius, 0, gameState.paddles[0] + paddleRadius);
   matrix.drawLine(matrix.width()-1, gameState.paddles[1] - paddleRadius, matrix.width()-1, gameState.paddles[1] + paddleRadius);
 
   // Draw ball
-  matrix.setPixel(Math.floor(gameState.ball.x), Math.floor(gameState.ball.y));
-
-  // Draw scores
-  matrix.fgColor(0x333333);
-  let midpoint = matrix.width() / 2;
-  matrix.drawLine(midpoint-1, 0, midpoint - 1 - gameState.score[0], 0);
-  matrix.drawLine(midpoint, 0, midpoint + gameState.score[1], 0);
+  matrix
+    .fgColor(0xBBFF00)
+    .setPixel(Math.floor(gameState.ball.x), Math.floor(gameState.ball.y));
 }
 
 function displayWinScreen(){
