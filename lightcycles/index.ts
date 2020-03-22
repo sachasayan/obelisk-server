@@ -54,14 +54,13 @@ function tick(){
             { x: p.coords[0].x + p.intent.x, y: p.coords[0].y + p.intent.y } :
             candidates[Math.floor(Math.random()*candidates.length)];
 
-      p.intent = {
-        x: finalCandidate.x - p.coords[0].x,
-        y: finalCandidate.y - p.coords[0].y
-      };
-
-
-      p.step();
-
+      if (finalCandidate){
+        p.intent = {
+          x: finalCandidate.x - p.coords[0].x,
+          y: finalCandidate.y - p.coords[0].y
+        };
+        p.step();
+      }
 
 
   });
