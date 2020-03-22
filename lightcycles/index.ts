@@ -14,7 +14,7 @@ let matrix;
 
 let gameSettings = {
   grid: '',
-  tick: (1000 / 10),
+  tick: (1000 / 20),
   demoMode: true
 };
 
