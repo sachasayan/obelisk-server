@@ -41,7 +41,7 @@ function init (m){
 
       starfield.forEach(star => {
         star.step();
-        matrix.fgColor(palette( Math.pow(100, star.distance)/100).num()).setPixel(star.x, Math.floor(star.y));
+        matrix.fgColor(palette( Math.pow(100, (star.distance/100)/100).num()).setPixel(star.x, Math.floor(star.y));
       });
 
       // if(rocket){
