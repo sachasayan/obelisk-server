@@ -14,7 +14,7 @@ let matrix;
 
 let gameSettings = {
   grid: '',
-  tick: (1000 / 5),
+  tick: (1000 / 10),
   demoMode: true
 };
 
@@ -42,9 +42,6 @@ function tick(){
       let walls = gameState.players
         .map(e => e.coords)
         .reduce((a, b) => a.concat(b), []);
-
-
-      console.log(walls);
 
       // Get all recommended movement candidates.
       let candidates = getAdjacent(p.coords[0].x, p.coords[0].y, matrix)
