@@ -2,7 +2,7 @@ import * as Jimp from 'jimp';
 import * as chroma from 'chroma-js';
 
 
-const palette = chroma.scale([0xCCCCCC, 0x111111]);
+const palette = chroma.scale([0x888888, 0x111111]);
 let matrix;
 
 class Star {
