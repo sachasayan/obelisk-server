@@ -17,7 +17,7 @@ class Star {
   }
 
   step(dt : number) {
-    this.y += 20 * (1-this.distance) * (dt/1000);
+    this.y += 50 * (1-this.distance) * (dt/1000);
     if (this.y > 16) {
       this.y -= 32;
     }
@@ -48,7 +48,12 @@ function init (m){
         rocket.scan(0, 0, rocket.bitmap.width, rocket.bitmap.height, function(x, y, idx) {
           let pc = rocket.getPixelColor(x, y);
           if (pc % 256 == 255) {
-            matrix.fgColor( (pc - (pc % 256)) / 256).setPixel( x + (64-8) + Math.round(5 * Math.sin(0.001 * Math.PI * t)), y);
+            matrix
+              .fgColor( (pc - (pc % 256)) / 256)
+              .setPixel(
+                x + (64-8) + Math.round(5 * Math.sin(0.001 * Math.PI * t)),
+                y + Math.round(5 * Math.sin(0.01 * Math.PI * t)),
+              );
           }
         });
       }
