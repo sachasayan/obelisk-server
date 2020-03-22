@@ -11,13 +11,13 @@ class Star {
   x: number;
 
   constructor() {
-    this.distance = 1 + Math.random()*10
+    this.distance = 1 + Math.random()*100
     this.x = Math.random()* matrix.width()
     this.y = Math.random() * 16;
   }
 
   step() {
-    this.y += 1 / this.distance;
+    this.y += 100 / this.distance;
     if (this.y > 16) {
       this.y -= 32;
     }
@@ -41,17 +41,17 @@ function init (m){
 
       starfield.forEach(star => {
         star.step();
-        matrix.fgColor(palette(star.distance/10).num()).setPixel(star.x, Math.floor(star.y));
+        matrix.fgColor(palette(star.distance/100).num()).setPixel(star.x, Math.floor(star.y));
       });
 
-      if(rocket){
-        rocket.scan(0, 0, rocket.bitmap.width, rocket.bitmap.height, function(x, y, idx) {
-          let pc = rocket.getPixelColor(x, y);
-          if (pc % 256 == 255) {
-            matrix.fgColor( (pc - (pc % 256)) / 256).setPixel( x + (64-8), y);
-          }
-        });
-      }
+      // if(rocket){
+      //   rocket.scan(0, 0, rocket.bitmap.width, rocket.bitmap.height, function(x, y, idx) {
+      //     let pc = rocket.getPixelColor(x, y);
+      //     if (pc % 256 == 255) {
+      //       matrix.fgColor( (pc - (pc % 256)) / 256).setPixel( x + (64-8), y);
+      //     }
+      //   });
+      // }
 
       setTimeout(() => matrix.sync(), 40);
     });
