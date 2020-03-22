@@ -19,7 +19,6 @@ interface PongGameState {
     velocity: number
   }
 };
-let field;
 
 let gameSettings: PongGameSettings = {
   paddleRadius: 1
@@ -106,17 +105,9 @@ function displayGameScreen(){
   let { paddleRadius } = gameSettings;
 
   // Draw background:
-  // matrix
-  //   .fgColor(0x002200)
-  //   .fill();
-
-    for (var x = 0; x < matrix.width(); x++ ) {
-      for (var y = 0; y < matrix.height(); y++) {
-        matrix
-          .fgColor(field[y][x])
-          .setPixel(x, y);
-      }
-  }
+  matrix
+    .fgColor(0x002200)
+    .fill();
 
   matrix
     .fgColor(0x333333)
@@ -159,14 +150,6 @@ function init (m){
     matrix.clear();
     resetGameState();
     setTimeout(tick, 3000);
-    field = [];
-    for (var y = 0; y < matrix.height(); y++) {
-      field[y] = [];
-      for (var x = 0; x < matrix.width(); x++ ) {
-        field[y][x] = [0x001a00, 0x001400, 0x00110a, 0x0a110a ][Math.floor(Math.random()*2)];
-      }
-  }
-
 
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
