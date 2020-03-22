@@ -118,8 +118,6 @@ function init (m){
     matrix = m;
     matrix.clear();
 
-    setTimeout(tick, 1000);
-
     // Render loop
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
@@ -128,6 +126,9 @@ function init (m){
 
       setTimeout(() => matrix.sync(), 0);
     });
+
+    setTimeout(tick, 1000);
+    matrix.sync();
 
 }
 
