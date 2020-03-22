@@ -51,10 +51,13 @@ function init (m){
             matrix
               .fgColor( (pc - (pc % 256)) / 256)
               .setPixel(
-                x + (64-8) +
-                  Math.round(5 * Math.sin(0.001 * Math.PI * t)) +
-                  Math.round(3 * Math.sin(0.004 * Math.PI * t)),
-                y + 1 + Math.round(1 * Math.sin(0.0002 * Math.PI * t)),
+                x +
+                  (64 - 8) +
+                  Math.round(5 * Math.sin(1 * Math.PI * (t/1000))) + // Freq: 1/s, Spread: 5px
+                  Math.round(3 * Math.sin(2 * Math.PI * (t/1000))), // Freq: 2/s, Spread: 3px
+                y +
+                  1 +
+                  Math.round(1 * Math.sin(2 * Math.PI * (t/1000))), // Freq: 2/s, Spread: 3px
               );
           }
         });
