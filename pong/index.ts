@@ -69,13 +69,16 @@ function tick() {
   ball.x += Math.sin(Math.PI*ball.heading*2);
   ball.y += Math.cos(Math.PI*ball.heading*2);
   // Hitting edges? Apply reflection
+  let reflect = () => {
+    ball.heading = ball.heading < 0.5 ? 0.5 - ball.heading : 1.5 - ball.heading;
+  }
   if (ball.y < 0){
-    ball.y = 0 - ball.x;
-    ball.heading < 0.5 ? ball.heading = 0.5 - ball.heading : ball.heading = 1.5 - ball.heading;
+    ball.y = 0 - ball.y;
+    reflect();
   };
   if (ball.y >= matrix.height()){
-    ball.y = matrix.height - (ball.y - matrix.height);
-    ball.heading < 0.5 ? ball.heading = 0.5 - ball.heading : ball.heading = 1.5 - ball.heading;
+    ball.y = matrix.height() - (ball.y - matrix.height());
+    reflect();
   };
 
   // Did we hit a paddle? Reflect x.
@@ -104,15 +107,10 @@ function displayIntroScreen(){}
 function displayGameScreen(){
   let { paddleRadius } = gameSettings;
 
-  // Draw background:
-  matrix
-    .fgColor(0x002200)
-    .fill();
-
   matrix
     .fgColor(0x333333)
     .drawRect(0,0, matrix.width()-1, matrix.height()-1)
-    .drawRect(matrix.width()/2-1, 0, matrix.width()/2, matrix.height());
+    .drawRect(matrix.width()/2-1, 0, matrix.width()/2+1, matrix.height());
 
   // Draw paddles
   matrix.fgColor(0xFFFFFF);
