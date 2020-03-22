@@ -40,7 +40,7 @@ function tick(){
 
       // We'll use this in a moment to attempt to rule out any decisions that would be fatal
       let walls = gameState.players
-        .map(e => {e.coords})
+        .map(e => e.coords)
         .reduce((a, b) => a.concat(b), []);
 
 
