@@ -105,10 +105,17 @@ function displayGameScreen(){
   let { paddleRadius } = gameSettings;
 
   // Draw background:
-// .fgColor([0x001100, 0x001100, 0x001103, 0x0a110a][Math.floor(Math.random()*4)] )
   matrix
     .fgColor(0x002200)
     .fill();
+
+  for (var x = 0; x < matrix.width(); x++ ) {
+      for (var y = 0; y < matrix.height(); y++) {
+        matrix
+          .fgColor([0x001100, 0x001100, 0x001103, 0x0a110a][Math.floor(Math.random()*4)] )
+          .setPixel(x, y);
+      }
+  }
 
   matrix
     .fgColor(0x333333)
