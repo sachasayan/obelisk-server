@@ -1,9 +1,13 @@
 import * as Jimp from 'jimp';
 import * as chroma from 'chroma-js';
 
+let matrix;
+
 
 const palette = chroma.scale([0xFFFFFF, 0x111111]);
-let matrix;
+const settings = {
+  starDensity: 2
+};
 
 class Star {
   distance: number; // Distance (from camera) affects brightness and speed
@@ -31,7 +35,7 @@ function init (m){
     let rocket;
     const starfield: Star[] = [];
 
-    for (let x = 0; x < matrix.width() * 2 ; x++) {
+    for (let x = 0; x < matrix.width() * settings.starDensity ; x++) {
       starfield.push(new Star());
     }
 
@@ -41,7 +45,9 @@ function init (m){
 
       starfield.forEach(star => {
         star.step(dt);
-        matrix.fgColor(palette(star.distance).num()).setPixel(star.x, Math.floor(star.y));
+        matrix.fgColor(palette(star.distance).num())
+        .drawLine(star.x, Math.floor(star.y), star.x, Math.floor((1 / star.distance) * 5 + star.y  ));
+        //.setPixel(star.x, Math.floor(star.y));
       });
 
       if(rocket){
