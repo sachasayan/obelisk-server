@@ -45,7 +45,7 @@ function resetGameState() {
     ball: {
       x: (Math.floor(matrix.width()/2)),
       y: (Math.floor(matrix.height()/2)),
-      heading: 0.75, // (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
+      heading: (Math.random() < 0.5 ? 0.25 : 0.75) + ((Math.random() * 0.25) - 0.125), // (Math.random() * 0.25) + 0.125 + Math.random() < 0.5 ? 0 : 0.5,   // A random value within 45º of straight, randomly left or right.
       velocity: 32, // in pixels per second
     },
   }
