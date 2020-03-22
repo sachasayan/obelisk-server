@@ -47,7 +47,7 @@ function tick(){
       let candidates = getAdjacent(p.coords[0].x, p.coords[0].y, matrix)
         .filter(coord => !walls.some( (w) => (w.x == coord.x && w.y == coord.y) ) ); //Filter out walls
 
-      let finalCandidate = candidates.some( (coord) => ( coord.x == p.coords[0].x + p.intent.x && coord.y == p.coords[0].y + p.intent.y ) ) ?
+      let finalCandidate = candidates.some( (coord) => ( coord.x == p.coords[0].x + p.intent.x && coord.y == p.coords[0].y + p.intent.y ) ) && Math.random() > 0.05 ?
             { x: p.coords[0].x + p.intent.x, y: p.coords[0].y + p.intent.y } :
             candidates[Math.floor(Math.random()*candidates.length)];
 
