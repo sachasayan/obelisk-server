@@ -2,7 +2,7 @@ import * as Jimp from 'jimp';
 import * as chroma from 'chroma-js';
 
 
-const palette = chroma.scale([0x888888, 0x111111]);
+const palette = chroma.scale([0xFFFFFF, 0x111111]);
 let matrix;
 
 class Star {
@@ -17,7 +17,7 @@ class Star {
   }
 
   step(dt : number) {
-    this.y += 10 * (1-this.distance) * (dt/1000);
+    this.y += 20 * (1-this.distance) * (dt/1000);
     if (this.y > 16) {
       this.y -= 32;
     }
