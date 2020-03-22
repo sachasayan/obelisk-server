@@ -18,16 +18,20 @@ let gameSettings = {
   demoMode: true
 };
 
-let gameState = {
-  activeScreen: STATUS.PLAYING_GAME,
-  inputs: [],
-  players: [
-    new LightCycle(0xDF740C, { x: 62, y: 7}, -1, 0),
-    new LightCycle(0xFFE64D, { x: 62, y: 8}, -1, 0),
-    new LightCycle(0xE6FFFF, { x: 64, y: 7}, 1, 0),
-    new LightCycle(0x6FC3DF, { x: 64, y: 8}, 1, 0)
-  ]
-};
+let gameState;
+
+function resetGame(){
+  gameState = {
+    activeScreen: STATUS.PLAYING_GAME,
+    inputs: [],
+    players: [
+      new LightCycle(0xDF740C, { x: 62, y: 7}, -1, 0),
+      new LightCycle(0xFFE64D, { x: 62, y: 8}, -1, 0),
+      new LightCycle(0xE6FFFF, { x: 64, y: 7}, 1, 0),
+      new LightCycle(0x6FC3DF, { x: 64, y: 8}, 1, 0)
+    ]
+  };
+}
 
 //////////////////////
 // MOVEMENT
@@ -47,7 +51,7 @@ function tick(){
       let candidates = getAdjacent(p.coords[0].x, p.coords[0].y, matrix)
         .filter(coord => !walls.some( (w) => (w.x == coord.x && w.y == coord.y) ) ); //Filter out walls
 
-      let finalCandidate = candidates.some( (coord) => ( coord.x == p.coords[0].x + p.intent.x && coord.y == p.coords[0].y + p.intent.y ) ) && Math.random() > 0.05 ?
+      let finalCandidate = candidates.some( (coord) => ( coord.x == p.coords[0].x + p.intent.x && coord.y == p.coords[0].y + p.intent.y ) ) && Math.random() > 0.01 ?
             { x: p.coords[0].x + p.intent.x, y: p.coords[0].y + p.intent.y } :
             candidates[Math.floor(Math.random()*candidates.length)];
 
@@ -57,25 +61,15 @@ function tick(){
           y: finalCandidate.y - p.coords[0].y
         };
         p.step();
+      } else {
+        p.status = 'dead'
       }
 
+      !gameState.players.some(p => p.status == 'alive') ? resetGame() : null;
 
   });
-  hitDetection();
   setTimeout(tick, gameSettings.tick);
 }
-
-function hitDetection() {
-  // let {} = gameState;
-
-  // // Did player hit a ghost? Die, sorry. :(
-  // ghosts.forEach(g => {
-  //   if (g.x == player.x && g.y == player.y){
-  //     gameState.activeScreen = STATUS.PLAYING_GAME;
-  //   }
-  // });
-}
-
 //////////////////////
 // GAME SCREENS
 //////////////////////
@@ -123,6 +117,7 @@ function init (m){
       setTimeout(() => matrix.sync(), 0);
     });
 
+    resetGame();
     setTimeout(tick, 1000);
     matrix.sync();
 
