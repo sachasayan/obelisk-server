@@ -112,7 +112,7 @@ function displayGameScreen(){
   for (var x = 0; x < matrix.width(); x++ ) {
       for (var y = 0; y < matrix.height(); y++) {
         matrix
-          .fgColor([0x001100, 0x001100, 0x001103, 0x0a110a][Math.floor(Math.random()*4)] )
+          .fgColor([0x002200, 0x001100, 0x001903, 0x0a110a][Math.floor(Math.random()*4)] )
           .setPixel(x, y);
       }
   }
