@@ -53,7 +53,7 @@ function init (m){
               .setPixel(
                 x +
                   (64 - 8) +
-                  Math.round(0.5 * Math.sin(5 * Math.PI * (t/1000))), // + // Freq: 0.5, Spread: 5px
+                  Math.round(5 * Math.sin(0.5 * Math.PI * (t/1000))), // + // Spread: 5px, Freq: 0.5
                 y +
                   1 +
                   Math.round(1 * Math.sin(2 * Math.PI * (t/1000))) // Freq: 2/s, Spread: 3px
