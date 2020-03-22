@@ -6,7 +6,7 @@ let matrix;
 
 const palette = chroma.scale([0xFFFFFF, 0x111111]);
 const settings = {
-  starDensity: 2
+  starDensity: 1
 };
 
 class Star {
