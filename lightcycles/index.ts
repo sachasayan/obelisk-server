@@ -65,7 +65,7 @@ function tick(){
         p.status = 'dead';
       }
 
-      // gameState.players.some(p => p.status == 'alive') ? null : resetGame();
+      gameState.players.some(p => p.status == 'alive') ? null : resetGame();
 
   });
   setTimeout(tick, gameSettings.tick);

@@ -11,7 +11,7 @@ interface Coords {
 }
 
 class LightCycle {
-  status: 'active' | 'dead';
+  status: 'alive' | 'dead';
   coords: Coords[];
   intent: Coords;
   maxLength: number;
@@ -22,7 +22,7 @@ class LightCycle {
     intentx: number,
     intenty: number
   ) {
-    this.status = 'active';
+    this.status = 'alive';
     this.color = color;
     this.coords = [];
     this.coords.push(initialCoords);
