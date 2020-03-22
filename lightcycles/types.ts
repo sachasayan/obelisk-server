@@ -22,6 +22,7 @@ class LightCycle {
     intenty: number
   ) {
     this.color = color;
+    this.coords = [];
     this.coords.push(initialCoords);
     this.intent = {x: intentx, y: intenty};
     this.maxLength = 20;
