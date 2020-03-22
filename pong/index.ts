@@ -159,7 +159,7 @@ function init (m){
     matrix.clear();
     resetGameState();
     setTimeout(tick, 3000);
-
+    field = [];
     for (var y = 0; y < matrix.height(); y++) {
       field[y] = [];
       for (var x = 0; x < matrix.width(); x++ ) {
