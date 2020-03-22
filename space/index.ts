@@ -52,7 +52,7 @@ function init (m){
               .fgColor( (pc - (pc % 256)) / 256)
               .setPixel(
                 x + (64-8) + Math.round(5 * Math.sin(0.001 * Math.PI * t)),
-                y + Math.round(2 * Math.sin(0.005 * Math.PI * t)),
+                y + 1 + Math.round(2 * Math.sin(0.0002 * Math.PI * t)),
               );
           }
         });
