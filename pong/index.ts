@@ -107,12 +107,11 @@ function displayGameScreen(){
   // Draw background:
 
   matrix
-    .fgColor(0x00AA00)
+    .fgColor(0x004400)
     .fill()
     .fgColor(0x333333)
     .drawRect(0,0,matrix.width(), matrix.height())
     .drawRect(matrix.width()/2, matrix.height(), matrix.width()/2+1, matrix.height())
-
 
   // Draw paddles
   matrix.fgColor(0xFFFFFF);
