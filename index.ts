@@ -68,7 +68,7 @@ const createModeSelector = () => {
         { value: CliMode.Space, title: '🚀 => Space Adventure' },
         { value: CliMode.Pulse, title:'🕺 => Twinkle' },
         { value: CliMode.Exit, title: '🚪 => Exit' },
-        { value: CliMode.Exit, title: '🟠 => Sunlight' },
+        { value: CliMode.Sunlight, title: '🟠 => Sunlight' },
         { value: CliMode.Test, title:  '(Test Mode)' },
       ],
     });
