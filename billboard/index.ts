@@ -8,7 +8,7 @@ let font;
 function displayGameScreen(){
 
   let time = new Date();
-  time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  time.toLocaleString('en-US', { timeZone: 'EDT', hour: 'numeric', minute: 'numeric', hour12: true });
 
   matrix
     .fgColor(0x333333)
