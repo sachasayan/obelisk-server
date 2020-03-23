@@ -31,7 +31,7 @@ function init (m){
 
       matrix.font(font);
 
-      setTimeout(() => matrix.sync(), 100);
+      matrix.sync();
     })
 
 
