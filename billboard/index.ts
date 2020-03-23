@@ -14,20 +14,27 @@ function init (m){
     matrix = m;
     matrix.clear();
 
-    const font = new Font('helvR12', `${process.cwd()}/fonts/helvR12.bdf`);
-    //const lines = LayoutUtils.textToLines(font, matrix.width(), 'Hello, matrix!');
-
-    matrix.font(font);
-
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
 
+
+      (async () => {
       displayGameScreen();
+      })
 
       setTimeout(() => matrix.sync(), 0);
     });
 
-    matrix.sync();
+    (async () => {
+      const font = new Font('helvR12', `${process.cwd()}/fonts/helvR12.bdf`);
+      //const lines = LayoutUtils.textToLines(font, matrix.width(), 'Hello, matrix!');
+
+      matrix.font(font);
+
+      setTimeout(() => matrix.sync(), 100);
+    })
+
+
 }
 
 let Billboard = { init };
