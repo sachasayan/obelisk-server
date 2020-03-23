@@ -8,11 +8,11 @@ let font;
 function displayGameScreen(){
 
   let time = new Date();
-  time.toLocaleString('en-US', { timeZone: 'EDT', hour: 'numeric', minute: 'numeric', hour12: true });
+  let formattedTime = time.toLocaleString('en-US', { timeZone: 'EDT', hour: 'numeric', minute: 'numeric', hour12: true });
 
   matrix
     .fgColor(0x333333)
-    .drawText(String(time), 2, 2);
+    .drawText(String(formattedTime), 2, 2);
 }
 
 function init (m){
