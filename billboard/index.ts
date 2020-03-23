@@ -48,7 +48,7 @@ function displayGameScreen(){
         matrix
           .fgColor( (pc - (pc % 256)) / 256)
           .setPixel(
-            x + (50 - 12),
+            x + (112 - 12),
             y + 4
           );
       }
@@ -58,7 +58,7 @@ function displayGameScreen(){
   matrix
     .font(fonts[1])
     .fgColor(0x222222)
-    .drawText(String(nextbusInfo) + 'm', 65, 4);
+    .drawText(String(nextbusInfo) + 'm', 116, 4);
 }
 
 function init (m){
