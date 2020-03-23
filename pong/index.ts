@@ -130,8 +130,8 @@ function displayGameScreen(){
 
    matrix
     .fgColor(0x222222)
-    .drawText(String(gameState.score[1]), matrix.width()/2 - 6, 0)
-    .drawText(String(gameState.score[0]), matrix.width()/2, 0);
+    .drawText(String(gameState.score[1]), matrix.width()/2 - 7 - 2, 0)
+    .drawText(String(gameState.score[0]), matrix.width()/2 + 2,  0);
 
 
   // Draw ball
