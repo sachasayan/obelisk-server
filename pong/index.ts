@@ -35,6 +35,7 @@ let gameSettings: PongGameSettings = {
 let gameState: PongGameState;
 
 let matrix: any;
+let font;
 
 function resetBall() {
   gameState.ball = {
@@ -162,7 +163,7 @@ function init (m){
     matrix = m;
     matrix.clear();
 
-    const font = new Font('helvR12', `${process.cwd()}/fonts/helvR12.bdf`);
+    font = new Font('helvR12', `${process.cwd()}/fonts/helvR12.bdf`);
     //const lines = LayoutUtils.textToLines(font, matrix.width(), 'Hello, matrix!');
 
     matrix.font(font);
