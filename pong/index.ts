@@ -117,7 +117,7 @@ function displayGameScreen(){
   let { paddleRadius } = gameSettings;
 
   matrix
-    .fgColor(0x111111)
+    .fgColor(0x222222)
     .drawRect(0,0, matrix.width()-1, matrix.height()-1)
     .drawRect(matrix.width()/2-1, 0, matrix.width()/2+1, matrix.height());
 
@@ -128,7 +128,7 @@ function displayGameScreen(){
 
 
    matrix
-    .fgColor(0x111111)
+    .fgColor(0x222222)
     .drawText(String(gameState.score[1]), matrix.width()/2 - 6, 0)
     .drawText(String(gameState.score[0]), matrix.width()/2, 0);
 
