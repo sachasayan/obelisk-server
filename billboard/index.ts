@@ -1,3 +1,5 @@
+import * as Jimp from 'jimp';
+
 import {
   Font
 } from 'rpi-led-matrix';
@@ -6,6 +8,7 @@ const http = require('http');
 let matrix: any;
 let fonts;
 let nextbusInfo = '';
+let streetcar;
 
 
 let tick = () => {
@@ -38,10 +41,28 @@ function displayGameScreen(){
     .fgColor(0x333333)
     .drawText(String(formattedTime), 2, 0);
 
+  if(streetcar){
+    streetcar.scan(0, 0, streetcar.bitmap.width, streetcar.bitmap.height, function(x, y, idx) {
+      let pc = streetcar.getPixelColor(x, y);
+      if (pc % 256 == 255) {
+        matrix
+          .fgColor( (pc - (pc % 256)) / 256)
+          .setPixel(
+            x +
+              (50 - 12) +
+              Math.round(5 * Math.sin(0.5 * Math.PI * (t/1000))), // + // Spread: 5px, Freq: 0.5
+            y +
+              4 +
+              Math.round(1 * Math.sin(2 * Math.PI * (t/1000))) // Freq: 2/s, Spread: 3px
+          );
+      }
+    });
+  }
+
   matrix
     .font(fonts[1])
-    .fgColor(0x333333)
-    .drawText("Next bus: " + String(nextbusInfo), 65, 0);
+    .fgColor(0x222222)
+    .drawText(String(nextbusInfo) + 'm', 65, 4);
 }
 
 function init (m){
@@ -64,8 +85,20 @@ function init (m){
       setTimeout(() => matrix.sync(), 0);
     });
 
-    matrix.sync();
-    setTimeout(tick, 1000);
+
+    Jimp.read('./billboard/streetcar.png')
+    .then(img => {
+      streetcar = img;
+      matrix.sync();
+      setTimeout(tick, 1000);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+
+
+
+
 }
 
 let Billboard = { init };
