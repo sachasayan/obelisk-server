@@ -48,12 +48,8 @@ function displayGameScreen(){
         matrix
           .fgColor( (pc - (pc % 256)) / 256)
           .setPixel(
-            x +
-              (50 - 12) +
-              Math.round(5 * Math.sin(0.5 * Math.PI * (t/1000))), // + // Spread: 5px, Freq: 0.5
-            y +
-              4 +
-              Math.round(1 * Math.sin(2 * Math.PI * (t/1000))) // Freq: 2/s, Spread: 3px
+            x + (50 - 12),
+            y + 4
           );
       }
     });
