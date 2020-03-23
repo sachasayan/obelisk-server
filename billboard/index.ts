@@ -1,9 +1,32 @@
 import {
   Font
 } from 'rpi-led-matrix';
+const http = require('http');
 
 let matrix: any;
 let font;
+let nextbusInfo = '';
+
+
+let tick = () => {
+  http.get('http://webservices.nextbus.com/service/publicJSONFeed?command=predictions&a=ttc&stopId=0816', (resp) => {
+    let data = '';
+
+    // A chunk of data has been recieved.
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    // The whole response has been received. Print out the result.
+    resp.on('end', () => {
+      let departuresByRoute = JSON
+                    .parse(data).predictions
+                    .filter(route => !!route.direction && !!route.direction.prediction);
+      nextbusInfo = departuresByRoute.length > 0 ? departuresByRoute[0].direction.prediction[0].minutes : null;
+    });
+  });
+  setTimeout(tick, 60*1000);
+}
 
 function displayGameScreen(){
 
@@ -12,7 +35,8 @@ function displayGameScreen(){
 
   matrix
     .fgColor(0x333333)
-    .drawText(String(formattedTime), 2, 2);
+    .drawText(String(formattedTime), 2, 0)
+    .drawText(String(nextbusInfo), 30, 0);
 }
 
 function init (m){
@@ -33,6 +57,7 @@ function init (m){
     });
 
     matrix.sync();
+    setTimeout(tick, 1000);
 }
 
 let Billboard = { init };
