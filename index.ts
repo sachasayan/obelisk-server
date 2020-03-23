@@ -8,12 +8,13 @@ import {
 } from 'rpi-led-matrix';
 
 import { Billboard } from './billboard';
-import { Test } from './test';
-import { Munchman } from './munchman';
-import { Space } from './space';
-import { Pulse } from './pulse';
-import { Pong } from './pong';
 import { Lightcycles } from './lightcycles';
+import { Munchman } from './munchman';
+import { Pong } from './pong';
+import { Pulse } from './pulse';
+import { Space } from './space';
+import { Sunlight } from './sunlight';
+import { Test } from './test';
 import * as prompts from 'prompts';
 
 export const matrixOptions: MatrixOptions = {
@@ -41,13 +42,14 @@ const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
 enum CliMode {
   Billboard = 'billboard',
-  Test = 'test',
-  Pac = 'pac',
-  Space = 'space',
-  Pulse = 'pulse',
-  Pong = 'pong',
-  Munchman = 'munchman',
   Lightcycles = 'lightcycles',
+  Munchman = 'munchman',
+  Pac = 'pac',
+  Pong = 'pong',
+  Pulse = 'pulse',
+  Space = 'space',
+  Sunlight = 'sunlight',
+  Test = 'test',
   Exit = 'exit'
 }
 
@@ -66,6 +68,7 @@ const createModeSelector = () => {
         { value: CliMode.Space, title: '🚀 => Space Adventure' },
         { value: CliMode.Pulse, title:'🕺 => Twinkle' },
         { value: CliMode.Exit, title: '🚪 => Exit' },
+        { value: CliMode.Exit, title: '🟠 => Sunlight' },
         { value: CliMode.Test, title:  '(Test Mode)' },
       ],
     });
@@ -99,6 +102,11 @@ const chooseMode = createModeSelector();
         case CliMode.Space: {
           matrix.afterSync(() => {});
           Space.init(matrix);
+          break;
+        }
+        case CliMode.Sunlight: {
+          matrix.afterSync(() => {});
+          Sunlight.init(matrix);
           break;
         }
         case CliMode.Pulse: {
