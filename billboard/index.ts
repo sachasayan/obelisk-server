@@ -36,7 +36,7 @@ function displayGameScreen(){
   matrix
     .fgColor(0x333333)
     .drawText(String(formattedTime), 2, 0)
-    .drawText(String(nextbusInfo), 30, 0);
+    .drawText(String(nextbusInfo), 65, 0);
 }
 
 function init (m){
