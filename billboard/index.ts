@@ -4,7 +4,7 @@ import {
 const http = require('http');
 
 let matrix: any;
-let font;
+let fonts;
 let nextbusInfo = '';
 
 
@@ -34,19 +34,27 @@ function displayGameScreen(){
   let formattedTime = time.toLocaleString('en-US', { timeZone: 'America/Toronto', hour: 'numeric', minute: 'numeric', hour12: true });
 
   matrix
+    .font(fonts[0])
     .fgColor(0x333333)
-    .drawText(String(formattedTime), 2, 0)
-    .drawText(String(nextbusInfo), 65, 0);
+    .drawText(String(formattedTime), 2, 0);
+
+  matrix
+    .font(fonts[1])
+    .fgColor(0x333333)
+    .drawText("Next bus: " + String(nextbusInfo), 65, 0);
 }
 
 function init (m){
     matrix = m;
     matrix.clear();
 
-    font = new Font('helvR12', `${process.cwd()}/fonts/helvR12.bdf`);
+    fonts = [
+      new Font('helvR12', `${process.cwd()}/fonts/helvR12.bdf`),
+      new Font('5x7', `${process.cwd()}/fonts/5x7.bdf`)
+    ];
     //const lines = LayoutUtils.textToLines(font, matrix.width(), 'Hello, matrix!');
 
-    matrix.font(font);
+
 
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
