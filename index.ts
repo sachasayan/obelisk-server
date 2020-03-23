@@ -7,6 +7,7 @@ import {
   RuntimeOptions,
 } from 'rpi-led-matrix';
 
+import { Billboard } from './billboard';
 import { Test } from './test';
 import { Munchman } from './munchman';
 import { Space } from './space';
@@ -39,6 +40,7 @@ export const runtimeOptions: RuntimeOptions = {
 const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
 
 enum CliMode {
+  Billboard = 'billboard',
   Test = 'test',
   Pac = 'pac',
   Space = 'space',
@@ -57,6 +59,7 @@ const createModeSelector = () => {
       message: 'What would you like to do?',
       hint: 'Use tab or arrow keys and press enter to select.',
       choices: [
+        { value: CliMode.Billboard, title:'🔤 => Billboard' },
         { value: CliMode.Pong, title:'🎾 => Pong' },
         { value: CliMode.Lightcycles, title:'🏍\s => Lightcycles' },
         { value: CliMode.Munchman, title:  '🟡 => Munchman' },
@@ -78,6 +81,11 @@ const chooseMode = createModeSelector();
 
     while (true) {
       switch (await chooseMode()) {
+        case CliMode.Billboard: {
+          matrix.afterSync(() => {});
+          Billboard.init(matrix);
+          break;
+        }
         case CliMode.Test: {
           matrix.afterSync(() => {});
           Test.init(matrix);
