@@ -6,9 +6,13 @@ let matrix: any;
 let font;
 
 function displayGameScreen(){
-   matrix
+
+  let time = new Date();
+  time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+  matrix
     .fgColor(0x333333)
-    .drawText(String("Test message."), matrix.width()/2 + 2, 0);
+    .drawText(String(time), 2, 2);
 }
 
 function init (m){
@@ -34,3 +38,5 @@ function init (m){
 let Billboard = { init };
 
 export { Billboard };
+
+
