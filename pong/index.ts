@@ -110,7 +110,7 @@ function tick() {
 
   // Check for out of x bounds, if so apply score
   if (ball.x >= 0 && ball.x <= matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
-  if (ball.x < -1) { incrementScore(0); };
+  if (ball.x < 0) { incrementScore(0); };
   if (ball.x > matrix.width()) { incrementScore(1); };
 
 }
