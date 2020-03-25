@@ -73,7 +73,7 @@ function incrementScore(player: number){
   }
 }
 
-function inputLoop(){
+function inputLoop(t: number){
   // Did paddles change? Should we receive input?
   gameState.paddles[0] = Math.floor(players[0].y * matrix.height());
 
