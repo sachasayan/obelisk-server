@@ -80,9 +80,9 @@ function tick() {
   ball.y += Math.cos(Math.PI*ball.heading*2);
 
   // Did paddles change? Should we receive input?
-  if(players[0]){
+
     gameState.paddles[0] = Math.floor(players[0].y * matrix.height());
-  }
+
 
   // Hitting edges? Apply reflection
   let reflect = () => {
