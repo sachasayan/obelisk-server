@@ -35,6 +35,7 @@ let gameSettings: PongGameSettings = {
 let gameState: PongGameState;
 
 let matrix: any;
+let players: any;
 let font;
 
 function resetBall() {
@@ -77,6 +78,12 @@ function tick() {
   // Move ball
   ball.x += Math.sin(Math.PI*ball.heading*2);
   ball.y += Math.cos(Math.PI*ball.heading*2);
+
+  // Did paddles change? Should we receive input?
+  if(players[0]){
+    gameState.paddles[0] = Math.floor(players[0].y * matrix.height());
+  }
+
   // Hitting edges? Apply reflection
   let reflect = () => {
     ball.heading = ball.heading < 0.5 ? 0.5 - ball.heading : 1.5 - ball.heading;
@@ -160,7 +167,8 @@ function gameLoop(){
   }
 }
 
-function init (m){
+function init (m, playerData){
+    players = playerData;
     matrix = m;
     matrix.clear();
 

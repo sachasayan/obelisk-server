@@ -144,7 +144,7 @@ const chooseMode = createModeSelector();
         }
         case CliMode.Pong: {
           matrix.afterSync(() => {});
-          Pong.init(matrix);
+          Pong.init(matrix, playerData);
           break;
         }
         case CliMode.Lightcycles: {
