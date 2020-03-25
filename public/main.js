@@ -100,7 +100,7 @@
 
   function onAssignUser(data){
     current.player = data
-    setTimeOut(draw, 5000);
+    setTimeout(draw, 3000);
   }
 
 
