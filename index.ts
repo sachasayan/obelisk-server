@@ -7,6 +7,32 @@ import {
   RuntimeOptions,
 } from 'rpi-led-matrix';
 
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const port = process.env.PORT || 3000;
+
+let players = [];
+let playerData = [];
+
+function onConnection(socket){
+  console.log(socket);
+  players.push(socket);
+  socket.emit('obeliskAssignUser', players.length);
+  socket.on('drawing', (data) => {playerData[data.player] = {y: data.y}; });
+  socket.on('disconnect', (reason) => {
+    console.log('Disconnect ' + socket.id + ' ' + reason);
+    players = players.filter(s => s.id != socket.id );
+    players.forEach((s, i) => s.emit('obeliskAssignUser',  i+1));
+  });
+};
+
+io.on('connection', onConnection);
+
+http.listen(port, () => console.log('listening on port ' + port));
+
+
 import { Billboard } from './billboard';
 import { Lightcycles } from './lightcycles';
 import { Munchman } from './munchman';
