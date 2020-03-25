@@ -77,6 +77,8 @@ function inputLoop(){
   // Did paddles change? Should we receive input?
   gameState.paddles[0] = Math.floor(players[0].y * matrix.height());
 
+  gameState.paddles[1] = Math.round(    (5 * Math.sin(0.7 * Math.PI * (t/1000))) + gameState.ball.y      );
+   // + // Spread: 5px, Freq: 0.5
 }
 
 function tick() {
@@ -84,9 +86,6 @@ function tick() {
   // Move ball
   ball.x += Math.sin(Math.PI*ball.heading*2);
   ball.y += Math.cos(Math.PI*ball.heading*2);
-
-
-
 
   // Hitting edges? Apply reflection
   let reflect = () => {
@@ -111,7 +110,7 @@ function tick() {
 
   // Check for out of x bounds, if so apply score
   if (ball.x >= 0 && ball.x <= matrix.width()) { setTimeout(() => {tick()}, (1 / ball.velocity) * 1000); };
-  if (ball.x < 0) { incrementScore(0); };
+  if (ball.x < -1) { incrementScore(0); };
   if (ball.x > matrix.width()) { incrementScore(1); };
 
 }
@@ -180,7 +179,7 @@ function init (m, playerData){
 
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
-      inputLoop();
+      inputLoop(t);
       gameLoop();
 
       setTimeout(() => matrix.sync(), 0);
