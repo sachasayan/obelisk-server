@@ -100,14 +100,19 @@ function tick() {
     reflect();
   };
 
+  let getSpread = (): number => {
+    // IE, get the relative position of the ball to the center of the paddle...
+    return (ball.y - gameState.paddles[0])  / gameSettings.paddleRadius * 0.10 ;
+  };
+
   // Did we hit a paddle? Reflect x.
   if ( ball.x < 1  && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius ){
       ball.x = 5 + 1 + (1- ball.x) ;
-      ball.heading = 0.25 + (ball.y - gameState.paddles[0] / gameSettings.paddleRadius) * 0.10 ;
+      ball.heading = 0.25 + getSpread();
   }
   if ( ball.x > matrix.width()-1  && Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius ){
       ball.x = 60 - matrix.width() + (matrix.width() - 1 - ball.x) ;
-      ball.heading = 0.75 + (ball.y - gameState.paddles[0] / gameSettings.paddleRadius) * 0.10 ;
+      ball.heading = 0.75 + getSpread();
   }
 
   // Check for out of x bounds, if so apply score
