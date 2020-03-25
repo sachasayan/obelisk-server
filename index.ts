@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
 
 let players = [];
-let playerData = [];
+let playerData: {y: number}[] = [{y: 0}];
 
 function onConnection(socket){
   console.log(socket);
