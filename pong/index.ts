@@ -75,7 +75,7 @@ function incrementScore(player: number){
 
 function inputLoop(t: number){
   // Did paddles change? Should we receive input?
-  gameState.paddles[0] = Math.floor(players[0].y * matrix.height());
+  gameState.paddles[0] = Math.round(players[0].y * matrix.height());
 
   gameState.paddles[1] = Math.round(    (5 * Math.sin(0.7 * Math.PI * (t/1000))) + gameState.ball.y      );
    // + // Spread: 5px, Freq: 0.5
@@ -102,11 +102,11 @@ function tick() {
 
   // Did we hit a paddle? Reflect x.
   if ( ball.x < 1  && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius ){
-      ball.x = 1 + (1- ball.x) ;
+      ball.x = 5 + 1 + (1- ball.x) ;
       ball.heading = 0.25 + (ball.y - gameState.paddles[0] / gameSettings.paddleRadius) * 0.10 ;
   }
   if ( ball.x > matrix.width()-1  && Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius ){
-      ball.x = matrix.width() + (matrix.width() - 1 - ball.x) ;
+      ball.x = 60 - matrix.width() + (matrix.width() - 1 - ball.x) ;
       ball.heading = 0.75 + (ball.y - gameState.paddles[0] / gameSettings.paddleRadius) * 0.10 ;
   }
 
@@ -124,7 +124,6 @@ function displayGameScreen(){
 
   matrix
     .fgColor(0x222222)
-    .drawRect(0,0, matrix.width()-1, matrix.height()-1)
     .drawLine(matrix.width()/2-1, 0, matrix.width()/2-1, matrix.height()-1)
     .drawLine(matrix.width()/2, 0, matrix.width()/2, matrix.height()-1);
 
