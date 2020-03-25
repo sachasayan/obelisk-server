@@ -20,7 +20,7 @@ let playerData = [];
 
 function onConnection(socket){
   console.log(socket);
-  players.push(socket);
+  players = [socket];
   socket.emit('obeliskAssignUser', players.length);
   socket.on('drawing', (data) => {playerData[data.player] = {y: data.y}; });
   socket.on('disconnect', (reason) => {
