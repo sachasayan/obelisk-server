@@ -39,10 +39,15 @@ let players: any;
 let font;
 
 function resetBall() {
+  let { paddles } = gameState;
+  let heading = paddles[0] > paddles[1] ? 0.75 + ((Math.random() * 0.25) - 0.125) :    // A random value within 45º of straight, randomly left or right.
+    paddles[1] < paddles[0] ?  0.25 + ((Math.random() * 0.25) - 0.125) :
+    (Math.random() < 0.5 ? 0.25 : 0.75) + ((Math.random() * 0.25) - 0.125);
+
   gameState.ball = {
     x: (Math.floor(matrix.width()/2)),
     y: (Math.floor(matrix.height()/2)),
-    heading: (Math.random() < 0.5 ? 0.25 : 0.75) + ((Math.random() * 0.25) - 0.125),   // A random value within 45º of straight, randomly left or right.
+    heading: heading,
     velocity: 32, // in pixels per second
   }
 }
@@ -77,7 +82,8 @@ function inputLoop(t: number){
   // Did paddles change? Should we receive input?
   gameState.paddles[0] = Math.round(players[0].y * matrix.height());
 
-  gameState.paddles[1] = Math.round(    (5 * Math.sin(0.7 * Math.PI * (t/1000))) + gameState.ball.y      );
+  //gameState.paddles[1] = Math.round(    (5 * Math.sin(0.7 * Math.PI * (t/1000))) + gameState.ball.y      );
+  gameState.paddles[1] - gameState.ball.y;
    // + // Spread: 5px, Freq: 0.5
 }
 
@@ -107,11 +113,11 @@ function tick() {
 
   // Did we hit a paddle? Reflect x.
   if ( ball.x < 1  && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius ){
-      ball.x = 5 + 1 + (1- ball.x) ;
+      ball.x = 1 + (1- ball.x) ;
       ball.heading = 0.25 + getSpread();
   }
   if ( ball.x > matrix.width()-1  && Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius ){
-      ball.x = 60 - matrix.width() + (matrix.width() - 1 - ball.x) ;
+      ball.x = matrix.width() + (matrix.width() - 1 - ball.x) ;
       ball.heading = 0.75 + getSpread();
   }
 
