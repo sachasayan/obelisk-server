@@ -29,7 +29,7 @@ interface PongGameState {
 };
 
 let gameSettings: PongGameSettings = {
-  paddleRadius: 1
+  paddleRadius: 2
 };
 
 let gameState: PongGameState;
@@ -73,15 +73,19 @@ function incrementScore(player: number){
   }
 }
 
+function inputLoop(){
+  // Did paddles change? Should we receive input?
+  gameState.paddles[0] = Math.floor(players[0].y * matrix.height());
+
+}
+
 function tick() {
   let ball = gameState.ball;
   // Move ball
   ball.x += Math.sin(Math.PI*ball.heading*2);
   ball.y += Math.cos(Math.PI*ball.heading*2);
 
-  // Did paddles change? Should we receive input?
 
-    gameState.paddles[0] = Math.floor(players[0].y * matrix.height());
 
 
   // Hitting edges? Apply reflection
@@ -98,16 +102,10 @@ function tick() {
   };
 
   // Did we hit a paddle? Reflect x.
-  if (
-      (ball.x == 1 || ball.x == 0 )  &&
-      Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius
-    ){
+  if ( ball.x < 1  && Math.abs(ball.y - gameState.paddles[0]) <= gameSettings.paddleRadius ){
       ball.heading = 0.25;
   }
-  if (
-      ( ball.x == matrix.width() - 1 || ball.x == matrix.width() - 2 ) &&
-      Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius
-    ){
+  if ( ball.x > matrix.width()-2  && Math.abs(ball.y - gameState.paddles[1]) <= gameSettings.paddleRadius ){
       ball.heading = 0.75;
   }
 
@@ -182,7 +180,7 @@ function init (m, playerData){
 
     matrix.afterSync((mat, dt, t) => {
       matrix.clear();
-
+      inputLoop();
       gameLoop();
 
       setTimeout(() => matrix.sync(), 0);
