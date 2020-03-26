@@ -1,7 +1,7 @@
 import * as chroma from 'chroma-js';
 import {
   BASE_COLORS
-} from './types';
+} from './munchman.types';
 
 let fade = (t, freq, offset) => {
   return Math.abs(Math.sin(  Math.PI * (t % freq / freq - offset) ));
