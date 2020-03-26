@@ -7,48 +7,28 @@ import {
   RuntimeOptions,
 } from 'rpi-led-matrix';
 
+import * as prompts from 'prompts';
+
+import {
+  Billboard,
+  Lightcycles,
+  Munchman,
+  Pong,
+  Pulse,
+  Space,
+  Sunlight,
+  Test
+} from './modes';
+
+import { CliMode } from './types';
+
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 
-app.use(express.static(__dirname + '/public'));
-
-let players = [];
-let playerData: {y: number}[] = [{y: 0}];
-
-function onConnection(socket){
-  console.log(socket);
-  players = [socket];
-  socket.emit('obeliskAssignUser', players.length);
-  socket.on('drawing', (data) => {
-    console.log(data.y);
-    playerData[0] = {y: data.y};
-  });
-  socket.on('disconnect', (reason) => {
-    console.log('Disconnect ' + socket.id + ' ' + reason);
-    players = players.filter(s => s.id != socket.id );
-    players.forEach((s, i) => s.emit('obeliskAssignUser',  i+1));
-  });
-};
-
-io.on('connection', onConnection);
-
-http.listen(port, () => console.log('listening on port ' + port));
-
-
-import { Billboard } from './billboard';
-import { Lightcycles } from './lightcycles';
-import { Munchman } from './munchman';
-import { Pong } from './pong';
-import { Pulse } from './pulse';
-import { Space } from './space';
-import { Sunlight } from './sunlight';
-import { Test } from './test';
-import * as prompts from 'prompts';
-
-export const matrixOptions: MatrixOptions = {
+const matrixOptions: MatrixOptions = {
   ...LedMatrix.defaultMatrixOptions(),
   rows: 16,
   cols: 32,
@@ -64,25 +44,33 @@ export const matrixOptions: MatrixOptions = {
   )
 };
 
-export const runtimeOptions: RuntimeOptions = {
+const runtimeOptions: RuntimeOptions = {
   ...LedMatrix.defaultRuntimeOptions(),
   gpioSlowdown: 4
 };
 
-const wait = (t: number) => new Promise(ok => setTimeout(ok, t));
+app.use(express.static(__dirname + '/public'));
 
-enum CliMode {
-  Billboard = 'billboard',
-  Lightcycles = 'lightcycles',
-  Munchman = 'munchman',
-  Pac = 'pac',
-  Pong = 'pong',
-  Pulse = 'pulse',
-  Space = 'space',
-  Sunlight = 'sunlight',
-  Test = 'test',
-  Exit = 'exit'
-}
+let players = [];
+let playerData: {y: number}[] = [{y: 0}];
+
+function onConnection(socket){
+  console.log(socket);
+  players = [socket];
+  socket.emit('obeliskAssignUser', players.length);
+  socket.on('drawing', (data) => {
+    playerData[0] = {y: data.y};
+  });
+  socket.on('disconnect', (reason) => {
+    console.log('Disconnect ' + socket.id + ' ' + reason);
+    players = players.filter(s => s.id != socket.id );
+    players.forEach((s, i) => s.emit('obeliskAssignUser',  i+1));
+  });
+};
+
+io.on('connection', onConnection);
+
+http.listen(port, () => console.log('Server started. Listening on :' + port));
 
 const createModeSelector = () => {
   return async () => {
