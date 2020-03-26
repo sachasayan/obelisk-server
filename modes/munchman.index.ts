@@ -10,9 +10,9 @@ import {
   MunchGameState,
   Ghost,
   Player
-} from './types';
+} from './munchman.types';
 
-import { fade, colors, getAdjacent } from './utils';
+import { fade, colors, getAdjacent } from './munchman.utils';
 
 let matrix;
 

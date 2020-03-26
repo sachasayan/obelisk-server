@@ -82,7 +82,7 @@ function init (m){
     });
 
 
-    Jimp.read('./billboard/streetcar.png')
+    Jimp.read('./images/streetcar.png')
     .then(img => {
       streetcar = img;
       matrix.sync();

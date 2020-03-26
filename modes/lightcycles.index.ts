@@ -4,11 +4,11 @@ import {
   fade,
   isViable,
   getAdjacent
-} from './utils';
+} from './lightcycles.utils';
 import {
   STATUS,
   LightCycle
-} from './types';
+} from './lightcycles.types';
 
 let matrix;
 
