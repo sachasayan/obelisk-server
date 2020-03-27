@@ -49,6 +49,17 @@ const runtimeOptions: RuntimeOptions = {
   gpioSlowdown: 4
 };
 
+var DynDNSClient = require("node-dyndns-client");
+var dyndns = new DynDNSClient({
+        url                 : "dynamicdns.park-your-domain.com",
+        username            : 'obelisk.me',
+        password            : '2861a862d09a436fbf2d72375af94d24',
+        network_interface   : 'en0',
+        protocol            : 'ipv4',
+        check               : 60
+    });
+
+
 app.use(express.static(__dirname + '/public'));
 
 let players = [];
