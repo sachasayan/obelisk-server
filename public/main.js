@@ -9,7 +9,7 @@
   var current = {
     x: null,
     y: null,
-    player: 'Hi'
+    player: ''
   };
   var touching = false;
 

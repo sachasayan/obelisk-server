@@ -66,14 +66,12 @@ let players = [];
 let playerData: {y: number}[] = [{y: 0}];
 
 function onConnection(socket){
-  console.log(socket);
   players = [socket];
   socket.emit('obeliskAssignUser', players.length);
   socket.on('drawing', (data) => {
     playerData[0] = {y: data.y};
   });
   socket.on('disconnect', (reason) => {
-    console.log('Disconnect ' + socket.id + ' ' + reason);
     players = players.filter(s => s.id != socket.id );
     players.forEach((s, i) => s.emit('obeliskAssignUser',  i+1));
   });
@@ -157,7 +155,6 @@ const chooseMode = createModeSelector();
         case CliMode.Exit: {
           matrix.afterSync(() => {});
           matrix.clear().sync();
-          console.log('Bye!');
           process.exit(0);
         }
       }
