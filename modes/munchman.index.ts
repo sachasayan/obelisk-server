@@ -186,7 +186,7 @@ function init (m){
     matrix = m;
     // Load level
 
-    Jimp.read('./munchman/munch-lvl.png')
+    Jimp.read('./images/munch-lvl.png')
     .then(img => {
         img.scan(0, 0, img.bitmap.width, img.bitmap.height, function(x, y, idx) {
           gameSettings.grid += MAP_LOOKUP[chroma({
