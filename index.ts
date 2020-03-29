@@ -1,166 +1,137 @@
-import {
-  GpioMapping,
-  LedMatrix,
-  LedMatrixUtils,
-  MatrixOptions,
-  PixelMapperType,
-  RuntimeOptions,
-} from 'rpi-led-matrix';
+//LED Matrix
+import { LedMatrix } from 'rpi-led-matrix';
+import { Billboard, Lightcycles, Munchman, Pong, Pulse, Space, Sunlight, Test } from './modes';
 
+// CLI
 import * as prompts from 'prompts';
 
-import {
-  Billboard,
-  Lightcycles,
-  Munchman,
-  Pong,
-  Pulse,
-  Space,
-  Sunlight,
-  Test
-} from './modes';
-
+//Config
+import { config, matrixOptions, runtimeOptions } from './config';
 import { CliMode } from './types';
 
-const express = require('express');
-const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-const port = process.env.PORT || 80;
-
-const matrixOptions: MatrixOptions = {
-  ...LedMatrix.defaultMatrixOptions(),
-  rows: 16,
-  cols: 32,
-  chainLength: 4,
-  brightness: 50,
-  rowAddressType: 2,
-  multiplexing: 3,
-  hardwareMapping: GpioMapping.Regular,
-  pwmLsbNanoseconds: 1500,
-  pwmBits: 8,
-  pixelMapperConfig: LedMatrixUtils.encodeMappers(
-    { type: PixelMapperType.Rotate, angle: 180 }
-  )
-};
-
-const runtimeOptions: RuntimeOptions = {
-  ...LedMatrix.defaultRuntimeOptions(),
-  gpioSlowdown: 4
-};
-
-var DynDNSClient = require("node-dyndns-client");
-var dyndns = new DynDNSClient({
-        url                 : "dynamicdns.park-your-domain.com",
-        username            : 'obelisk.me',
-        password            : '2861a862d09a436fbf2d72375af94d24',
-        network_interface   : 'wlan0',
-        protocol            : 'ipv4',
-        check               : 60
-    });
-
-
-app.use(express.static(__dirname + '/public'));
-
+let server: any = {};
+let matrix;
 let players = [];
 let playerData: {y: number}[] = [{y: 0}];
 
-function onConnection(socket){
-  players = [socket];
-  socket.emit('obeliskAssignUser', players.length);
-  socket.on('drawing', (data) => {
-    playerData[0] = {y: data.y};
-  });
-  socket.on('disconnect', (reason) => {
-    players = players.filter(s => s.id != socket.id );
-    players.forEach((s, i) => s.emit('obeliskAssignUser',  i+1));
-  });
-};
+if (config.runServer){
+  let express = require('express');
+  let DynDNSClient = require('node-dyndns-client');
 
-io.on('connection', onConnection);
-
-http.listen(port, () => console.log('Server started. Listening on :' + port));
-
-const createModeSelector = () => {
-  return async () => {
-    const { mode } = await prompts({
-      name: 'mode',
-      type: 'select',
-      message: 'What would you like to do?',
-      hint: 'Use tab or arrow keys and press enter to select.',
-      choices: [
-        { value: CliMode.Billboard, title:'🔤 => Billboard' },
-        { value: CliMode.Pong, title:'🎾 => Pong' },
-        { value: CliMode.Lightcycles, title:'🏍\s => Lightcycles' },
-        { value: CliMode.Munchman, title:  '🟡 => Munchman' },
-        { value: CliMode.Space, title: '🚀 => Space Adventure' },
-        { value: CliMode.Pulse, title:'🕺 => Twinkle' },
-        { value: CliMode.Exit, title: '🚪 => Exit' },
-        { value: CliMode.Sunlight, title: '🟠 => Sunlight' },
-        { value: CliMode.Test, title:  '(Test Mode)' },
-      ],
+  server.app = express();
+  server.http = require('http').Server(server.app);
+  server.io = require('socket.io')(server.http);
+  server.port = process.env.PORT || 80;
+  if (config.initPanel){
+    server.dyndns = new DynDNSClient({
+      url                 : "dynamicdns.park-your-domain.com",
+      username            : 'obelisk.me',
+      password            : '2861a862d09a436fbf2d72375af94d24',
+      network_interface   : 'wlan0',
+      protocol            : 'ipv4',
+      check               : 60
     });
-    return mode as CliMode;
+  }
+  let onConnection = (socket) => {
+    players = [socket];
+    socket.emit('obeliskAssignUser', players.length);
+    socket.on('drawing', (data) => {
+      playerData[0] = {y: data.y};
+    });
+    socket.on('disconnect', (reason) => {
+      players = players.filter(s => s.id != socket.id );
+      players.forEach((s, i) => s.emit('obeliskAssignUser',  i+1));
+    });
   };
-};
-const chooseMode = createModeSelector();
+  server.io.on('connection', onConnection);
+  server.app.use(express.static(__dirname + '/public'));
+  server.http.listen(server.port, () => console.log('Server started. Listening on :' + server.port));
+}
 
-(async () => {
-  try {
-    const matrix = new LedMatrix(matrixOptions, runtimeOptions);
-    matrix.clear();
+if (config.initPanel) {
 
-    while (true) {
-      switch (await chooseMode()) {
-        case CliMode.Billboard: {
-          matrix.afterSync(() => {});
-          Billboard.init(matrix);
-          break;
-        }
-        case CliMode.Test: {
-          matrix.afterSync(() => {});
-          Test.init(matrix);
-          break;
-        }
-        case CliMode.Munchman: {
-          matrix.afterSync(() => {});
-          Munchman.init(matrix);
-          break;
-        }
-        case CliMode.Space: {
-          matrix.afterSync(() => {});
-          Space.init(matrix);
-          break;
-        }
-        case CliMode.Sunlight: {
-          matrix.afterSync(() => {});
-          Sunlight.init(matrix);
-          break;
-        }
-        case CliMode.Pulse: {
-          matrix.afterSync(() => {});
-          Pulse.init(matrix);
-          break;
-        }
-        case CliMode.Pong: {
-          matrix.afterSync(() => {});
-          Pong.init(matrix, playerData);
-          break;
-        }
-        case CliMode.Lightcycles: {
-          matrix.afterSync(() => {});
-          Lightcycles.init(matrix);
-          break;
-        }
-        case CliMode.Exit: {
-          matrix.afterSync(() => {});
-          matrix.clear().sync();
-          process.exit(0);
+  const createModeSelector = () => {
+    return async () => {
+      const { mode } = await prompts({
+        name: 'mode',
+        type: 'select',
+        message: 'What would you like to do?',
+        hint: 'Use tab or arrow keys and press enter to select.',
+        choices: [
+          { value: CliMode.Billboard, title:'🔤 => Billboard' },
+          { value: CliMode.Pong, title:'🎾 => Pong' },
+          { value: CliMode.Lightcycles, title:'🏍\s => Lightcycles' },
+          { value: CliMode.Munchman, title:  '🟡 => Munchman' },
+          { value: CliMode.Space, title: '🚀 => Space Adventure' },
+          { value: CliMode.Pulse, title:'🕺 => Twinkle' },
+          { value: CliMode.Exit, title: '🚪 => Exit' },
+          { value: CliMode.Sunlight, title: '🟠 => Sunlight' },
+          { value: CliMode.Test, title:  '(Test Mode)' },
+        ],
+      });
+      return mode as CliMode;
+    };
+  };
+  const chooseMode = createModeSelector();
+
+  (async () => {
+    try {
+      const matrix = new LedMatrix(matrixOptions, runtimeOptions);
+      matrix.clear();
+
+      while (true) {
+        switch (await chooseMode()) {
+          case CliMode.Billboard: {
+            matrix.afterSync(() => {});
+            Billboard.init(matrix);
+            break;
+          }
+          case CliMode.Test: {
+            matrix.afterSync(() => {});
+            Test.init(matrix);
+            break;
+          }
+          case CliMode.Munchman: {
+            matrix.afterSync(() => {});
+            Munchman.init(matrix);
+            break;
+          }
+          case CliMode.Space: {
+            matrix.afterSync(() => {});
+            Space.init(matrix);
+            break;
+          }
+          case CliMode.Sunlight: {
+            matrix.afterSync(() => {});
+            Sunlight.init(matrix);
+            break;
+          }
+          case CliMode.Pulse: {
+            matrix.afterSync(() => {});
+            Pulse.init(matrix);
+            break;
+          }
+          case CliMode.Pong: {
+            matrix.afterSync(() => {});
+            Pong.init(matrix, playerData);
+            break;
+          }
+          case CliMode.Lightcycles: {
+            matrix.afterSync(() => {});
+            Lightcycles.init(matrix);
+            break;
+          }
+          case CliMode.Exit: {
+            matrix.afterSync(() => {});
+            matrix.clear().sync();
+            process.exit(0);
+          }
         }
       }
     }
-  }
-  catch (error) {
-    console.error(`${__filename} caught: `, error);
-  }
-})();
+    catch (error) {
+      console.error(`${__filename} caught: `, error);
+    }
+  })();
+
+}
